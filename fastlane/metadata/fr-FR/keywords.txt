@@ -1,1 +1,1 @@
-maths,calcul,tables,fractions,géométrie,français,anglais,culture,conjugaison,grammaire,lecture
+calcul mental,tables,multiplication,fractions,géométrie,anglais,conjugaison,lecture,CE1,CE2,CM1
