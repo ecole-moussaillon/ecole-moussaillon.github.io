@@ -6,7 +6,7 @@
 @font-face{font-family:'IM Fell English SC';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/im-fell-english-sc.woff2) format('woff2')}
 @font-face{font-family:'Lexend';font-style:normal;font-weight:400 800;font-display:swap;src:url(assets/fonts/lexend.woff2) format('woff2')}
 /* Appli plein écran (max 560 px) : chaque écran est une couche absolue. Monde peint (images générées) + deux matières d'interface : verre sombre pour naviguer, parchemin pour lire et jouer. Laiton = action principale, cire = feu et erreurs. Un seul thème, nuit marine. */
-:root{
+:root{--vw:1vw;--vh:1vh;
   --abyss:#0b2230; --deep:#0f3446; --lagoon:#1d6b74; --foam:#e9f3ee; --mist:#9dbcbe;
   --parch:#f4e8cc; --parch-2:#e9d6ad; --ink:#2a1c12; --ink-2:#6b5440;
   --brass:#c9973f; --brass-hi:#f3d58c; --brass-lo:#6e4c18; --wax:#b8382a; --wax-hi:#e0644f; --kelp:#5cbf86;
@@ -43,7 +43,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .round{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;flex:none}
 .round svg{width:22px;height:22px}
 .chip{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:15px;font:600 13px var(--f-u);white-space:nowrap}
-.toast{position:fixed;left:50%;bottom:calc(var(--sbm) + 110px);transform:translateX(-50%);z-index:200;max-width:min(90vw,420px);padding:12px 16px;border-radius:16px;font-weight:600;text-align:center;animation:rise .25s ease-out}
+.toast{position:fixed;left:50%;bottom:calc(var(--sbm) + 110px);transform:translateX(-50%);z-index:200;max-width:min(calc(90 * var(--vw)),420px);padding:12px 16px;border-radius:16px;font-weight:600;text-align:center;animation:rise .25s ease-out}
 @keyframes rise{from{opacity:0;transform:translate(-50%,10px)}}
 
 /* ---------- Carte ---------- */
@@ -194,12 +194,12 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .pw img{width:36px;height:36px;border-radius:50%;background:#0f3446;box-shadow:0 0 0 1.5px var(--brass);object-fit:cover}
 .pw small{display:none}
 .pw[disabled]{opacity:.4;pointer-events:none}
-.g-bottom{position:relative;flex:none;padding:0 12px calc(var(--sbm) + 12vh);background:linear-gradient(180deg,rgba(11,34,48,0),var(--abyss) 26px);margin-top:-26px;z-index:9}
+.g-bottom{position:relative;flex:none;padding:0 12px calc(var(--sbm) + calc(12 * var(--vh)));background:linear-gradient(180deg,rgba(11,34,48,0),var(--abyss) 26px);margin-top:-26px;z-index:9}
 .qcard{border-radius:22px;padding:12px 14px 14px;margin-bottom:10px;position:relative}
 .qcard .ask{font-size:16.5px;font-weight:600;color:var(--ink);text-align:center;line-height:1.3;text-wrap:balance;padding:0 30px}
-.qcard .prompt{font-family:var(--f-d);font-weight:800;font-size:clamp(34px,10.5vw,52px);line-height:1.08;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink);text-wrap:balance}
-.qcard .prompt.mid{font-size:clamp(22px,6.4vw,30px)}
-.words{font-family:var(--f-u);font-weight:700;font-size:clamp(17px,5vw,21px);color:#7a3f20;display:inline-block;line-height:1.25}
+.qcard .prompt{font-family:var(--f-d);font-weight:800;font-size:clamp(34px,calc(10.5 * var(--vw)),52px);line-height:1.08;text-align:center;font-variant-numeric:tabular-nums;color:var(--ink);text-wrap:balance}
+.qcard .prompt.mid{font-size:clamp(22px,calc(6.4 * var(--vw)),30px)}
+.words{font-family:var(--f-u);font-weight:700;font-size:clamp(17px,calc(5 * var(--vw)),21px);color:#7a3f20;display:inline-block;line-height:1.25}
 .slot{display:inline-grid;place-items:center;min-width:1.7em;padding:0 .15em;border-radius:14px;background:rgba(255,255,255,.55);box-shadow:inset 0 2px 4px rgba(42,28,18,.18),inset 0 0 0 1.5px rgba(138,98,36,.45);color:var(--wax);font-style:italic}
 .slot:empty::before{content:"?";opacity:.3;font-style:normal}
 .timer{position:absolute;right:12px;top:10px;width:26px;height:26px}
@@ -211,24 +211,24 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .key.fire{background:linear-gradient(#e0644f,#b8382a 60%,#962a1e);color:#fff3e6;font:700 17px var(--f-u);display:flex;gap:6px;box-shadow:0 4px 0 #5e170f,0 8px 14px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.35)}
 .key.fire svg{width:22px;height:22px}
 .choices{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.choice{min-height:72px;border-radius:18px;font-family:var(--f-d);font-weight:800;font-size:clamp(24px,7.5vw,32px);color:var(--ink);background:linear-gradient(#fbf3df,#ecdcb6);box-shadow:0 5px 0 #a98a52,0 10px 16px rgba(0,0,0,.25),inset 0 1px 0 #fff;padding:4px 2px;font-variant-numeric:tabular-nums}
+.choice{min-height:72px;border-radius:18px;font-family:var(--f-d);font-weight:800;font-size:clamp(24px,calc(7.5 * var(--vw)),32px);color:var(--ink);background:linear-gradient(#fbf3df,#ecdcb6);box-shadow:0 5px 0 #a98a52,0 10px 16px rgba(0,0,0,.25),inset 0 1px 0 #fff;padding:4px 2px;font-variant-numeric:tabular-nums}
 .choice:active{transform:translateY(3px);box-shadow:0 2px 0 #a98a52}
 .choice.right{background:linear-gradient(#a6e3bf,#5cbf86);box-shadow:0 5px 0 #2b7a4d,0 0 22px rgba(92,191,134,.6)}
 .choice.wrong{background:linear-gradient(#f2b0a3,#e0644f);box-shadow:0 5px 0 #8e2a20;animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.qcard .prompt.sent{font:600 clamp(18px,5.2vw,22px)/1.35 var(--f-u);margin-top:4px}
+.qcard .prompt.sent{font:600 clamp(18px,calc(5.2 * var(--vw)),22px)/1.35 var(--f-u);margin-top:4px}
 .qcard .prompt.sent .slot{min-width:2.6em;height:1.35em;vertical-align:-.2em;border-radius:9px}
 .qcard mark{background:linear-gradient(transparent 6%,#5fe0d2 6%,#3fcfc0 94%,transparent 94%);color:#10302e;padding:0 .18em;border-radius:5px;box-shadow:inset 0 -3px 0 #1d8f86;font-weight:800;-webkit-box-decoration-break:clone;box-decoration-break:clone} /* surligneur turquoise : bien visible sur le parchemin */
 .choices.txt{grid-template-columns:1fr;gap:8px}
-.choices.txt .choice{min-height:50px;font:700 clamp(16px,4.6vw,19px)/1.25 var(--f-u);padding:8px 12px;text-wrap:balance}
+.choices.txt .choice{min-height:50px;font:700 clamp(16px,calc(4.6 * var(--vw)),19px)/1.25 var(--f-u);padding:8px 12px;text-wrap:balance}
 .choices.two{grid-template-columns:1fr 1fr}
 /* Île des Formes : figures de géométrie (SVG) dans la carte de question */
 .qcard .prompt.geo{font:600 16px/1.3 var(--f-u);margin:2px 0 0}
-.gfig{display:block;width:100%;max-width:340px;height:auto;max-height:clamp(140px,26vh,200px);margin:2px auto 0;overflow:visible}
-.prompt.kp .gfig{max-height:clamp(110px,19vh,160px)}
+.gfig{display:block;width:100%;max-width:340px;height:auto;max-height:clamp(140px,calc(26 * var(--vh)),200px);margin:2px auto 0;overflow:visible}
+.prompt.kp .gfig{max-height:clamp(110px,calc(19 * var(--vh)),160px)}
 .gfig.wide{max-width:none;max-height:none}
 /* Petits écrans (iPhone SE) : figure, consigne et marge du bas réduites pour que le pavé numérique reste entier à l'écran */
-@media (max-height:720px){.prompt.kp .gfig{max-height:84px}.prompt.geo .gans{font-size:22px;margin-top:0}.qcard:has(.prompt.kp){padding:8px 12px 9px}.qcard:has(.prompt.geo) .ask{font-size:15px;line-height:1.22}.game.tall .g-bottom:has(.prompt.kp){padding-bottom:calc(var(--sbm) + 2vh)}}
+@media (max-height:720px){.prompt.kp .gfig{max-height:84px}.prompt.geo .gans{font-size:22px;margin-top:0}.qcard:has(.prompt.kp){padding:8px 12px 9px}.qcard:has(.prompt.geo) .ask{font-size:15px;line-height:1.22}.game.tall .g-bottom:has(.prompt.kp){padding-bottom:calc(var(--sbm) + calc(2 * var(--vh)))}}
 .gfig .gl,.gfig .gsf{fill:rgba(201,151,63,.2)}
 .gfig .gl{stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round}
 .gfig .gsf{stroke:none}
@@ -247,13 +247,13 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .glet{font:800 34px/1 var(--f-u)}
 .prompt.enq{margin:4px 0 0}.enplay{display:inline-flex;align-items:center;gap:10px;margin:6px auto 2px;padding:10px 22px 10px 16px;border-radius:30px;background:linear-gradient(#f7dc93,#c9973f);color:#2a1a07;font:700 18px var(--f-u);box-shadow:0 3px 0 var(--brass-lo)}
 .enplay svg{width:30px;height:30px}.prompt.enq .enplay{display:flex;width:max-content}
-.enline{font:700 clamp(19px,5.4vw,24px)/1.3 var(--f-u);color:var(--ink);text-align:center;margin:6px 4px 0}
+.enline{font:700 clamp(19px,calc(5.4 * var(--vw)),24px)/1.3 var(--f-u);color:var(--ink);text-align:center;margin:6px 4px 0}
 .enbig .emo{font-size:72px}.enbig{text-align:center;line-height:1.1}
 .emo{font-size:40px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;filter:drop-shadow(0 1px 1.5px rgba(42,28,18,.45))} /* les emoji clairs (nuage, neige) restent visibles sur le crème */.emo.sm{font-size:28px;letter-spacing:4px}
 .sw{display:inline-block;width:44px;height:44px;border-radius:50%;border:3px solid #2a1c12;vertical-align:middle;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
 .ennum{font:800 30px var(--f-u)}
 .gfig .gship{fill:var(--wax);stroke:#5e170f;stroke-width:1.5;stroke-linejoin:round}
-.prompt.geo .gans{font:800 clamp(24px,7vw,30px)/1.2 var(--f-d);margin-top:4px;font-variant-numeric:tabular-nums}
+.prompt.geo .gans{font:800 clamp(24px,calc(7 * var(--vw)),30px)/1.2 var(--f-d);margin-top:4px;font-variant-numeric:tabular-nums}
 .prompt.geo .gprog{font:700 15px/1.35 var(--f-u);color:#7a3f20;margin-top:4px;text-wrap:balance}
 /* Notation d'un angle : un chapeau au-dessus des trois lettres (l'angle ABC) */
 .ang{position:relative;display:inline-block}
@@ -262,7 +262,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .wchips button{min-height:44px;padding:6px 12px;border-radius:12px;font:600 18px var(--f-u);background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1.5px rgba(138,98,36,.45),0 2px 0 rgba(138,98,36,.35);color:var(--ink)}
 .wchips.grp button{font-size:16.5px}
 .wchips button[aria-pressed="true"]{background:linear-gradient(180deg,#f7dc93,#c9973f);box-shadow:0 3px 0 var(--brass-lo)}
-.rtext{max-height:min(34vh,260px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px 4px 6px;margin:-2px -4px 8px;border-bottom:1.5px dashed rgba(138,98,36,.45);font:400 16px/1.55 var(--f-u);color:var(--ink)}
+.rtext{max-height:min(calc(34 * var(--vh)),260px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px 4px 6px;margin:-2px -4px 8px;border-bottom:1.5px dashed rgba(138,98,36,.45);font:400 16px/1.55 var(--f-u);color:var(--ink)}
 .rtext b{display:block;font:800 18px var(--f-d);margin-bottom:4px}
 .rtext p{margin:0 0 6px}
 .qcard .ask.rq{font-size:16.5px;color:var(--ink)}
@@ -312,10 +312,10 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .tray .coin{width:36px;height:36px;font-size:11px}.tray .bill{width:46px;height:30px;font-size:12px}
 .pricetag{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-d);font-weight:800;font-size:34px;color:var(--ink)}
 /* parts */
-.pizza{width:min(170px,46vw);height:auto;touch-action:manipulation}
+.pizza{width:min(170px,calc(46 * var(--vw)));height:auto;touch-action:manipulation}
 .slice{fill:rgba(255,255,255,0);stroke:#2a1c12;stroke-width:2.5;cursor:pointer}
 .slice.on{fill:rgba(184,56,42,.6)}
-.pizza.cake{width:min(130px,36vw)}.pizza.cake .slice{cursor:default;stroke:rgba(42,28,18,.8)}
+.pizza.cake{width:min(130px,calc(36 * var(--vw)))}.pizza.cake .slice{cursor:default;stroke:rgba(42,28,18,.8)}
 .fbars{display:flex;flex-direction:column;gap:10px;margin:6px 0}
 .fbar{display:flex;align-items:center;gap:10px}
 .fbar .cells{flex:1;display:flex;height:28px;border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 2px var(--ink);background:#fff8e8}
@@ -326,7 +326,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .line-svg text{font-family:var(--f-u);font-weight:700;fill:var(--ink)}
 
 .burst{position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);z-index:20;text-align:center;pointer-events:none;animation:pop .5s cubic-bezier(.2,1.6,.4,1)}
-.burst .w{display:block;font-family:var(--f-d);font-weight:900;font-size:clamp(40px,12vw,58px);color:#fff3d0;text-shadow:0 3px 0 #9a4a1a,0 8px 24px rgba(0,0,0,.5);white-space:nowrap}
+.burst .w{display:block;font-family:var(--f-d);font-weight:900;font-size:clamp(40px,calc(12 * var(--vw)),58px);color:#fff3d0;text-shadow:0 3px 0 #9a4a1a,0 8px 24px rgba(0,0,0,.5);white-space:nowrap}
 .burst .g{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:800 18px var(--f-u);color:var(--brass-hi);text-shadow:0 2px 6px rgba(0,0,0,.6)}
 .burst .g img{width:26px}
 @keyframes pop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
@@ -398,16 +398,16 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .showship .cap{position:absolute;left:14px;top:12px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
 .wood{background:#3b2617 url(assets/tex-wood.webp) center/320px}
 .poster{position:relative;width:min(330px,88%);aspect-ratio:2/3;margin:0 auto;background:url(assets/poster-blank.webp) center/100% 100% no-repeat;filter:drop-shadow(0 20px 26px rgba(0,0,0,.55));transform:rotate(-1.2deg);color:var(--ink);text-align:center}
-.poster .t1{position:absolute;left:0;right:0;top:10%;font-family:var(--f-d);font-weight:900;font-size:clamp(24px,7.6vw,32px);letter-spacing:.03em;line-height:1}
+.poster .t1{position:absolute;left:0;right:0;top:10%;font-family:var(--f-d);font-weight:900;font-size:clamp(24px,calc(7.6 * var(--vw)),32px);letter-spacing:.03em;line-height:1}
 .poster .t2{position:absolute;left:14%;right:14%;top:18.5%;display:flex;align-items:center;gap:8px;color:var(--ink-2)}
 .poster .t2 i{flex:1;height:1px;background:currentColor}
 .poster .photo{position:absolute;left:17%;right:17%;top:23%;height:36%;overflow:hidden;border:2px solid #4b3422;background:linear-gradient(#e9b98a,#c97e52);box-shadow:inset 0 0 24px rgba(42,28,18,.4)}
 .poster .photo>img{width:100%;height:100%;object-fit:cover;object-position:50% 10%;filter:sepia(.25) saturate(1.05)}
-.poster .nm{position:absolute;left:0;right:0;top:61%;font-family:var(--f-d);font-weight:900;font-size:clamp(26px,8vw,34px);line-height:1}
+.poster .nm{position:absolute;left:0;right:0;top:61%;font-family:var(--f-d);font-weight:900;font-size:clamp(26px,calc(8 * var(--vw)),34px);line-height:1}
 .poster .ep{position:absolute;left:0;right:0;top:68%;font-family:var(--f-d);font-style:italic;font-weight:600;font-size:15px;color:var(--ink-2)}
 .poster .bounty{position:absolute;left:16%;right:16%;top:73.5%;display:flex;justify-content:center;align-items:center;gap:8px;padding:5px 0;border-top:1.5px solid rgba(75,52,34,.6);border-bottom:1.5px solid rgba(75,52,34,.6)}
 .poster .bounty img{width:30px}
-.poster .bounty b{font-family:var(--f-d);font-weight:900;font-size:clamp(28px,8.5vw,36px);line-height:1}
+.poster .bounty b{font-family:var(--f-d);font-weight:900;font-size:clamp(28px,calc(8.5 * var(--vw)),36px);line-height:1}
 .poster .foot{position:absolute;left:18%;right:18%;top:81.5%;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--ink-2);text-align:left}
 .waxs{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--wax-hi),var(--wax) 55%,#6e1a12);color:#f7d9c4;font:800 10px/1.05 var(--f-u);text-align:center;transform:rotate(-10deg);box-shadow:0 3px 6px rgba(0,0,0,.35)}
 .rank{border-radius:20px;padding:14px 16px;margin-top:22px}
@@ -670,14 +670,14 @@ textarea.fld{min-height:76px}
 .title>*{position:relative;z-index:1}
 .tlogo{text-align:center;color:#fffaf0;text-shadow:0 4px 18px rgba(0,0,0,.55)}
 .tlogo .smallcaps{color:#ffd9a0;font-size:14px;letter-spacing:.22em}
-.tlogo .disp{font-size:clamp(40px,11.5vw,66px);line-height:.98;margin-top:8px}
-.tship{position:absolute!important;left:50%;top:58%;width:min(70%,400px,calc((100vh - 360px) * 1.2));transform:translate(-50%,-50%);animation:tship 4s ease-in-out infinite;z-index:1}
+.tlogo .disp{font-size:clamp(40px,calc(11.5 * var(--vw)),66px);line-height:.98;margin-top:8px}
+.tship{position:absolute!important;left:50%;top:58%;width:min(70%,400px,calc((calc(100 * var(--vh)) - 360px) * 1.2));transform:translate(-50%,-50%);animation:tship 4s ease-in-out infinite;z-index:1}
 @keyframes tship{50%{transform:translate(-50%,calc(-50% - 8px)) rotate(-1.5deg)}}
 .tgo{display:flex;flex-direction:column;align-items:center;gap:12px;width:min(100%,320px)}
 .tgo span{white-space:nowrap;text-align:center;font:700 20px var(--f-u);color:#fff3d0;padding:14px 26px;border-radius:30px;background:rgba(8,26,36,.55);box-shadow:inset 0 0 0 1.5px rgba(243,213,140,.55);animation:pulse2 1.6s ease-in-out infinite}
 @keyframes pulse2{50%{transform:scale(1.05);box-shadow:inset 0 0 0 1.5px rgba(243,213,140,.9),0 0 24px rgba(243,213,140,.35)}}
 .tload{width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,.15);overflow:hidden}.tload i{display:block;height:100%;width:0;background:var(--brass-hi);transition:width .3s}
-.title.who{cursor:default}.whob{border-radius:22px;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;width:min(92vw,360px)}
+.title.who{cursor:default}.whob{border-radius:22px;padding:14px 12px 12px;display:flex;flex-direction:column;align-items:center;gap:10px;width:min(calc(92 * var(--vw)),360px)}
 .whob b{font:700 20px var(--f-u);color:#fff3d0}
 /* « Qui joue ? » : un enfant par ligne (portrait, prénom, classe), quel que soit le nombre d'enfants et la longueur des prénoms */
 .whol{display:flex;flex-direction:column;gap:8px;width:100%}
@@ -706,7 +706,7 @@ button.medal{display:block;padding:0;cursor:pointer}
 .paint.cant{opacity:.6}
 .ifx{position:absolute;pointer-events:none;z-index:6}
 .ifx.ball{width:46px;height:46px;left:18%;bottom:18%;animation:ballfly .9s cubic-bezier(.25,.6,.4,1) forwards}
-@keyframes ballfly{0%{transform:translate(0,0) rotate(0) scale(1)}100%{transform:translate(min(52vw,260px),-150%) rotate(540deg) scale(.6);opacity:.4}}
+@keyframes ballfly{0%{transform:translate(0,0) rotate(0) scale(1)}100%{transform:translate(min(calc(52 * var(--vw)),260px),-150%) rotate(540deg) scale(.6);opacity:.4}}
 .g-scene .jframe{position:absolute;left:-4%;top:-4%;width:108%;height:108%;object-fit:cover;object-position:50% 100%;z-index:5;pointer-events:none;transform-origin:50% 100%;animation:sway 6s ease-in-out infinite}
 @keyframes sway{50%{transform:scale(1.015) rotate(.4deg)}}
 @media (prefers-reduced-motion:reduce){.g-scene .jframe{animation:none}}
@@ -723,15 +723,15 @@ button.medal{display:block;padding:0;cursor:pointer}
 @keyframes tickspin{0%{opacity:0;transform:translateX(-50%) scale(.5)}30%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) scale(1.1)}}
 .ifx.tick .mh{transform-origin:50px 50px;animation:mh 1s linear}
 @keyframes mh{to{transform:rotate(360deg)}}
-.clock{width:min(170px,46vw);height:auto;display:block;margin:4px auto 0}
+.clock{width:min(170px,calc(46 * var(--vw)));height:auto;display:block;margin:4px auto 0}
 .isle.soon .land{display:none}
-.burst .w{font-size:clamp(30px,10vw,58px);white-space:normal;max-width:92vw;line-height:1.02}
+.burst .w{font-size:clamp(30px,calc(10 * var(--vw)),58px);white-space:normal;max-width:calc(92 * var(--vw));line-height:1.02}
 .isle.soon .lag{opacity:.45}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .gradeb{flex:none;padding:1px 6px;border-radius:6px;background:var(--brass-hi);color:#2a1a07;font:800 10.5px/1.4 var(--f-u);letter-spacing:.06em}
 /* Police pirate (vieux livre de bord) pour les titres et les noms ; les chiffres des calculs, les touches et les réponses gardent Fraunces et Lexend, plus lisibles */
 .disp,.tlogo .disp,.isle .lbl b,.coastport .lbl b,.lair .lbl,.tide h2,.rlab b,.burst .w,.sheet-err h3,.tabpage h1,.crew-card b,.poster .t1,.poster .nm,.trophy .tt b,.yh,.yard h2,.hud .nm,.shipcap .disp{font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;letter-spacing:.01em}
-.tlogo .disp{font-size:clamp(46px,13vw,74px);line-height:.98}
+.tlogo .disp{font-size:clamp(46px,calc(13 * var(--vw)),74px);line-height:.98}
 .result .head .disp{font-size:33px}.tide h2{font-size:24px}.isle .lbl b{font-size:18px}.hud .nm{font-size:19px}
 
 /* ================= Effets visuels ================= */
@@ -848,9 +848,9 @@ button.medal{display:block;padding:0;cursor:pointer}
 .chap .cn{display:block;font:700 11px var(--f-u);letter-spacing:.12em;text-transform:uppercase;color:var(--brass-hi)}.chap b{display:block;font:400 21px var(--f-p)}.chap small{color:var(--mist);font-size:13px}
 .chap.lk{opacity:.55}.chap.lk b{letter-spacing:.2em}.chap.unread{box-shadow:inset 0 0 0 2px var(--brass),0 0 16px rgba(243,213,140,.25)}.chap.unread small{color:var(--brass-hi)}
 /* Le texte défile, pas le cadre : l'illustration qui dépasse au-dessus du cadre n'est plus coupée */
-.modal.saga .box{max-height:calc(86vh - 60px);overflow:visible}.modal.saga .box>img,.modal.saga .errbtns{flex:none}
-.modal.saga .sscene{display:block;width:100%;max-height:34vh;aspect-ratio:3/2;object-fit:cover;border-radius:16px;box-shadow:0 8px 18px rgba(0,0,0,.28),inset 0 0 0 1px rgba(0,0,0,.1)}
-@media (max-height:700px){.modal.saga .sscene{max-height:24vh}} /* petits écrans : la scène laisse de la place au texte */
+.modal.saga .box{max-height:calc(calc(86 * var(--vh)) - 60px);overflow:visible}.modal.saga .box>img,.modal.saga .errbtns{flex:none}
+.modal.saga .sscene{display:block;width:100%;max-height:calc(34 * var(--vh));aspect-ratio:3/2;object-fit:cover;border-radius:16px;box-shadow:0 8px 18px rgba(0,0,0,.28),inset 0 0 0 1px rgba(0,0,0,.1)}
+@media (max-height:700px){.modal.saga .sscene{max-height:calc(24 * var(--vh))}} /* petits écrans : la scène laisse de la place au texte */
 .sagahead{display:flex;gap:10px;align-items:center}.sagahead img{width:76px;flex:none;margin:-6px 0 0 -4px;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}.sagahead>div{min-width:0}
 .modal.saga .stxt{flex:0 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .modal.saga .stxt.more{padding-bottom:22px;-webkit-mask:linear-gradient(#000 calc(100% - 34px),transparent);mask:linear-gradient(#000 calc(100% - 34px),transparent)}
@@ -991,12 +991,12 @@ button.medal{display:block;padding:0;cursor:pointer}
 .map>.sea-gl{top:calc(-1 * var(--mtop) - 300px);height:calc(100% + var(--mtop) + 300px)}
 /* ---------- Retours v1.8 : écran de jeu, doublons, onglets du bas ---------- */
 /* Réponses un peu plus bas : moins de vide sous les boutons, la scène gagne la place */
-.g-bottom{padding-bottom:calc(var(--sbm) + 5vh)}
+.g-bottom{padding-bottom:calc(var(--sbm) + calc(5 * var(--vh)))}
 /* La zone de réponses défile en mode « tall » : de la place au-dessus de la carte pour le bandeau Revanche */
 .game.tall .g-bottom{padding-top:16px}
 /* Vagues de premier plan : la crête la plus haute monte à 49 % de l'image. La boîte est assez haute pour
    la montrer en entier (0,39 × la largeur), sinon le haut de la vague était coupé net. */
-.g-scene .waves{height:max(34%,min(40vw,224px))}
+.g-scene .waves{height:max(34%,min(calc(40 * var(--vw)),224px))}
 /* Compteur de doublons : plus grand, et il ne se laisse plus écraser par le nom */
 .purse{flex:none;height:42px;gap:7px;padding:0 15px 0 6px;border-radius:21px}
 .purse img{width:30px;height:30px}
@@ -1058,6 +1058,20 @@ const ico = (id, cls = '') => `<svg class="${cls}" aria-hidden="true"><use href=
 const starSvg = (s, on = true) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" class="${on ? '' : 'off'}"><use href="#star" fill="url(#gBrass)" stroke="#6e4c18" stroke-width=".8"/></svg>`;
 const SLOT = '<span class="slot" id="slot"></span>';
 const app = $('#app');
+// Tablette (iPad) et grand écran : l'interface est dessinée pour un téléphone (560 px au plus). Plutôt qu'une colonne étroite entre deux
+// bandes sombres, on agrandit toute l'appli (UIZ) pour remplir la largeur : environ 500 × 740 points logiques, mis à l'échelle de l'écran.
+// --vw et --vh remplacent vw et vh dans les styles, pour qu'ils se rapportent à l'appli et non à l'écran.
+// Une position mesurée à l'écran (getBoundingClientRect) se divise par UIZ avant de servir dans l'appli.
+let UIZ = 1;
+function fitTablet() {
+  const vw = innerWidth, vh = innerHeight, z = vw >= 700 ? Math.min(vw / 480, vh / 740) : 1, st = app.style, rs = document.documentElement.style;
+  UIZ = z > 1.05 ? z : 1;
+  if (UIZ === 1) { ['width', 'height', 'left', 'right', 'top', 'bottom', 'margin', 'transform', 'transformOrigin'].forEach(k => { st[k] = ''; }); rs.removeProperty('--vw'); rs.removeProperty('--vh'); return; }
+  const W = Math.min(560, vw / UIZ), H = vh / UIZ;
+  Object.assign(st, { width: W + 'px', height: H + 'px', left: (vw - W * UIZ) / 2 + 'px', top: '0px', right: 'auto', bottom: 'auto', margin: '0', transform: `scale(${UIZ})`, transformOrigin: '0 0' });
+  rs.setProperty('--vw', W / 100 + 'px'); rs.setProperty('--vh', H / 100 + 'px');
+}
+fitTablet(); window.addEventListener('resize', fitTablet);
 
 /* Nombres en lettres (orthographe rectifiée, comme au programme) */
 const U = ['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize'];
@@ -5151,7 +5165,7 @@ function renderMap() {
   bindCog();
   const sc = $('#mapScroll');
   const hb = $('.seas').getBoundingClientRect().bottom, tt = $('.tide').getBoundingClientRect().top;
-  sc.scrollTop = mapScroll != null ? mapScroll : Math.max(0, $('.map', sc).offsetTop + cur.y - (hb + tt) / 2 + 10);
+  sc.scrollTop = mapScroll != null ? mapScroll : Math.max(0, $('.map', sc).offsetTop + cur.y - (hb + tt) / 2 / UIZ + 10);
   sc.addEventListener('scroll', () => { mapScroll = sc.scrollTop; }, { passive: true });
   if (S.refund) { const r = S.refund; delete S.refund; save(); setTimeout(() => toast(`Les sillages ont quitté le chantier naval : ${fmt(r)} doublons te sont rendus.`), 900); }
   if (S.giftNote && S.intro) { delete S.giftNote; save(); setTimeout(() => toast('Cadeau de bienvenue : une pierre précieuse pour bâtir ton port d’attache !'), 1600); }
@@ -5436,7 +5450,7 @@ function coachStep() {
   const el = $('.coach'); if (!el || !coach) return; const steps = TUTO[coach.key], [sel, txt] = steps[coach.k], last = coach.k === steps.length - 1;
   const t = $(sel, $('.screen.game')), scr = $('.screen.game').getBoundingClientRect();
   const r = t ? t.getBoundingClientRect() : { left: scr.left + 20, top: scr.top + 200, width: scr.width - 40, height: 80 };
-  const ring = $('.ring', el), pad = 6, L = r.left - scr.left - pad, T = r.top - scr.top - pad, W = r.width + pad * 2, H = r.height + pad * 2;
+  const ring = $('.ring', el), pad = 6, L = (r.left - scr.left) / UIZ - pad, T = (r.top - scr.top) / UIZ - pad, W = r.width / UIZ + pad * 2, H = r.height / UIZ + pad * 2;
   Object.assign(ring.style, { left: L + 'px', top: T + 'px', width: W + 'px', height: H + 'px' });
   Object.assign($('.hand', el).style, { left: (L + W * .62) + 'px', top: (T + H * .55) + 'px' });
   $('p', el).textContent = txt; $('[data-a="coachnext"]', el).textContent = last ? 'À toi\u00a0!' : 'Compris';
@@ -5602,7 +5616,7 @@ function answer(ok, givenText, btn) {
 function fx(cls, img, x, y, w) { const sc = $('#scene'); if (!sc) return; const e = document.createElement('img'); e.className = 'fx ' + cls; e.src = IMG(img); e.alt = ''; e.style.cssText = `left:${x}%;top:${y}%;width:${w}px`; sc.appendChild(e); setTimeout(() => e.remove(), 1700); }
 function shoot(hit) {
   const sc = $('#scene'); if (!sc) return; const b = document.createElement('div'); b.className = 'ball' + (gearSel('canon') === 'canon' ? ' gold' : ''); sc.appendChild(b);
-  const W = sc.clientWidth, H = sc.clientHeight, x0 = W * .36, y0 = H * .58, x1 = W * (hit ? .74 : .66), y1 = H * (hit ? .62 : .74), hb = $('.hpbox', sc), hbB = hb ? hb.getBoundingClientRect().bottom - sc.getBoundingClientRect().top : 0, top = Math.max(H * .1, Math.min(H * .3, y0 - hbB + 6));
+  const W = sc.clientWidth, H = sc.clientHeight, x0 = W * .36, y0 = H * .58, x1 = W * (hit ? .74 : .66), y1 = H * (hit ? .62 : .74), hb = $('.hpbox', sc), hbB = hb ? (hb.getBoundingClientRect().bottom - sc.getBoundingClientRect().top) / UIZ : 0, top = Math.max(H * .1, Math.min(H * .3, y0 - hbB + 6));
   // Trajectoire en cloche calculée point par point : x avance régulièrement, y suit une parabole, le boulet tourne et rapetisse un peu en s'éloignant
   const pts = Array.from({ length: 25 }, (_, k) => { const t = k / 24, x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t - 4 * top * t * (1 - t);
     return { opacity: 1, transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${Math.round(t * 540)}deg) scale(${(1.15 - t * .35).toFixed(2)})` }; });
@@ -5736,7 +5750,7 @@ function renderResult(win, stars, rewards, tideNext) {
   centerRays();
 }
 // Les rayons de lumière suivent le coffre
-function centerRays() { const c = $('#chest'), r = $('.rays'); if (!c || !r) return; const a = c.getBoundingClientRect(), b = app.getBoundingClientRect(); r.style.top = (a.top - b.top + a.height / 2) + 'px'; }
+function centerRays() { const c = $('#chest'), r = $('.rays'); if (!c || !r) return; const a = c.getBoundingClientRect(), b = app.getBoundingClientRect(); r.style.top = (a.top - b.top + a.height / 2) / UIZ + 'px'; }
 function openChest() {
   const c = $('#chest'); if (!c || c.classList.contains('open')) return;
   c.classList.remove('shake'); c.classList.add('open'); { const bm = document.createElement('i'); bm.className = 'beam'; c.prepend(bm); const [x, y] = ctr(c); FX.sparkles(x, y, 28, 260); setTimeout(() => FX.sparkles(x, y - 30, 16, 200), 260); } $('.closed', c).style.opacity = 0; $('.opened', c).style.opacity = 1; const t = $('.tap', c); t && t.remove();
@@ -5746,13 +5760,13 @@ function openChest() {
   { const g = document.createElement('img'); g.className = 'coinburst'; g.src = IMG('fx-coins'); g.alt = ''; c.appendChild(g); setTimeout(() => g.remove(), 1400); }
   const r = c.getBoundingClientRect(), ar = app.getBoundingClientRect();
   for (let k = 0; k < 14; k++) { const im = document.createElement('img'); im.className = 'coinfly'; im.src = IMG('coin-doublon'); im.alt = '';
-    const x = r.left - ar.left + r.width / 2, y = r.top - ar.top + r.height * .4; im.style.left = x + 'px'; im.style.top = y + 'px'; app.appendChild(im);
+    const x = (r.left - ar.left + r.width / 2) / UIZ, y = (r.top - ar.top + r.height * .4) / UIZ; im.style.left = x + 'px'; im.style.top = y + 'px'; app.appendChild(im);
     const dx = (Math.random() - .5) * 320, dy = -120 - Math.random() * 160;
     im.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: 1 }, { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(1)`, opacity: 1, offset: .55 }, { transform: `translate(calc(-50% + ${dx * 1.2}px),calc(-50% + ${dy + 260}px)) scale(.8)`, opacity: 0 }], { duration: 1300 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.4,1)' });
     setTimeout(() => im.remove(), 1800); }
   // Le butin apparaît après la gerbe de doublons ; le coffre glisse doucement vers le haut (mesure avant/après puis transition)
   setTimeout(() => { const rw = $('#rewards'), sc = $('.result'); if (!rw || !sc) return; const y0 = c.getBoundingClientRect().top;
-    sc.classList.remove('closed'); rw.hidden = false; const dy = y0 - c.getBoundingClientRect().top;
+    sc.classList.remove('closed'); rw.hidden = false; const dy = (y0 - c.getBoundingClientRect().top) / UIZ;
     c.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 550, easing: 'cubic-bezier(.3,.8,.3,1)' });
     setTimeout(centerRays, 250); }, 1000);
 }
@@ -6330,7 +6344,7 @@ function decorate(kind) {
       const fresh = sea.filter(i => !P0.seen.includes(i.id))[0];
       if (fresh) { P0.seen.push(fresh.id); save(); const el = $(`.isle[data-i="${fresh.id}"]`, sc), ms = $('#mapScroll', sc);
         if (el && ms) { el.classList.add('hidden-new'); const fog = document.createElement('img'); fog.className = 'fogpatch lift'; fog.src = IMG('fx-fog-a'); fog.alt = ''; fog.style.cssText = `left:${el.style.left};top:${parseFloat(el.style.top) - 10}px;width:420px`; el.after(fog);
-          setTimeout(() => { const hb = $('.seas') ? $('.seas').getBoundingClientRect().bottom : 0, tt = $('.tide') ? $('.tide').getBoundingClientRect().top : ms.clientHeight; ms.scrollTo({ top: Math.max(0, $('.map', sc).offsetTop + fresh.y - (hb + tt) / 2 + 10), behavior: calm() ? 'auto' : 'smooth' });
+          setTimeout(() => { const hb = $('.seas') ? $('.seas').getBoundingClientRect().bottom : 0, tt = $('.tide') ? $('.tide').getBoundingClientRect().top : ms.clientHeight; ms.scrollTo({ top: Math.max(0, $('.map', sc).offsetTop + fresh.y - (hb + tt) / 2 / UIZ + 10), behavior: calm() ? 'auto' : 'smooth' });
           setTimeout(() => { if (!el.isConnected) return; el.classList.remove('hidden-new'); el.classList.add('reveal'); fog.classList.add('go'); setTimeout(() => fog.remove(), 1800); const [x, y] = ctr($('.land', el) || el); FX.ring(x, y, 170); FX.sparkles(x, y, 40, 280); FX.confetti(60);
             sfx('unlock') || SND.fanfare(); toast(`Nouvelle île découverte : ${fresh.n}\u00a0!`); }, 900); }, 500); } } }
     FX.ambient('glint', () => { const a = $('.seas'), b = $('.tide'); if (!a || !b) return null; const z = zone(sc); if (!z) return null; const top = a.getBoundingClientRect().bottom - app.getBoundingClientRect().top, bot = b.getBoundingClientRect().top - app.getBoundingClientRect().top; return { x: 0, y: top, w: z.w, h: Math.max(0, bot - top) }; }, .22);
