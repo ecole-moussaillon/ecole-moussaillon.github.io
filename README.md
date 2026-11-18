@@ -10,9 +10,9 @@ Aucune publicité, aucun achat, aucun compte. La progression reste sur l’appar
 
 Ce dépôt est le site complet : la page `index.html` à la racine se lance telle quelle.
 
-- **GitHub Pages** : Settings → Pages → Source « Deploy from a branch », branche `main`, dossier `/ (root)`. L’adresse sera `https://pierrerouby-droid.github.io/Chiffres-l-abordage/`.
+- **GitHub Pages** : Settings → Pages → Source « Deploy from a branch », branche `main`, dossier `/ (root)`. L’adresse sera `https://ecole-moussaillon.github.io/`.
 - **Sur iPhone** : ouvrir l’adresse dans Safari, Partager → « Sur l’écran d’accueil ». Une fois installé, le jeu fonctionne aussi hors connexion.
-- **Version administrateur** : ajouter `?admin` à l’adresse (`…/Chiffres-l-abordage/?admin`). Toutes les îles et tous les niveaux sont ouverts, avec une sauvegarde à part : la progression de l’enfant n’est pas touchée. Un bouton y mène aussi depuis l’espace parents.
+- **Version administrateur** : ajouter `?admin` à l’adresse (`…/?admin`). Toutes les îles et tous les niveaux sont ouverts, avec une sauvegarde à part : la progression de l’enfant n’est pas touchée. Un bouton y mène aussi depuis l’espace parents.
 - **Guide pour les parents** : `aide.html` (aussi accessible depuis l’espace parents du jeu, en maintenant la roue crantée 2 secondes).
 
 ## Les îles

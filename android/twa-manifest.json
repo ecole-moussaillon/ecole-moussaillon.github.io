@@ -1,6 +1,6 @@
 {
   "packageId": "io.github.pierrerouby_droid.chiffres",
-  "host": "pierrerouby-droid.github.io",
+  "host": "ecole-moussaillon.github.io",
   "name": "Moussaillon : l’école pirate",
   "launcherName": "Moussaillon",
   "display": "standalone",
@@ -12,9 +12,9 @@
   "navigationDividerColorDark": "#000000",
   "backgroundColor": "#0B2230",
   "enableNotifications": false,
-  "startUrl": "/Chiffres-l-abordage/",
-  "iconUrl": "https://pierrerouby-droid.github.io/Chiffres-l-abordage/icon-512.png",
-  "maskableIconUrl": "https://pierrerouby-droid.github.io/Chiffres-l-abordage/icon-maskable-512.png",
+  "startUrl": "/",
+  "iconUrl": "https://ecole-moussaillon.github.io/icon-512.png",
+  "maskableIconUrl": "https://ecole-moussaillon.github.io/icon-maskable-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "./chiffres-upload.keystore",
@@ -24,7 +24,7 @@
   "appVersionCode": 1,
   "shortcuts": [],
   "generatorApp": "unknown",
-  "webManifestUrl": "https://pierrerouby-droid.github.io/Chiffres-l-abordage/manifest.webmanifest",
+  "webManifestUrl": "https://ecole-moussaillon.github.io/manifest.webmanifest",
   "fallbackType": "customtabs",
   "features": {},
   "alphaDependencies": {
@@ -33,7 +33,7 @@
   "enableSiteSettingsShortcut": false,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://pierrerouby-droid.github.io/Chiffres-l-abordage/",
+  "fullScopeUrl": "https://ecole-moussaillon.github.io/",
   "minSdkVersion": 24,
   "orientation": "portrait",
   "fingerprints": [],

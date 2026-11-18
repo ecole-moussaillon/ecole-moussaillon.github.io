@@ -1089,6 +1089,12 @@ const digits = n => [Math.floor(n / 1000), Math.floor(n % 1000 / 100), Math.floo
 const decomp = n => { const [m, c, d, u] = digits(n); return `${pl(m, 'millier')}, ${pl(c, 'centaine')}, ${pl(d, 'dizaine')} et ${pl(u, 'unité')}`; };
 
 /* ================= Sauvegarde ================= */
+// Déménagement (novembre 2026) : l'ancienne adresse (pierrerouby-droid.github.io/Chiffres-l-abordage) renvoie ici avec ses sauvegardes
+// dans l'adresse (#import=…). On les recopie, sans jamais écraser une sauvegarde déjà présente sur ce site, puis on nettoie l'adresse.
+(() => { const m = /^#import=([^&]+)/.exec(location.hash); if (!m) return;
+  try { const d = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
+    Object.entries(d).forEach(([k, v]) => { if (/^(archipel|moussaillon)/.test(k) && typeof v === 'string' && localStorage.getItem(k) == null) localStorage.setItem(k, v); }); } catch (e) {}
+  history.replaceState(null, '', location.pathname + location.search); })();
 // Version administrateur, pour tester sur le web seulement (adresse terminée par ?admin) : tout est débloqué, sur une sauvegarde à part.
 // Jamais dans l'appli des stores, et aucun lien ne la propose : Apple refuse les fonctions de bêta-test (règle 2.2).
 const ADMIN = !(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) && /(^|[?&#])admin\b/.test(location.search.slice(1) + '#' + location.hash.slice(1));

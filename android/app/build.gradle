@@ -22,8 +22,8 @@ plugins {
 
 def twaManifest = [
     applicationId: 'io.github.pierrerouby_droid.chiffres',
-    hostName: 'pierrerouby-droid.github.io', // The domain being opened in the TWA.
-    launchUrl: '/Chiffres-l-abordage/', // The start path for the TWA. Must be relative to the domain.
+    hostName: 'ecole-moussaillon.github.io', // The domain being opened in the TWA.
+    launchUrl: '/', // The start path for the TWA. Must be relative to the domain.
     name: 'Moussaillon : l’école pirate', // The application name.
     launcherName: 'Moussaillon', // The name shown on the Android Launcher.
     themeColor: '#0B2230', // The color used for the status bar.
@@ -76,12 +76,12 @@ android {
             // The URL the Web Manifest for the Progressive Web App that the TWA points to. This
             // is used by Chrome OS and Meta Quest to open the Web version of the PWA instead of
             // the TWA, as it will probably give a better user experience for non-mobile devices.
-            resValue "string", "webManifestUrl", 'https://pierrerouby-droid.github.io/Chiffres-l-abordage/manifest.webmanifest'
+            resValue "string", "webManifestUrl", 'https://ecole-moussaillon.github.io/manifest.webmanifest'
         
 
         
             // This is used by Meta Quest.
-            resValue "string", "fullScopeUrl", 'https://pierrerouby-droid.github.io/Chiffres-l-abordage/'
+            resValue "string", "fullScopeUrl", 'https://ecole-moussaillon.github.io/'
         
 
         
