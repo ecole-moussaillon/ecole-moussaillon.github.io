@@ -20,7 +20,7 @@
     "path": "./chiffres-upload.keystore",
     "alias": "upload"
   },
-  "appVersionName": "2.3",
+  "appVersionName": "2.5",
   "appVersionCode": 1,
   "shortcuts": [],
   "generatorApp": "unknown",
