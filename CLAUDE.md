@@ -34,9 +34,9 @@ Jeu éducatif pirate, du CP au CM2. 15 îles : 8 de maths (canons, stade, mine, 
   - Google Play : test fermé obligatoire de 12 testeurs pendant 14 jours (compte personnel), pas encore lancé.
 
 ## Chantiers en cours
-1. **Migration vers le compte GitHub `ecole-moussaillon`** : branche `migration-ecole-moussaillon`, prête. Nouvelle adresse https://ecole-moussaillon.github.io/ (dépôt à renommer `ecole-moussaillon.github.io`). Elle contient `.well-known/assetlinks.json`, l'import des sauvegardes `#import=…`, et `tools/ancien-site/` (page de redirection à publier sur l'ancienne adresse).
-   - Reste à faire : transfert et renommage par l'utilisateur, installation de l'application GitHub de Claude sur ce compte, publication, paquet Android, URLs de la fiche App Store.
-   - Ensuite, ajouter l'empreinte de la clé de signature Google Play à `assetlinks.json`.
+1. **Migration vers le compte GitHub `ecole-moussaillon`** : faite au 19/11/2026. Le dépôt est transféré et renommé (`ecole-moussaillon/ecole-moussaillon.github.io`), la branche de migration est fusionnée dans `main`, et le site https://ecole-moussaillon.github.io/ sert le jeu, `.well-known/assetlinks.json` (une empreinte SHA-256 en place) et l'import des sauvegardes `#import=…`. Les URLs fastlane (marketing, confidentialité, support) pointent vers la nouvelle adresse.
+   - Reste à faire : publier la page de redirection `tools/ancien-site/` sur l'ancienne adresse (https://pierrerouby-droid.github.io/Chiffres-l-abordage/ renvoie un 404 depuis le transfert : recréer un dépôt `Chiffres-l-abordage` sous `pierrerouby-droid` avec GitHub Pages) ; régénérer et téléverser le paquet Android (.aab) pointant vers la nouvelle adresse ; vérifier que l'installation de l'application GitHub de Claude sur le compte est faite ; soumettre la fiche App Store avec les nouvelles URLs.
+   - Vérifier que l'empreinte dans `assetlinks.json` est bien celle de la clé de signature Google Play (et pas seulement la clé d'upload) ; sinon l'ajouter.
 2. **Communication** (`design/com`, `design/video-reseaux.md`, `design/seedance-refs`) : vidéo d'aperçu App Store, visuels, invites Seedance des 4 plans et voix off. Le montage de la vidéo des réseaux attend les plans Seedance.
 3. **Monétisation envisagée plus tard** : gratuit, puis achat unique à 4,99 € (étude de marché dans un document Claude).
 
