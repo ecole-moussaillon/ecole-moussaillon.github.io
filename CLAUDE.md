@@ -21,7 +21,7 @@ Jeu éducatif pirate, du CP au CM2. 15 îles : 8 de maths (canons, stade, mine, 
 - Sons dans `assets/audio` : voix `vo-*`, musiques `mus-*`, bruitages `sfx-*`, avec variantes jouées à tour de rôle.
 
 ## Publication
-- **Web** : GitHub Pages, branche `main`, https://pierrerouby-droid.github.io/Chiffres-l-abordage/
+- **Web** : GitHub Pages, branche `main`, https://ecole-moussaillon.github.io/
 - **iOS** : Capacitor (`ios-app/`), qui embarque les fichiers du jeu. Bundle `io.github.pierreroubydroid.chiffres`, Apple ID de l'appli 6825742947. Workflows à lancer à la main :
   - `ios-app-store.yml` : compilation, le numéro de build est le numéro d'exécution ;
   - `ios-soumission.yml` : fiche et soumission (fastlane deliver, sous Linux, `reject_if_possible`) ;
