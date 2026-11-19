@@ -1109,7 +1109,7 @@ const saveProfs = () => { try { localStorage.setItem(PKEY, JSON.stringify(PROFS)
 const ME = PROFS.cur; // profil chargé par cette page (PROFS.cur change juste avant un rechargement)
 const KEY = ADMIN ? 'archipel-nombres-admin' : profKey(ME);
 // La progression (îles, marée, revanches, erreurs, victoires par mer) est rangée par classe dans S.g ; le reste (nom, doublons, équipage, navire) est commun.
-const DEF = () => ({ name: '', epithet: '', eps: [], gold: 0, gems: 0, hull: 0, sound: true, music: true, voice: true, tuto: {}, seenTab: {}, spent: 0, paints: ['origine'], paint: 'origine', limit: 5, wins: 0, rounds: 0, crew: ['perroquet'], days: {}, fastStreak: 0, intro: false, grade: null, sea: 'm', g: {}, avatar: 'a', flag: 'crane', gear: [], fig: '', gcan: false, ward: ['tricorne'], outfit: { h: 'tricorne' }, port: ['', '', '', '', '', ''], blds: [] });
+const DEF = () => ({ name: '', epithet: '', eps: [], gold: 0, gems: 0, hull: 0, sound: true, music: true, voice: true, enTxt: false, tuto: {}, seenTab: {}, spent: 0, paints: ['origine'], paint: 'origine', limit: 5, wins: 0, rounds: 0, crew: ['perroquet'], days: {}, fastStreak: 0, intro: false, grade: null, sea: 'm', g: {}, avatar: 'a', flag: 'crane', gear: [], fig: '', gcan: false, ward: ['tricorne'], outfit: { h: 'tricorne' }, port: ['', '', '', '', '', ''], blds: [] });
 const GRADES = { cp: { n: 'CP', age: '6 ans' }, ce1: { n: 'CE1', age: '7 ans' }, ce2: { n: 'CE2', age: '8 ans' }, cm1: { n: 'CM1', age: '9 ans' }, cm2: { n: 'CM2', age: '10 ans' } };
 const PDEF = () => ({ isl: {}, tide: null, rev: [], errors: [], wins: { m: 0, f: 0 } });
 function migrate(o) {
@@ -1402,7 +1402,7 @@ const GEARSVG = { fanaux: '<svg viewBox="0 0 48 48" aria-hidden="true"><circle c
 GEARSVG['fanaux-emeraude'] = GEARSVG.fanaux.replace('rgba(255,196,90,.35)', 'rgba(90,230,150,.35)').replace('#ffd36b', '#7fe6a8').replace('#fff4cf', '#e6fff0');
 GEARSVG['fanaux-lune'] = GEARSVG.fanaux.replace('rgba(255,196,90,.35)', 'rgba(150,200,255,.38)').replace('#ffd36b', '#bfe0ff').replace('#fff4cf', '#ffffff');
 // Lanternes et canon posés : l'identifiant de l'ornement, ou '' (anciennes sauvegardes : S.lamps et S.gcan étaient des booléens)
-const gearOn = (key, old, base) => { if (typeof S[key] !== 'string') S[key] = S[old] !== false && S.gear.includes(base) ? base : ''; return S.gear.includes(S[key]) ? S[key] : ''; };
+const gearOn = (key, old, base) => { if (typeof S[key] !== 'string') S[key] = S[old] !== false && S.gear.includes(base) ? base : ''; return S.gear.includes(S[key]) && gearGroup(S[key]) === gearGroup(base) ? S[key] : ''; };
 const lamps = () => gearOn('lampOn', 'lamps', 'fanaux');
 const GSEL = { fig: 'fig', canon: 'canOn', lamp: 'lampOn', ancre: 'ancreOn', chaloupe: 'boatOn' };
 const gearSel = grp => grp === 'lamp' ? lamps() : grp === 'canon' ? gearOn('canOn', 'gcan', 'canon') : (S[GSEL[grp]] && S.gear.includes(S[GSEL[grp]]) && gearGroup(S[GSEL[grp]]) === grp ? S[GSEL[grp]] : '');
@@ -1621,7 +1621,11 @@ function clockSVG(h, m) {
   for (let k = 0; k < 60; k++) { const [x1, y1] = pt(k * 6, 46), [x2, y2] = pt(k * 6, k % 5 ? 43 : 40); s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#2a1c12" stroke-width="${k % 5 ? .8 : 2}"/>`; }
   for (let k = 1; k <= 12; k++) { const [x, y] = pt(k * 30, 33); s += `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="central" font-family="Fraunces,serif" font-weight="800" font-size="10" fill="#2a1c12">${k}</text>`; }
   const [hx, hy] = pt(((h % 12) + m / 60) * 30, 21), [mx, my] = pt(m * 6, 37);
-  return `<svg class="clock" viewBox="0 0 100 100" role="img" aria-label="Une horloge"><circle cx="50" cy="50" r="48" fill="#fff8e8" stroke="#8a6224" stroke-width="3"/>${s}<line x1="50" y1="50" x2="${hx}" y2="${hy}" stroke="#2a1c12" stroke-width="5" stroke-linecap="round"/><line x1="50" y1="50" x2="${mx}" y2="${my}" stroke="#b8382a" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="50" r="3.5" fill="#2a1c12"/></svg>`;
+  // Alternative pour les lecteurs d'écran : la position des aiguilles, pas l'heure (la lecture reste à faire par l'enfant)
+  const g5 = Math.floor(m / 5), rest = m % 5;
+  const pa = m ? `la petite aiguille est entre le ${h % 12 || 12} et le ${(h % 12) + 1}` : `la petite aiguille est sur le ${h % 12 || 12}`;
+  const ga = !m ? 'la grande aiguille est sur le 12' : !rest ? `la grande aiguille est sur le ${g5}` : `la grande aiguille a dépassé le ${g5 || 12} de ${rest} petit${rest > 1 ? 's' : ''} trait${rest > 1 ? 's' : ''}`;
+  return `<svg class="clock" viewBox="0 0 100 100" role="img" aria-label="Horloge à aiguilles. ${pa} ; ${ga}."><circle cx="50" cy="50" r="48" fill="#fff8e8" stroke="#8a6224" stroke-width="3"/>${s}<line x1="50" y1="50" x2="${hx}" y2="${hy}" stroke="#2a1c12" stroke-width="5" stroke-linecap="round"/><line x1="50" y1="50" x2="${mx}" y2="${my}" stroke="#b8382a" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="50" r="3.5" fill="#2a1c12"/></svg>`;
 }
 function ce2Horloge(l) {
   if (l === 5 && Math.random() < .5) {
@@ -2639,7 +2643,7 @@ function gFigName(set) {
     wrong = [['rectangle', 'Un rectangle a quatre angles droits : celui-ci n’en a que deux.'], ['trapèze', 'C’est bien un trapèze, mais il a aussi deux angles droits : le nom le plus précis est « trapèze rectangle ».']]; }
   else if (t === 'trir') { const h = pick([1.3, 1.6]), w = pick([2.2, 2.6]); pts = [[0, 0], [0, h], [w, h]]; right = [1]; ans = 'triangle rectangle'; def = 'un triangle qui a un angle droit';
     wrong = [['triangle isocèle', 'Un triangle isocèle a deux côtés de même longueur : aucun codage ne l’indique ici.'], ['triangle équilatéral', 'Un triangle équilatéral a trois côtés de même longueur, et aucun angle droit.'], ['triangle', 'C’est bien un triangle, mais il a un angle droit : le nom le plus précis est « triangle rectangle ».']]; }
-  else if (t === 'tri') { pts = [[0, 1.4], [2.6, 1.4], [rnd(18, 26) / 10, 0]]; ans = 'triangle'; def = 'une figure qui a trois côtés et trois sommets';
+  else if (t === 'tri') { pts = [[0, 1.4], [2.6, 1.4], [rnd(18, 22) / 10, 0]]; ans = 'triangle'; def = 'une figure qui a trois côtés et trois sommets'; // x ≤ 2,2 : l'angle en B reste ≤ 74°, jamais droit ni presque droit
     wrong = [['triangle rectangle', 'Un triangle rectangle a un angle droit : il n’y en a pas ici.']]; }
   else if (t === 'cercle') { pts = []; ans = 'cercle'; def = 'une ligne fermée toute ronde, sans côté ni sommet, qu’on trace au compas'; wrong = []; }
   else if (t === 'triiso') { const h = pick([2.4, 0.75]); pts = [[0, h], [2, h], [1, 0]]; ticks = [[1, 2, 1], [2, 0, 1]]; ans = 'triangle isocèle'; def = 'un triangle qui a deux côtés de même longueur';
@@ -2654,12 +2658,18 @@ function gFigName(set) {
     for (const v of shuffle(known.filter(v => v !== ans && !wrong.some(w => w[0] === v) && GNS[v] !== ns))) { if (wrong.length >= 2) break;
       wrong.push([v, ns === 0 ? `Un ${v} a ${GNS[v]} côtés droits. Cette figure est toute ronde : elle n’a ni côté ni sommet.` : GNS[v] === 0 ? 'Un cercle est une ligne toute ronde, sans côté ni sommet. Cette figure a des côtés droits.' : `Un ${v} a ${GNS[v]} côtés. Cette figure en a ${ns}.`]); } }
   if (t === 'cercle') { const s0 = `<circle class="gl" cx="${GW / 2}" cy="${GH / 2}" r="${rnd(58, 70)}"/>${gDot([GW / 2, GH / 2])}`;
-    return gq({ kind: 'choices', ask: 'Quel est le nom de cette figure ?', prompt: gsvg(s0, 'une figure'), answer: ans, answerText: ans, choices: gch(ans, wrong), log: 'nommer : cercle',
+    return gq({ kind: 'choices', ask: 'Quel est le nom de cette figure ?', prompt: gsvg(s0, 'une figure toute ronde, sans côté droit, avec un point au milieu'), answer: ans, answerText: ans, choices: gch(ans, wrong), log: 'nommer : cercle',
       explain: `C’est un cercle : ${def}. Le point au milieu est son centre.`, hint: 'Regarde si la figure a des côtés droits et des sommets.' }); }
   const P = gfit(pts, Math.random() < .35 ? 0 : rnd(-40, 40), GW, par ? GH - 16 : GH), n = P.length, at = k => P[(k + n) % n], c = gctr(P);
   let s = gPath(P, 'gl') + right.map(k => gRight(at(k - 1), at(k), at(k + 1))).join('') + ticks.map(([a, b, m]) => gTick(P[a], P[b], m)).join('');
   if (par) s += P.map((p, k) => gLab(p, c, 'ABCD'[k])).join('') + gText([GW / 2, GH - 7], 'côtés [AB] et [DC] parallèles');
-  return gq({ kind: 'choices', ask: 'Quel est le nom le plus précis de cette figure ?', prompt: gsvg(s, 'une figure codée'), answer: ans, answerText: ans, choices: gch(ans, wrong), log: `nommer : ${ans}`,
+  // Alternative pour les lecteurs d'écran : ce que montrent les codages, sans donner le nom (le raisonnement reste à faire)
+  const gby = {}; ticks.forEach(k => { gby[k[2]] = (gby[k[2]] || 0) + 1; });
+  const sz = Object.values(gby);
+  const tTxt = !ticks.length ? 'aucun côté n’est codé égal à un autre' : sz.length === 2 ? 'les côtés sont codés égaux deux à deux' : sz[0] === n ? `les ${n === 3 ? 'trois' : 'quatre'} côtés sont codés de même longueur` : 'deux côtés sont codés de même longueur';
+  const rTxt = !right.length ? 'aucun angle droit n’est codé' : right.length === 1 ? 'un angle droit est codé' : `${right.length === 2 ? 'deux' : 'quatre'} angles droits sont codés`;
+  const dsc = [`une figure à ${n} côtés`, rTxt, tTxt, par ? 'les côtés [AB] et [DC] sont parallèles' : ''].filter(Boolean).join(' ; ');
+  return gq({ kind: 'choices', ask: 'Quel est le nom le plus précis de cette figure ?', prompt: gsvg(s, dsc), answer: ans, answerText: ans, choices: gch(ans, wrong), log: `nommer : ${ans}`,
     explain: `C’est un ${ans} : ${def}.`, hint: t === 'tri' ? 'Compte les côtés, puis cherche un petit carré qui montrerait un angle droit.' : par ? 'Sous la figure, on te dit quels côtés sont parallèles ; un petit carré montre un angle droit.' : 'Regarde les codages : un petit carré montre un angle droit, de petits traits montrent des côtés de même longueur.' });
 }
 function gPolyName() {
@@ -3952,8 +3962,8 @@ function qGroup() {
 }
 function qNeg(cm1) {
   const inf = pick(verbsFor(cm1, (V, v) => !V.e && v !== 'être' && v !== 'pouvoir')), s = pickSubj(inf, 'pc', cm1, [0, 1, 3, 4]), aux = VB['avoir'].pr[s.p], P = pp(inf), x = VB[inf].x, S = cap(s.t);
-  // Après « pas », un / une / des deviennent « de » (« d’ » devant une voyelle) : « Elles n’ont pas vu de baleine. »
-  const xn = x.replace(/^(un|une|des) (.+)$/, (_, d, w) => (vowel(w) ? 'd’' : 'de ') + w), deDe = xn !== x;
+  // Après « pas », un / une / des / du / de la deviennent « de » (« d’ » devant une voyelle) : « Elles n’ont pas vu de baleine. »
+  const xn = x.replace(/^(un|une|des|du|de la) (.+)$/, (_, d, w) => (vowel(w) ? 'd’' : 'de ') + w), deDe = xn !== x;
   const ne = vowel(aux) ? 'n’' : 'ne ', ans = `${S} ${ne}${aux} pas ${P} ${xn}.`;
   return { kind: 'choices', ask: 'Quelle phrase est la forme négative de :', prompt: `${S} ${aux} ${P} ${x}.`, promptClass: 'sent', answer: ans, answerText: ans,
     choices: shuffle([ans, `${S} ${ne}${aux} ${P} pas ${xn}.`, `${S} ${aux} pas ${P} ${xn}.`]).map(v => ({ v, html: v })), log: `négation : ${s.t} ${aux} ${P}`,
@@ -4389,7 +4399,7 @@ function qTense2(ts = ['im', 'ps', 'pc', 'pqp']) {
 }
 function qNeg3() {
   const inf = pick(Object.keys(VB).filter(v => CM2V(v) && !VB[v].e && v !== 'être' && v !== 'pouvoir')), s = pickSubj(inf, 'pqp', true, [0, 1, 3, 4]), aux = vforms('avoir', 'im')[s.p], P = pp(inf), x = VB[inf].x, S = cap(s.t);
-  const xn = x.replace(/^(un|une|des) (.+)$/, (_, d, w) => (vowel(w) ? 'd’' : 'de ') + w), ans = `${S} n’${aux} pas ${P} ${xn}.`;
+  const xn = x.replace(/^(un|une|des|du|de la) (.+)$/, (_, d, w) => (vowel(w) ? 'd’' : 'de ') + w), ans = `${S} n’${aux} pas ${P} ${xn}.`;
   return { kind: 'choices', ask: 'Quelle phrase est la forme négative de :', prompt: `${S} ${aux} ${P} ${x}.`, promptClass: 'sent', answer: ans, answerText: ans,
     choices: shuffle([ans, `${S} n’${aux} ${P} pas ${xn}.`, `${S} ${aux} pas ${P} ${xn}.`]).map(v => ({ v, html: v })), log: `négation : ${s.t} ${aux} ${P}`,
     explain: `Aux temps composés, « ne… pas » entoure l’auxiliaire : ${ans}${xn !== x ? ` Après « pas », « ${x.split(' ')[0]} » devient « ${xn.startsWith('d’') ? 'd’' : 'de'} ».` : ''}`, hint: '« ne » avant l’auxiliaire, « pas » juste après lui.' };
@@ -5312,7 +5322,7 @@ function nextQ() {
   if (!q.retry) { const k = q.qk || qKey(q), id = QI().id, rec = (P().recent || (P().recent = {}))[id] || []; R.seen.add(q.log); R.seenK.add(k);
     P().recent[id] = [...rec.filter(x => x !== k), k].slice(-RECENT); }
   R.q = q; R.input = ''; R.locked = false; R.qt = performance.now(); R.counts = R.tray = R.sel = R.pick = R.dig = R.wsel = null;
-  if (q.listen && !q.enShown && !enOK()) { q.prompt += enTxt(q.en); q.enShown = 1; }
+  if (q.listen && !q.enShown && (S.enTxt || !enOK())) { q.prompt += enTxt(q.en); q.enShown = 1; }
   renderGame();
   if (q.listen && q.en) setTimeout(() => { if (R && R.q === q && !R.locked) speakEn(q.en); }, 500);
 }
@@ -5360,12 +5370,16 @@ function lineSVG(q, mark, arrow) {
     if (k === 0 || k === 10 || (q.mid && k === 5)) s += `<text x="${x(k)}" y="88" font-size="15" text-anchor="middle">${labN(q, q.start + k * q.step)}</text>`; }
   if (arrow != null) s += `<path d="M${x(arrow) - 9} 20 h18 l-9 14 z" fill="#b8382a"/>`;
   if (mark != null) s += `<image href="${IMG('crew-perroquet')}" x="${x(mark) - 20}" y="0" width="40" height="40"/>`;
-  return `<svg class="line-svg" id="line" viewBox="0 0 340 96" role="img" aria-label="Droite graduée">${s}</svg>`;
+  // Alternative pour les lecteurs d'écran : bornes, pas de graduation et position de la flèche ou du repère (le calcul reste à faire)
+  let lab = `Droite graduée de ${labN(q, q.start)} à ${labN(q, q.start + 10 * q.step)}, en dix intervalles de ${labN(q, q.step)}`;
+  if (arrow != null) lab += ` ; la flèche pointe la graduation numéro ${arrow}, en comptant depuis ${labN(q, q.start)}`;
+  if (mark != null) lab += ` ; le perroquet est posé sur la graduation numéro ${mark}, en comptant depuis ${labN(q, q.start)}`;
+  return `<svg class="line-svg" id="line" viewBox="0 0 340 96" role="img" aria-label="${lab}.">${s}</svg>`;
 }
 function pizzaSVG(parts, sel, food = 'food-pizza', play = true) { const cx = 100, cy = 100, r = 93; let s = '';
   for (let k = 0; k < parts; k++) { const a0 = -Math.PI / 2 + k * 2 * Math.PI / parts, a1 = a0 + 2 * Math.PI / parts, p = a => `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
     s += `<path ${play ? `data-a="slice" data-i="${k}" ` : ''}class="slice${sel.has(k) ? ' on' : ''}" d="M${cx},${cy} L${p(a0)} A${r},${r} 0 0 1 ${p(a1)} Z"/>`; }
-  return `<svg class="pizza${play ? '' : ' cake'}" viewBox="0 0 200 200" role="img" aria-label="${food === 'food-pizza' ? 'Pizza' : 'Gâteau'} en ${parts} parts"><image href="${IMG(food)}" x="0" y="0" width="200" height="200"/>${s}</svg>`; }
+  return `<svg class="pizza${play ? '' : ' cake'}" viewBox="0 0 200 200" role="img" aria-label="${food === 'food-pizza' ? 'Pizza' : 'Gâteau'} en ${parts} parts${sel.size ? `, ${sel.size} part${sel.size > 1 ? 's' : ''} ${play ? 'choisie' : 'coloriée'}${sel.size > 1 ? 's' : ''}` : play ? ', aucune part choisie' : ''}"><image href="${IMG(food)}" x="0" y="0" width="200" height="200"/>${s}</svg>`; }
 const barHTML = (n, d) => `<div class="fbar"><span class="lab">${frac(n, d)}</span><span class="cells">${range(1, d * Math.max(1, Math.ceil(n / d))).map(k => `<i class="${k <= n ? 'on' : ''}${k % d === 0 && k < n ? ' sep' : ''}"></i>`).join('')}</span></div>`;
 
 function inputHTML(q) {
@@ -5939,6 +5953,8 @@ function openParents() {
       <div style="margin-bottom:12px"><div style="font-size:13px;color:var(--mist);margin-bottom:6px">Son</div><div class="seg"><button data-a="snd" data-v="1" aria-pressed="${S.sound}">Activé</button><button data-a="snd" data-v="0" aria-pressed="${!S.sound}">Coupé</button></div></div>
       <div style="margin-bottom:12px"><div style="font-size:13px;color:var(--mist);margin-bottom:6px">Musique</div><div class="seg"><button data-a="mus" data-v="1" aria-pressed="${S.music}">Oui</button><button data-a="mus" data-v="0" aria-pressed="${!S.music}">Non</button></div></div>
       <div style="margin-bottom:12px"><div style="font-size:13px;color:var(--mist);margin-bottom:6px">Voix des personnages</div><div class="seg"><button data-a="vox" data-v="1" aria-pressed="${S.voice}">Oui</button><button data-a="vox" data-v="0" aria-pressed="${!S.voice}">Non</button></div></div>
+      ${playable().some(i => i.id === 'anglais') ? `<div style="margin-bottom:12px"><div style="font-size:13px;color:var(--mist);margin-bottom:6px">Questions d’écoute en anglais</div><div class="seg"><button data-a="entxt" data-v="0" aria-pressed="${!S.enTxt}">Écoute seule</button><button data-a="entxt" data-v="1" aria-pressed="${!!S.enTxt}">Écoute + texte</button></div>
+        <p class="note" style="margin:6px 0 0">« Écoute + texte » affiche aussi la phrase anglaise sous la question : utile si votre enfant entend mal.</p></div>` : ''}
       <div id="resetbox"><button class="ghost-btn" data-a="reset1" style="color:#ffb9ad">${PROFS.list.length > 1 && !ADMIN ? `Effacer la progression de ${esc(S.name || 'cet enfant')}…` : 'Tout effacer…'}</button></div>
       <p style="font-size:12.5px;color:var(--mist);margin:10px 0 0">Les données restent ${standalone ? 'sur cet appareil' : 'dans le navigateur de cet appareil'}. Aucune publicité, aucun compte.</p></div>
     <div class="vers">Moussaillon · version ${VERSION}</div>`;
@@ -6128,6 +6144,7 @@ app.addEventListener('click', e => {
     case 'snd': S.sound = el.dataset.v === '1'; save(); audioSession(); S.sound ? music(musWant || 'carte') : stopMusic(); $('.parents').remove(); openParents(); break;
     case 'mus': S.music = el.dataset.v === '1'; save(); S.music ? music(musWant || 'carte') : stopMusic(); $('.parents').remove(); openParents(); break;
     case 'vox': S.voice = el.dataset.v === '1'; save(); $('.parents').remove(); openParents(); break;
+    case 'entxt': S.enTxt = el.dataset.v === '1'; save(); $('.parents').remove(); openParents(); break;
     case 'reset1': $('#resetbox').innerHTML = `<div class="seg"><button data-a="reset2" style="background:#5a2420;color:#ffb9ad">Oui, tout effacer</button><button data-a="reset0">Annuler</button></div>`; break;
     case 'reset0': $('.parents').remove(); openParents(); break;
     case 'reset2': S = DEF(); applyGrade(); save(); sessionMs = 0; mapScroll = null; $('.parents').remove(); show('map'); onboarding(); break;
