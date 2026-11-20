@@ -276,6 +276,8 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ifx.let{top:62%;font:900 46px var(--f-d);color:#fff3d0;text-shadow:0 3px 0 #8a6224,0 6px 14px rgba(0,0,0,.45);animation:letfly 1.1s ease-out forwards}
 @keyframes letfly{0%{transform:translateY(0) scale(.4) rotate(-10deg);opacity:0}25%{opacity:1}100%{transform:translateY(-120px) scale(1.15) rotate(12deg);opacity:0}}
 .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1;margin:0 .08em}
+/* Texte pour les lecteurs d'écran seulement (région live, équivalent des fractions) */
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
 .frac b{font-weight:inherit;padding:0 .12em}
 .frac b:first-child{border-bottom:.08em solid currentColor;padding-bottom:.04em}
 .valid{margin-top:10px}
@@ -806,6 +808,12 @@ button.medal{display:block;padding:0;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.amb,.skies,.flock,.isle.cur::before{display:none}.enter,.tlogo .disp .w,.brass-btn::after,.lvlban,.result .stars svg,.game.hot .qcard{animation:none}.title img.bg{transform:none}}
 .say{position:absolute;right:8px;top:8px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#7a4f1a;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1.5px rgba(138,98,36,.35);z-index:2}
 .say svg{width:19px;height:19px}.say:active{transform:scale(.92)}
+/* Cibles tactiles : la zone de toucher atteint ~44 px sans changer la mise en page (le ::after étend la surface cliquable) */
+.say::after{content:"";position:absolute;inset:-4px;border-radius:50%}
+.mini-btn,.seas button,.seg button,.kk{position:relative}
+.mini-btn::after{content:"";position:absolute;inset:-7px -2px;border-radius:inherit}
+.seas button::after,.seg button::after{content:"";position:absolute;inset:-4px 0;border-radius:inherit}
+.kk::after{content:"";position:absolute;inset:0 -2px}
 .errbtns{display:flex;gap:10px;align-items:center}.errbtns .say{position:static;flex:none;width:52px;height:52px}.errbtns .brass-btn{flex:1}
 .revb.retry{background:linear-gradient(180deg,#6fb3d9,#2f7fa8)}
 .kbd{display:flex;flex-direction:column;gap:6px;user-select:none;-webkit-user-select:none}
@@ -1016,7 +1024,8 @@ button.medal{display:block;padding:0;cursor:pointer}
 .toast{bottom:calc(var(--sbm) + 118px)}
 </style>
 
-<div id="app" aria-live="polite"></div>
+<div id="app"></div>
+<div id="live" class="sr" aria-live="polite"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="iCompass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M15.8 8.2 13.4 13.4 8.2 15.8 10.6 10.6Z"/></g></symbol>
   <symbol id="iCrew" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c-4 0-6.5 2.7-6.5 6.2 0 2.2 1.2 3.6 2.6 4.2l.3 2.4h7.2l.3-2.4c1.4-.6 2.6-2 2.6-4.2 0-3.5-2.5-6.2-6.5-6.2Z"/><path d="M9.3 10.2h.1M14.6 10.2h.1M10 19.5l-.3 1.5M14 19.5l.3 1.5"/></g></symbol>
@@ -1050,7 +1059,8 @@ const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const fmtE = c => c % 100 === 0 ? `${fmt(c / 100)} €` : `${fmt(Math.floor(c / 100))},${String(c % 100).padStart(2, '0')} €`;
 const fmtC = c => c < 100 ? `${c} c` : fmtE(c);
 const coinLabel = c => c < 100 ? `${c} c` : `${c / 100} €`;
-const frac = (n, d) => `<span class="frac"><b>${n}</b><b>${d}</b></span>`;
+// aria-hidden + équivalent .sr : sans cela, les lecteurs d'écran lisent « 12 » pour une moitié
+const frac = (n, d) => `<span class="frac" aria-hidden="true"><b>${n}</b><b>${d}</b></span><span class="sr">${n} sur ${d}</span>`;
 const pl = (k, w) => `${fmt(k)} ${w}${k > 1 ? 's' : ''}`;
 const today = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const IMG = n => `assets/${n}.webp`;
@@ -1097,7 +1107,8 @@ const decomp = n => { const [m, c, d, u] = digits(n); return `${pl(m, 'millier')
   history.replaceState(null, '', location.pathname + location.search); })();
 // Version administrateur, pour tester sur le web seulement (adresse terminée par ?admin) : tout est débloqué, sur une sauvegarde à part.
 // Jamais dans l'appli des stores, et aucun lien ne la propose : Apple refuse les fonctions de bêta-test (règle 2.2).
-const ADMIN = !(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) && /(^|[?&#])admin\b/.test(location.search.slice(1) + '#' + location.hash.slice(1));
+// Exclues : les applis Capacitor (iOS) ET tout affichage autonome (TWA Android du Play Store, PWA installée) — un lien …/?admin ouvrait l'appli Android en mode admin.
+const ADMIN = !(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches)) && /(^|[?&#])admin\b/.test(location.search.slice(1) + '#' + location.hash.slice(1));
 // Plusieurs enfants sur le même appareil (2.4) : un profil par enfant, chacun avec sa sauvegarde complète (classe, îles, doublons, navire, réglages).
 // Le premier profil garde la clé d'origine : rien ne bouge pour les sauvegardes existantes. Changer d'enfant recharge la page.
 const PKEY = 'moussaillon-profils', PMAX = 6;
@@ -1125,7 +1136,11 @@ function migrate(o) {
   { const W = { sillage: 250, 'sillage-or': 400, 'sillage-arc': 1200 }, had = Array.isArray(o.gear) ? o.gear.filter(id => W[id]) : [];
     if (had.length) { const back = had.reduce((t, id) => t + W[id], 0); o.gear = o.gear.filter(id => !W[id]); o.spent = Math.max(0, (o.spent || 0) - back); o.refund = (o.refund || 0) + back; }
     delete o.wake; delete o.wakeOn; }
-  Object.values(o.g).forEach(p => { if (!p.isl) p.isl = {}; if (!Array.isArray(p.rev)) p.rev = []; if (!Array.isArray(p.errors)) p.errors = []; if (!p.wins) p.wins = { m: 0, f: 0 }; });
+  Object.values(o.g).forEach(p => { if (!p.isl || typeof p.isl !== 'object' || Array.isArray(p.isl)) p.isl = {}; if (!Array.isArray(p.rev)) p.rev = []; if (!Array.isArray(p.errors)) p.errors = []; if (!p.wins) p.wins = { m: 0, f: 0 };
+    // Une sauvegarde restaurée ou importée peut avoir des entrées d'île incomplètes : chaque île reprend la forme de IS(), sinon l'appli plante à l'affichage de l'île et en escale mélangée
+    Object.keys(p.isl).forEach(k => { const s = p.isl[k]; if (!s || typeof s !== 'object' || Array.isArray(s)) { delete p.isl[k]; return; }
+      s.node = Math.min(11, Math.max(1, Math.round(+s.node) || 1)); if (!s.stars || typeof s.stars !== 'object' || Array.isArray(s.stars)) s.stars = {};
+      s.ok = +s.ok || 0; s.tot = +s.tot || 0; s.ms = +s.ms || 0; s.fails = +s.fails || 0; s.best = +s.best || 0; s.rank = +s.rank || 0; }); });
   return o;
 }
 let S;
@@ -3170,7 +3185,7 @@ function gProps() {
   return gq({ kind: 'choices', ask, prompt: '', answer: ans, answerText: ans, choices: gch(ans, w), log: `propriété : ${ans}`, explain: ex, hint: hint || 'Pense aux côtés (combien ? de même longueur ?) et aux angles droits.' });
 }
 // Lettres majuscules qui ont un axe de symétrie (CE2, CM1), dans la police du jeu
-const GLETV = ['A', 'H', 'M', 'O', 'T', 'U', 'V', 'W', 'X', 'Y'], GLETH = ['C', 'D', 'E', 'H', 'I', 'O', 'X'], GLETN = ['F', 'G', 'J', 'L', 'N', 'P', 'R', 'S', 'Z'];
+const GLETV = ['A', 'H', 'I', 'M', 'O', 'T', 'U', 'V', 'W', 'X', 'Y'], GLETH = ['C', 'D', 'E', 'H', 'I', 'O', 'X'], GLETN = ['F', 'G', 'J', 'L', 'N', 'P', 'R', 'S', 'Z'];
 function gLettre() {
   const L = pick([...new Set([...GLETV, ...GLETH])]), N = shuffle(GLETN).slice(0, 2), v = GLETV.includes(L), h = GLETH.includes(L);
   const axe = v && h ? 'deux axes de symétrie, un vertical et un horizontal' : v ? 'un axe de symétrie vertical' : 'un axe de symétrie horizontal', html = x => `<span class="glet">${x}</span>`;
@@ -3519,7 +3534,7 @@ function enDialogue() {
 }
 // Mots de liaison : and, but, or (CM2)
 const ENLINK = [['I like apples … I don’t like bananas.', 'but'], ['I’ve got a cat … a dog.', 'and'], ['Do you want juice … milk?', 'or'], ['She can swim … she can’t ride a bike.', 'but'], ['My favourite colours are blue … green.', 'and'],
-  ['Is it a cat … a dog?', 'or'], ['He likes football … tennis.', 'and'], ['It’s sunny … it’s cold.', 'but'], ['Is your bag red … blue?', 'or'], ['I’m tired … I’m happy.', 'but']];
+  ['Is it a cat … a dog?', 'or'], ['He likes football … tennis.', 'and'], ['I like tea … I don’t like coffee.', 'but'], ['Is your bag red … blue?', 'or'], ['He’s got a bike … he hasn’t got a car.', 'but']];
 const ENLW = { and: 'et', but: 'mais', or: 'ou' };
 function enLink() {
   const [s, ans] = pick(ENLINK);
@@ -3929,7 +3944,10 @@ function qFill(inf, t, cm1, cue = true) {
   const w = []; for (const c of [pick(cands), ...shuffle(other), ...shuffle(cands)]) if (c && c !== ans && !w.includes(c) && w.length < 2) w.push(c);
   const head = cue ? `${TCUE[t]}, ${s.t}` : cap(s.t);
   // Pourquoi ce piège est faux : autre personne, autre temps, mauvais auxiliaire, infinitif, accord oublié
-  const why = c => { const ps = forms.map((f, k) => f === c ? PRN[k] : '').filter(Boolean); if (ps.length) return `« ${c} » va avec « ${ps.join(' » ou « ')} », pas avec « ${s.t} ».`;
+  const why = c => { const ps = forms.map((f, k) => f === c ? PRN[k] : '').filter(Boolean);
+    // Aux temps composés, la personne se lit sur l'auxiliaire : « est allés » n'irait avec personne, c'est « est » qui va avec il/elle/on
+    if (ps.length && c.includes(' ')) return `« ${c} » : l’auxiliaire « ${c.split(' ')[0]} » va avec « ${ps.join(' » ou « ')} », pas avec « ${s.t} ».`;
+    if (ps.length) return `« ${c} » va avec « ${ps.join(' » ou « ')} », pas avec « ${s.t} ».`;
     const tt = ['pr', 'fu', 'im'].find(x => x !== t && vforms(inf, x, s)[s.p] === c); if (tt) return `« ${c} » est ${TAU[tt]}. Ici, le verbe est ${TAU[t]}.`;
     if (t === 'pc') { if (c.endsWith(' ' + inf)) return `Après l’auxiliaire, on écrit le participe passé « ${pp(inf)} », pas l’infinitif « ${inf} ».`; if (c.split(' ')[0] !== ans.split(' ')[0]) return `Avec « ${inf} », le passé composé se fait avec l’auxiliaire « ${V.e ? 'être' : 'avoir'} ».`; return `Avec « être », le participe passé s’accorde avec le sujet « ${s.t} » (${gWhy(s.f, s.pl)}).`; }
     return ''; };
@@ -4903,7 +4921,8 @@ function genLecture(l) {
   const stay = max => R && R.rt && set.includes(R.rt) && fresh(R.rt, max).length ? R.rt : pick(set.filter(t => fresh(t, max).length));
   const T = stay(0) || stay(1) || pick(set), qs = fresh(T, 0).length ? fresh(T, 0) : fresh(T, 1).length ? fresh(T, 1) : T.q;
   if (R) R.rt = T; const [ty, q, a, w, e] = pick(types && l === 3 ? (qs.filter(x => x[0] === 'i').length ? qs.filter(x => x[0] === 'i') : qs) : qs);
-  return { kind: 'read', title: T.t, text: typo(T.x), ask: typo(q), prompt: '', answer: a, answerText: typo(a), choices: shuffle([a, ...w]).map(v => ({ v, html: esc(typo(v)) })), log: `${T.t} · ${q}`, explain: esc(typo(e)), hint: QHINT[ty] };
+  // Quand la question demande le meilleur titre, on n'affiche pas le titre au-dessus du texte : la réponse serait sous les yeux
+  return { kind: 'read', title: ty === 'g' && /titre/i.test(q) ? '' : T.t, text: typo(T.x), ask: typo(q), prompt: '', answer: a, answerText: typo(a), choices: shuffle([a, ...w]).map(v => ({ v, html: esc(typo(v)) })), log: `${T.t} · ${q}`, explain: esc(typo(e)), hint: QHINT[ty] };
 }
 
 /* ================= Compétences « Je sais… » ================= */
@@ -4929,7 +4948,7 @@ const SKILLS = {
     marche: ['payer jusqu’à 20 €', 'payer jusqu’à 50 €', 'payer avec des centimes', 'additionner deux prix avec centimes', 'rendre la monnaie avec les centimes'],
     cuisine: ['colorier 1/2, 1/3 et 1/4', 'colorier 1/5, 1/6, 1/8 ou 1/10', 'colorier une fraction comme 3/5, trouver une moitié', 'comparer des fractions et résoudre un problème de groupes', 'additionner des fractions et résoudre un problème'],
     horloge: ['lire l’heure pile', 'lire la demie', 'lire les quarts d’heure', 'calculer une durée', 'lire les heures de l’après-midi et calculer des durées'],
-    formes: ['reconnaître carré, rectangle, triangle et cercle', 'reconnaître un angle droit, vérifier un rectangle', 'reconnaître les solides, compter faces, arêtes, sommets', 'mesurer avec la règle, utiliser m, cm et km', 'me repérer et suivre un déplacement'],
+    formes: ['reconnaître carré, rectangle, triangle et cercle', 'reconnaître un angle droit, aigu ou obtus, vérifier un rectangle', 'reconnaître les solides, compter faces, arêtes, sommets', 'mesurer avec la règle, utiliser m, cm et km', 'me repérer et suivre un déplacement'],
     lecture: ['comprendre un petit texte', 'retrouver une information', 'retrouver une information écrite dans le texte', 'trouver une information cachée', 'comprendre les pronoms et les mots du texte'],
     conjug: ['trouver le bon pronom', 'conjuguer au présent', 'conjuguer au futur, trouver l’infinitif', 'conjuguer à l’imparfait', 'conjuguer au passé composé, reconnaître le temps'],
     gram: ['repérer majuscule et point, trouver le type de phrase', 'trouver le verbe', 'trouver les noms et les déterminants', 'trouver le sujet et le verbe', 'utiliser la négation, trouver le sujet et le verbe'],
@@ -5123,7 +5142,9 @@ setInterval(() => { if (R && !R.done && !document.hidden) { sessionMs += 1000; c
 
 /* ================= Écrans ================= */
 let tab = 'map', R = null, mapScroll = null;
-function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass'; t.textContent = msg; app.appendChild(t); setTimeout(() => t.remove(), 3200); }
+function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass'; t.textContent = msg; app.appendChild(t); setTimeout(() => t.remove(), 3200); announce(msg); }
+// Région live dédiée : les lecteurs d'écran annoncent les messages sans relire tout l'écran
+function announce(msg) { const l = document.getElementById('live'); if (!l) return; l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 50); }
 function hudHTML() {
   const ri = rankIdx(S.gold), next = RANKS[ri + 1], pct = next ? (S.gold - RANKS[ri][0]) / (next[0] - RANKS[ri][0]) * 100 : 100;
   const kids = !ADMIN && PROFS.list.length > 1;
@@ -5193,7 +5214,7 @@ function tideHTML(t) {
   const play = `<span class="play">${ico('iHelm')}</span>`;
   const btn = sessionOver() ? `<button class="brass-btn" disabled>Le navire se repose · à demain</button>`
     : t.done ? `<button class="brass-btn" data-a="free">Choisis une île sur la carte</button>`
-    : `<button class="brass-btn" data-a="tide">${play}<span class="lbl">${t.i ? `<b>Continuer</b><small>escale ${t.i + 1} sur 3</small>` : `<b>Jouer</b><small>Larguer les amarres · 5 min</small>`}</span></button>`;
+    : `<button class="brass-btn" data-a="tide">${play}<span class="lbl">${t.i ? `<b>Continuer</b><small>escale ${t.i + 1} sur 3</small>` : `<b>Jouer</b><small>Larguer les amarres${S.limit ? ` · ${S.limit} min` : ''}</small>`}</span></button>`;
   return `<section class="tide paper" aria-label="Marée du jour"><div class="th">
     <div class="tt2"><div class="sub2">${t.done ? 'Marée du jour terminée' : `Marée du jour · escale ${t.i + 1} sur 3`}</div><h2>${t.done ? 'Bravo, capitaine !' : `Cap sur ${nxt.art}`}</h2></div><div class="mini">${mini}</div></div>${btn}</section>`;
 }
@@ -5409,7 +5430,7 @@ function inputHTML(q) {
 const canSay = () => 'speechSynthesis' in window && typeof SpeechSynthesisUtterance === 'function';
 const sayBtn = (what = 'q') => canSay() ? `<button class="say" data-a="say" data-w="${what}" aria-label="Écouter">${ico('iSound')}</button>` : '';
 function speakable(html) {
-  const t = document.createElement('div'); t.innerHTML = String(html).replace(/<span class="frac"><b>(\d+)<\/b><b>(\d+)<\/b><\/span>/g, ' $1 sur $2 ').replace(/<span class="slot"[^>]*>[^<]*<\/span>/g, ' … ');
+  const t = document.createElement('div'); t.innerHTML = String(html).replace(/<span class="frac"[^>]*><b>(\d+)<\/b><b>(\d+)<\/b><\/span>(<span class="sr">[^<]*<\/span>)?/g, ' $1 sur $2 ').replace(/<span class="slot"[^>]*>[^<]*<\/span>/g, ' … ');
   let x = t.textContent.replace(/___/g, ' … ');
   // Dans un calcul, la case vide se dit « combien » ; dans une phrase, c'est un blanc
   if (/\d/.test(x) && /[=+×÷−]/.test(x)) x = x.replace(/…\s*\?|\?\s*…|…|(=\s*)\?/g, (m, eq) => eq ? `${eq}combien` : ' combien ');
@@ -5443,7 +5464,7 @@ function qcardHTML(q) {
   if (q.clock) body = clockSVG(q.clock.h, q.clock.m);
   if (q.kind === 'words') { const sel = R.wsel || (R.wsel = new Set()); body = `<div class="wchips${q.chips.some(c => c.includes(' ')) ? ' grp' : ''}">${q.chips.map((c, k) => `<button data-a="wchip" data-i="${k}" aria-pressed="${sel.has(k)}">${esc(c)}</button>`).join('')}</div>`; }
   const rev = q.rev ? '<span class="revb">Revanche\u00a0!</span>' : q.retry ? '<span class="revb retry">Seconde chance</span>' : '';
-  if (q.kind === 'read') return `<div class="qcard paper">${rev}${sayBtn()}<div class="rtext" tabindex="0"><b>${esc(q.title)}</b>${q.text.split('\n').map(p => `<p>${esc(p)}</p>`).join('')}</div><div class="ask rq">${nbU(q.ask)}</div></div>`;
+  if (q.kind === 'read') return `<div class="qcard paper">${rev}${sayBtn()}<div class="rtext" tabindex="0">${q.title ? `<b>${esc(q.title)}</b>` : ''}${q.text.split('\n').map(p => `<p>${esc(p)}</p>`).join('')}</div><div class="ask rq">${nbU(q.ask)}</div></div>`;
   return `<div class="qcard paper">${rev}${sayBtn()}<div class="ask">${nbU(q.ask)}</div>${q.prompt ? `<div class="prompt ${q.promptClass || ''}">${q.prompt}</div>` : ''}${body}</div>`;
 }
 const TK = { type: 'type', keypad: 'keypad', mineRead: 'keypad', choices: 'choices', lineRead: 'choices', compare: 'choices', mine: 'mine', line: 'line', money: 'money', pizza: 'pizza', words: 'words', read: 'read' };
@@ -5464,7 +5485,7 @@ function startTuto(key) {
   const el = document.createElement('div'); el.className = 'coach'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Comment jouer');
   el.innerHTML = `<div class="ring"></div><svg class="hand" viewBox="0 0 48 48" aria-hidden="true"><path d="M18 6a4 4 0 0 1 4 4v14l2-.3V8a4 4 0 0 1 8 0v16l2 .2V12a4 4 0 0 1 8 0v18c0 9-6 16-15 16-6 0-10-3-13-8L8 30a3.5 3.5 0 0 1 5.5-4.3L14 26V10a4 4 0 0 1 4-4Z" fill="#fff3d0" stroke="#2a1c12" stroke-width="2.5" stroke-linejoin="round"/></svg>
     <div class="bub paper"><img src="${IMG('guide-capitaine')}" alt=""><div class="tx"><b>Comment jouer</b><p></p><div class="row"><span class="dots">${steps.map(() => '<i></i>').join('')}</span><button data-a="coachnext"></button></div></div></div>`;
-  $('.screen.game').appendChild(el); coachStep();
+  const scr = $('.screen.game'); if (!scr) return; scr.appendChild(el); coachStep(); // l'escale peut avoir été quittée avant l'arrivée du tutoriel
 }
 function coachStep() {
   const el = $('.coach'); if (!el || !coach) return; const steps = TUTO[coach.key], [sel, txt] = steps[coach.k], last = coach.k === steps.length - 1;
@@ -5612,6 +5633,7 @@ function answer(ok, givenText, btn) {
     else if (fast && has('requin') && !R.popped.requin) pop('crew-requin', 'Éclair doublé par le Requin', 'requin');
     if (has('phoque') && R.combo === 6) pop('crew-phoque', 'Le Phoque booste ton combo', 'phoque');
     save();
+    announce(`Bonne réponse ! Plus ${gain} doublons.`);
     celebrate(fast, gain);
     { const el = btn || $('[data-k="ok"]') || $('[data-a="validate"]') || $('.qcard'); if (el) { const [x, y] = ctr(el); FX.ring(x, y); FX.sparkles(x, y, 18); }
       const cb = $('.combo'); if (cb && R.combo >= 3) { const [x, y] = ctr(cb); FX.embers(x, y, 3 + Math.min(R.combo, 8)); }
@@ -6155,6 +6177,12 @@ app.addEventListener('pointerup', e => {
   const r = svg.getBoundingClientRect(), vx = (e.clientX - r.left) / r.width * 340; R.pick = Math.max(0, Math.min(10, Math.round((vx - 30) / 28))); SND.tap(); refreshBottom();
 });
 document.addEventListener('keydown', e => {
+  // Tabulation contenue dans la boîte de dialogue ouverte (porte parentale, saga, « Qui joue ? »…) : l'arrière-plan ne prend plus le focus
+  if (e.key === 'Tab') { const ds = $$('[role="dialog"],[role="alertdialog"]'), dl = ds[ds.length - 1];
+    if (dl) { const f = [...dl.querySelectorAll('button,[href],input,textarea,select,[tabindex]:not([tabindex="-1"])')].filter(x => !x.disabled && x.offsetParent !== null);
+      if (f.length) { const i = f.indexOf(document.activeElement);
+        if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); } } } }
   if ($('.title') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); $('.title').click(); return; }
   if (!R || R.done) { if (e.key === 'Enter' && $('#chest.shake')) openChest(); return; }
   if ($('.coach')) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('[data-a="coachnext"]').click(); } return; }
@@ -6163,6 +6191,9 @@ document.addEventListener('keydown', e => {
   const k = R.q.kind;
   if (k === 'keypad' || k === 'mineRead') { if (/^[0-9]$/.test(e.key)) key(e.key); else if (e.key === 'Backspace') key('del'); else if (e.key === 'Enter') { e.preventDefault(); key('ok'); } }
   else if (k === 'type') { if (e.key.length === 1 && /[a-zàâçéèêëîïôûùü' ’-]/i.test(e.key)) { e.preventDefault(); tkey(e.key.toLowerCase()); } else if (e.key === 'Backspace') { e.preventDefault(); tkey('del'); } else if (e.key === 'Enter') { const v = $('.kbd [data-a="validate"]'); if (v && !v.disabled) { e.preventDefault(); v.click(); } } }
+  // Clavier pour les deux réponses « au doigt » : parts de pizza (chiffres) et droite graduée (flèches), puis Entrée pour valider
+  else if (k === 'pizza' && /^[1-9]$/.test(e.key) && +e.key <= R.q.parts) { e.preventDefault(); const i = +e.key - 1; R.sel || (R.sel = new Set()); R.sel.has(i) ? R.sel.delete(i) : R.sel.add(i); SND.tap(); announce(`Part ${+e.key} ${R.sel.has(i) ? 'coloriée' : 'effacée'} ; ${R.sel.size} sur ${R.q.parts}.`); refreshBottom(); }
+  else if (k === 'line' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); R.pick = R.pick == null ? (e.key === 'ArrowRight' ? 0 : 10) : Math.max(0, Math.min(10, R.pick + (e.key === 'ArrowRight' ? 1 : -1))); SND.tap(); announce(labN(R.q, R.q.start + R.pick * R.q.step)); refreshBottom(); }
   else if (R.q.choices && /^[1-3]$/.test(e.key) && R.q.choices.length >= +e.key) { const b = $$('[data-a="choice"]')[+e.key - 1]; b && b.click(); }
   else if (e.key === 'Enter') { const v = $('[data-a="validate"]'); if (v && !v.disabled) { e.preventDefault(); v.click(); } }
 });
