@@ -43,6 +43,7 @@ Object.defineProperty(global, 'navigator', { value: { userAgent: 'node', platfor
 global.innerWidth = 375; global.innerHeight = 700;
 global.addEventListener = () => {}; global.removeEventListener = () => {};
 global.matchMedia = () => ({ matches: false });
+global.MutationObserver = class { observe() {} disconnect() {} takeRecords() { return []; } };
 global.requestAnimationFrame = () => 0; global.cancelAnimationFrame = () => {};
 global.Image = class { set src(v) { this._s = v; } get src() { return this._s; } };
 global.fetch = () => Promise.reject(new Error('no net'));

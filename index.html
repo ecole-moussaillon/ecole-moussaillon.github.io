@@ -112,7 +112,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .seas button[aria-pressed="true"] b{background:rgba(42,26,7,.14);color:#2a1a07}
 @media (max-width:360px){.seas button{font-size:12.5px;padding:0 9px 0 5px}}
 .map.sea-f .ocean{filter:brightness(.92) hue-rotate(-28deg) saturate(1.15)}
-.mers{position:absolute;left:0;right:0;top:270px;text-align:center;font:700 13px var(--f-d);letter-spacing:.3em;color:#3c5960;text-transform:uppercase;pointer-events:none}
+.mers{position:absolute;left:0;right:0;top:270px;text-align:center;font:700 13px var(--f-d);letter-spacing:.3em;color:#6f949e;text-transform:uppercase;pointer-events:none}
 .hud{position:absolute;left:12px;right:12px;top:calc(var(--st) + 10px);height:64px;border-radius:22px;display:flex;align-items:center;gap:10px;padding:0 9px;z-index:20}
 .medal{width:48px;height:48px;border-radius:50%;flex:none;overflow:hidden;background:#173f52;box-shadow:0 0 0 2px #0a2230,0 0 0 3.5px var(--brass)}
 .medal>img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;transform:scale(1.15)}
@@ -138,7 +138,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .stop span{font-size:10.5px;color:var(--ink-2)}
 .stop.cur{background:rgba(255,255,255,.78);box-shadow:inset 0 0 0 1.5px var(--brass),0 4px 12px rgba(138,98,36,.25)}
 .stop.done{opacity:.65}
-.stop.done::after{content:"✓";position:absolute;top:4px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--kelp);color:#fff;font:800 12px/20px var(--f-u)}
+.stop.done::after{content:"✓";position:absolute;top:4px;right:6px;width:20px;height:20px;border-radius:50%;background:#2f8f5a;color:#fff;font:800 12px/20px var(--f-u)}
 .seal{position:absolute;right:-6px;top:-16px;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,var(--wax-hi),var(--wax) 55%,#6e1a12);box-shadow:0 4px 8px rgba(0,0,0,.3),inset 0 0 0 4px rgba(0,0,0,.12);transform:rotate(12deg);color:#f7d9c4;font:800 9.5px/1.05 var(--f-u);letter-spacing:.06em;text-align:center}
 .dock{position:absolute;left:12px;right:12px;bottom:calc(var(--sbm) + 12px);height:68px;border-radius:24px;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;z-index:30}
 .dock button{display:flex;flex-direction:column;align-items:center;gap:3px;font:600 11.5px var(--f-u);color:#8fb0b3;height:100%}
@@ -210,7 +210,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .segs{flex:1;height:42px;border-radius:21px;display:flex;align-items:center;gap:5px;padding:0 14px}
 .segs i{flex:1;height:7px;border-radius:4px;background:rgba(255,255,255,.18)}
 .segs i.ok{background:linear-gradient(90deg,var(--brass),var(--brass-hi))}
-.segs i.ko{background:var(--wax-hi)}
+.segs i.ko{background:repeating-linear-gradient(135deg,var(--wax-hi) 0 4px,#7e241a 4px 7px)}
 .segs i.cur{background:rgba(255,255,255,.7)}
 .combo{height:42px;border-radius:21px;display:flex;align-items:center;gap:4px;padding:0 12px 0 10px;color:#ffcf7a;font:800 16px var(--f-u)}
 .combo svg{width:18px;height:18px;color:#ff9d3c}
@@ -420,7 +420,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .crew-card.lock{background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px var(--glass-line);color:var(--mist)}
 .crew-card.lock span{color:var(--mist)}
 .mystery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-.mystery div{aspect-ratio:1;border-radius:16px;display:grid;place-items:center;font:800 24px var(--f-d);color:#4d6a70;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--glass-line)}
+.mystery div{aspect-ratio:1;border-radius:16px;display:grid;place-items:center;font:800 24px var(--f-d);color:#77979f;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px var(--glass-line)}
 .showship{position:relative;border-radius:24px;overflow:hidden;height:200px;margin-bottom:16px}
 .showship img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
 .showship .sh{position:absolute;right:-2%;bottom:8px;width:64%;animation:shipr 3.4s ease-in-out infinite}
@@ -529,7 +529,7 @@ textarea.fld{min-height:76px}
 .tide .mini img{width:32px;height:28px;object-fit:contain}
 .tide .mini .cur{background:rgba(255,255,255,.85);box-shadow:inset 0 0 0 2px var(--brass),0 3px 8px rgba(138,98,36,.3)}
 .tide .mini .done{opacity:.6}
-.tide .mini .done::after{content:"✓";position:absolute;right:-4px;top:-4px;width:18px;height:18px;border-radius:50%;background:var(--kelp);color:#fff;font:800 11px/18px var(--f-u);text-align:center}
+.tide .mini .done::after{content:"✓";position:absolute;right:-4px;top:-4px;width:18px;height:18px;border-radius:50%;background:#2f8f5a;color:#fff;font:800 11px/18px var(--f-u);text-align:center}
 .tide .tt2{min-width:0;flex:1}
 .tide .sub2{font:600 14px var(--f-u);color:var(--ink-2)}
 .tide h2{margin:1px 0 0;font-size:20px;line-height:1.12}
@@ -759,6 +759,8 @@ button.medal{display:block;padding:0;cursor:pointer}
 .burst .w{font-size:clamp(30px,calc(10 * var(--vw)),58px);white-space:normal;max-width:calc(92 * var(--vw));line-height:1.02}
 .isle.soon .lag{opacity:.45}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* Contraste forcé (Windows) : les fonds peints disparaissent, on redonne un contour aux commandes */
+@media (forced-colors:active){button,.brass-btn,.ghost-btn,.mini-btn,.key,.choice,.round,.chip{border:1px solid ButtonText}.segs i{border:1px solid CanvasText}}
 .gradeb{flex:none;padding:1px 6px;border-radius:6px;background:var(--brass-hi);color:#2a1a07;font:800 10.5px/1.4 var(--f-u);letter-spacing:.06em}
 /* Police pirate (vieux livre de bord) pour les titres et les noms ; les chiffres des calculs, les touches et les réponses gardent Fraunces et Lexend, plus lisibles */
 .disp,.tlogo .disp,.isle .lbl b,.coastport .lbl b,.lair .lbl,.tide h2,.rlab b,.burst .w,.sheet-err h3,.tabpage h1,.crew-card b,.poster .t1,.poster .nm,.trophy .tt b,.yh,.yard h2,.hud .nm,.shipcap .disp{font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;letter-spacing:.01em}
@@ -1125,13 +1127,18 @@ function w999(n, end) { const c = Math.floor(n / 100), r = n % 100, p = []; // �
 function words(n) { if (n === 0) return 'zéro'; const m = Math.floor(n / 1000), p = [];
   if (m) p.push(m === 1 ? 'mille' : w999(m, false) + '-mille'); if (n % 1000) p.push(w999(n % 1000, true)); return p.join('-'); }
 const digits = n => [Math.floor(n / 1000), Math.floor(n % 1000 / 100), Math.floor(n % 100 / 10), n % 10];
-const decomp = n => { const [m, c, d, u] = digits(n); return `${pl(m, 'millier')}, ${pl(c, 'centaine')}, ${pl(d, 'dizaine')} et ${pl(u, 'unité')}`; };
+const decomp = n => { const [m, c, d, u] = digits(n), p = [m && pl(m, 'millier'), c && pl(c, 'centaine'), d && pl(d, 'dizaine'), u && pl(u, 'unité')].filter(Boolean); return p.length > 1 ? p.slice(0, -1).join(', ') + ' et ' + p[p.length - 1] : p[0] || pl(0, 'unité'); };
 
 /* ================= Sauvegarde ================= */
 // Déménagement (novembre 2026) : l'ancienne adresse (pierrerouby-droid.github.io/Chiffres-l-abordage) renvoie ici avec ses sauvegardes
 // dans l'adresse (#import=…). On les recopie, sans jamais écraser une sauvegarde déjà présente sur ce site, puis on nettoie l'adresse.
+// Base64 d'un texte UTF-8 sans escape/unescape (dépréciées) : octets identiques à l'ancien encodage, les codes existants restent valables.
+const b64enc = s => { const b = new TextEncoder().encode(s); let r = ''; for (let i = 0; i < b.length; i++) r += String.fromCharCode(b[i]); return btoa(r); };
+const b64dec = s => new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)));
+// JSON d'une sauvegarde : les clés qui toucheraient au prototype sont ignorées.
+const parseSave = s => JSON.parse(s, function (k, v) { return k === '__proto__' || k === 'constructor' || k === 'prototype' ? undefined : v; });
 (() => { const m = /^#import=([^&]+)/.exec(location.hash); if (!m) return;
-  try { const d = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
+  try { const d = parseSave(b64dec(decodeURIComponent(m[1])));
     Object.entries(d).forEach(([k, v]) => { if (/^(archipel|moussaillon)/.test(k) && typeof v === 'string' && localStorage.getItem(k) == null) localStorage.setItem(k, v); }); } catch (e) {}
   history.replaceState(null, '', location.pathname + location.search); })();
 // Version administrateur, pour tester sur le web seulement (adresse terminée par ?admin) : tout est débloqué, sur une sauvegarde à part.
@@ -1173,11 +1180,12 @@ function migrate(o) {
   return o;
 }
 let S;
-try { S = migrate(Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}'))); } catch (e) { S = DEF(); }
+try { S = migrate(Object.assign(DEF(), parseSave(localStorage.getItem(KEY) || '{}'))); } catch (e) { S = DEF(); }
 const GR = () => S.grade || 'ce2', CM1 = () => GR() === 'cm1';
 const P = () => S.g[GR()] || (S.g[GR()] = PDEF());
 let dropped = false; // profil abandonné : plus rien n'est écrit pour lui, même à la fermeture de la page
-const save = () => { if (dropped) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (!ADMIN) syncProf(); };
+let saveFail = false; // l'échec d'enregistrement (stockage plein ou bloqué) n'est signalé qu'une seule fois
+const save = () => { if (dropped) return; try { localStorage.setItem(KEY, JSON.stringify(S)); saveFail = false; } catch (e) { if (!saveFail) { saveFail = true; toast(`Impossible d'enregistrer la partie : demande à un parent de copier le code de sauvegarde.`); } } if (!ADMIN) syncProf(); };
 // Le sélecteur « Qui joue ? » montre le prénom, le portrait et la classe de chaque enfant, recopiés ici à chaque sauvegarde
 function syncProf() { const p = PROFS.list.find(x => x.id === ME); if (!p) return; const m = { name: S.name || '', avatar: S.avatar || 'a', grade: S.grade || '' };
   if (p.name !== m.name || p.avatar !== m.avatar || p.grade !== m.grade) { Object.assign(p, m); saveProfs(); } }
@@ -1501,8 +1509,8 @@ const FOES = [{ img: 'ship-meduse', n: 'La Méduse' }, { img: 'ship-requin', hit
 const foe = () => FOES[R.node % 2];
 const EPITHETS = [ // [surnom, comment le gagner, île : masqué tant que l'île n'est pas jouable]
   ['Calcul-Éclair', '5 bonnes réponses de suite en moins de 5 s'], ['Canonnier d’Élite', '6 sur 6 à l’Île des Canons'], ['Tête Froide', '6 sur 6 au Stade des Vagues'],
-  ['Bâtisseur', '6 sur 6 à la Mine aux Blocs'], ['Œil-de-Lynx', '6 sur 6 dans la Jungle'], ['Main-d’Or', '6 sur 6 au Marché du Port'], ['Fine Lame', '6 sur 6 à la Cuisine'], ['Vainqueur du Kraken', 'Bats le boss de l’Île des Canons'], ['Maître du Temps', '6 sur 6 à l’Île de l’Horloge', 'horloge'], ['Grand Géomètre', '6 sur 6 à l’Île des Formes', 'formes'],
-  ['Chasseur de Trésor', 'Retrouve les douze morceaux de la carte'], ['Maître Charpentier', 'Termine le plan de ton navire'], ['Gouverneur du Port', 'Construis les six parcelles de ton port d’attache'],
+  ['Bâtisseur', '6 sur 6 à la Mine aux Blocs'], ['Œil-de-Lynx', '6 sur 6 dans la Jungle'], ['Main-d’Or', '6 sur 6 au Marché du Port'], ['Fine Lame', '6 sur 6 à la Cuisine'], ['Vainqueur du Kraken', 'bats le boss de l’Île des Canons'], ['Maître du Temps', '6 sur 6 à l’Île de l’Horloge', 'horloge'], ['Grand Géomètre', '6 sur 6 à l’Île des Formes', 'formes'],
+  ['Chasseur de Trésor', 'retrouve les douze morceaux de la carte'], ['Maître Charpentier', 'termine le plan de ton navire'], ['Gouverneur du Port', 'construis les six parcelles de ton port d’attache'],
   ['Grand Liseur', '6 sur 6 à la Grotte aux Histoires', 'lecture'], ['Globe-Trotter', '6 sur 6 à l’Île des Perroquets', 'anglais'], ['Puits de Science', '6 sur 6 à l’Île des Curiosités', 'culture'], ['Maître des Verbes', '6 sur 6 à la Forge des Verbes', 'conjug'], ['Chef de Phrase', '6 sur 6 au Récif des Phrases', 'gram'], ['Gardien des Accords', '6 sur 6 au Pont des Accords', 'accords'], ['Mille-Mots', '6 sur 6 à la Baie des Mots', 'vocab'],
 ];
 const ISLES = [
@@ -1631,9 +1639,10 @@ function ce2Mine(l) {
     return { kind: 'mine', target: n, showTotal: l === 1, answer: n, answerText: fmt(n), prompt: l === 3 ? `<span class="words">${words(n)}</span>` : fmt(n), promptClass: l === 3 ? 'mid' : '', ask: 'Construis ce nombre avec les blocs :', log: l === 3 ? words(n) : fmt(n), explain: `${fmt(n)}, c’est ${decomp(n)}.`, hint: `Commence par les milliers, puis les centaines, les dizaines et les unités.` }; }
   if (l === 4) { let m, c, d, u, n;
     do { m = rnd(0, 7); c = rnd(0, 9); d = rnd(0, 9); u = rnd(0, 9); const w = rnd(1, 3); if (w === 1) c = rnd(10, 19); else if (w === 2) d = rnd(10, 19); else u = rnd(10, 19); n = m * 1000 + c * 100 + d * 10 + u; } while (n > 9999 || n < 100);
-    return { kind: 'mineRead', counts: [m, c, d, u], answer: n, answerText: fmt(n), ask: 'Quel nombre forment ces blocs ?', prompt: SLOT, log: `${m} milliers, ${c} centaines, ${d} dizaines, ${u} unités`,
+    return { kind: 'mineRead', counts: [m, c, d, u], answer: n, answerText: fmt(n), ask: 'Quel nombre forment ces blocs ?', prompt: SLOT, log: `${pl(m, 'millier')}, ${pl(c, 'centaine')}, ${pl(d, 'dizaine')}, ${pl(u, 'unité')}`,
       explain: `${m} × 1 000 + ${c} × 100 + ${d} × 10 + ${u} = ${fmt(n)}. Rappel : 10 centaines font 1 millier, 10 dizaines font 1 centaine.`, hint: `Attention : quand une colonne a 10 blocs ou plus, ils forment une unité de la colonne de gauche.` }; }
-  const n = rnd(1001, 9999), [m, c, d, u] = digits(n), f = pick(['mult', 'add', 'diz', 'mix']);
+  let n; do { n = rnd(1001, 9999); } while (digits(n).filter(Boolean).length < 2); // sinon « Écris 3 000 » se répond en recopiant
+  const [m, c, d, u] = digits(n), f = pick(['mult', 'add', 'diz', 'mix']);
   const txt = f === 'mult' ? `(${m} × 1 000) + (${c} × 100) + (${d} × 10) + ${u}` : f === 'add' ? [m * 1000, c * 100, d * 10, u].filter(Boolean).map(fmt).join(' + ') : f === 'diz' ? `${fmt(Math.floor(n / 10))} dizaines et ${pl(u, 'unité')}` : `${pl(d, 'dizaine')}, ${pl(m * 10 + c, 'centaine')} et ${pl(u, 'unité')}`;
   return { kind: 'keypad', ask: 'Écris ce nombre en chiffres :', prompt: `<span class="words">${txt}</span><br>${SLOT}`, promptClass: 'mid', answer: n, answerText: fmt(n), log: txt, explain: `${txt} = ${fmt(n)}, c’est-à-dire ${decomp(n)}.`, hint: 'Range chaque morceau dans sa colonne : milliers, centaines, dizaines, unités.' };
 }
@@ -1889,7 +1898,7 @@ const CPL = [
   ['Tom a un chien. Il s’appelle Rex.', 'Comment s’appelle le chien ?', 'Rex', ['Tom', 'Pi'], 2], ['La pluie tombe. Tom prend son parapluie.', 'Qu’est-ce que Tom prend ?', 'son parapluie', ['son bateau', 'sa canne à pêche'], 2],
   ['Tom et Lila nagent près de l’île. L’eau est chaude. Ils voient des poissons jaunes.', 'De quelle couleur sont les poissons ?', 'jaunes', ['rouges', 'verts'], 3],
   ['Le ciel devient noir. Le tonnerre gronde. Le capitaine crie : « Rentrez les voiles ! »', 'Quel temps fait-il ?', 'il y a un orage', ['il fait beau', 'il neige'], 3],
-  ['Pi vole jusqu’au mât. Il regarde la mer. Soudain, il crie : « Terre ! Terre ! »', 'Qu’est-ce que Pi a vu ?', 'une terre', ['un poisson', 'un nuage'], 3],
+  ['Pi vole jusqu’au mât. Il regarde la mer. Soudain, il crie : « Terre ! Terre ! »', 'Qu’est-ce que Pi a vu ?', 'la terre', ['un poisson', 'un nuage'], 3],
   ['Le cuistot casse trois œufs. Il ajoute du lait et de la farine. Ce soir, il y a des crêpes !', 'Qu’est-ce que le cuistot prépare ?', 'des crêpes', ['une soupe', 'du poisson'], 3],
   ['Lila a perdu sa clé. Elle cherche sous le lit. La clé est dans sa poche !', 'Où est la clé ?', 'dans sa poche', ['sous le lit', 'sur la table'], 3],
   ['Tom pêche depuis le matin. Il n’a rien attrapé. Il est un peu triste.', 'Pourquoi est-ce que Tom est triste ?', 'parce qu’il n’a rien pêché', ['parce qu’il a froid', 'parce qu’il a perdu son chapeau'], 3],
@@ -1948,7 +1957,7 @@ function cpSons(l) {
     const others = shuffle([...new Set(SYL.flatMap(x => x[1].split('-')))].filter(x => sonOf(x) !== sonOf(ans) && x.length <= 4)).filter((x, j, a) => a.findIndex(y => sonOf(y) === sonOf(x)) === j).slice(0, 2);
     return { kind: 'choices', ask: `Quelle syllabe manque pour écrire « ${w} » ?`, prompt: parts.map((x, j) => j === k ? '…' : x).join(' · '), promptClass: 'mid', answer: ans, answerText: ans, choices: [ans, ...others].map(v => ({ v, html: v })), log: `syllabe de ${w}`,
       explain: `${w} : ${parts.join(' · ')}. Il manquait « ${ans} ».`, hint: `Dis « ${w} » doucement, syllabe par syllabe.` }; }
-  if (Math.random() < .3) return { ...qPron(pick(['être', 'avoir']), 'pr'), sayChoices: true };
+  if (Math.random() < .3) return cpSons(pick([2, 3, 4]));
   const g = pick(Object.keys(GRAPH)), ans = pick(GRAPH[g]), others = shuffle(Object.values(GRAPH).flat().filter(x => !x.includes(g))).slice(0, 2);
   return { kind: 'choices', ask: `Quel mot s’écrit avec « ${g} » ?`, prompt: '', answer: ans, answerText: ans, choices: [ans, ...others].map(v => ({ v, html: v })), log: `graphème ${g} : ${ans}`, explain: `« ${ans} » s’écrit avec « ${g} ».`, hint: `Cherche les lettres « ${g} », l’une à côté de l’autre.` };
 }
@@ -2006,7 +2015,7 @@ function cpVocab(l) {
     return { kind: 'choices', ask: `Quel est le contraire de « ${a} » ?`, prompt: '', answer: b, answerText: b, choices: [b, ...others].map(v => ({ v, html: v })), log: `contraire de ${a}`, explain: `Le contraire de « ${a} », c’est « ${b} ».`, hint: 'Le contraire, c’est le mot qui dit l’inverse.', sayChoices: true }; }
   if (l === 4) { const k = rnd(0, 24), ans = LETTERS[k + 1], others = shuffle(LETTERS.split('').filter(x => x !== ans && x !== LETTERS[k])).slice(0, 2);
     return { kind: 'choices', ask: `Quelle lettre vient juste après ${LETTERS[k]} ?`, prompt: '', answer: ans, answerText: ans, choices: [ans, ...others].map(v => ({ v, html: v })), log: `après ${LETTERS[k]}`, explain: `Dans l’alphabet : ${LETTERS.slice(Math.max(0, k - 1), k + 3).split('').join(', ')}${k + 3 < 26 ? '…' : '.'}`, hint: 'Chante l’alphabet doucement.', sayChoices: true }; }
-  const c = pick(keys), two = shuffle(CPCAT[c][1]).slice(0, 2), other = pick(keys.filter(k => k !== c)), ans = pick(CPCAT[other][1]);
+  const c = pick(keys), two = shuffle(CPCAT[c][1]).slice(0, 2), other = pick(keys.filter(k => k !== c && !(c === 'couleur' && k === 'fruit'))), ans = pick(CPCAT[other][1]);
   return { kind: 'choices', ask: `Quel mot n’est pas ${CPCAT[c][0]} ?`, prompt: '', answer: ans, answerText: ans, choices: [ans, ...two].map(v => ({ v, html: v })), log: `intrus (${c}) : ${ans}`, explain: `« ${two[0]} » et « ${two[1]} » sont ${CPCAT[c][2]}. « ${ans} » n’est pas ${CPCAT[c][0]}.`, hint: 'Cherche le mot qui ne va pas avec les autres.', sayChoices: true };
 }
 
@@ -2049,7 +2058,7 @@ function ce1Mine(l) {
     return { kind: 'mine', cols: 3, target: n, showTotal: l === 1, answer: n, answerText: fmt(n), prompt: fmt(n), ask: 'Construis ce nombre avec les blocs :', log: fmt(n),
       explain: `${n}, c’est ${pl(c, 'centaine')}, ${pl(d, 'dizaine')} et ${pl(u, 'unité')}.`, hint: 'Le premier chiffre donne les centaines, puis les dizaines, puis les unités.' }; }
   if (l === 3) { const c = rnd(1, 9), d = rnd(0, 9), u = rnd(0, 9), n = c * 100 + d * 10 + u;
-    return { kind: 'mineRead', cols: 3, counts: [0, c, d, u], answer: n, answerText: fmt(n), ask: 'Quel nombre forment ces blocs ?', prompt: SLOT, log: `${c} centaines, ${d} dizaines, ${u} unités`,
+    return { kind: 'mineRead', cols: 3, counts: [0, c, d, u], answer: n, answerText: fmt(n), ask: 'Quel nombre forment ces blocs ?', prompt: SLOT, log: `${pl(c, 'centaine')}, ${pl(d, 'dizaine')}, ${pl(u, 'unité')}`,
       explain: `${pl(c, 'centaine')}, ${pl(d, 'dizaine')} et ${pl(u, 'unité')} : ${n}.`, hint: 'Compte les plaques de 100, puis les barres de 10, puis les petits cubes.' }; }
   if (l === 4) { const n = rnd(102, 987), dg = [Math.floor(n / 100), Math.floor(n / 10) % 10, n % 10]; if (new Set(dg).size < 3) return ce1Mine(4);
     const k = rnd(0, 2), nm = ['centaines', 'dizaines', 'unités'][k];
@@ -2113,7 +2122,7 @@ function ce1Fractions() {
     return { kind: 'choices', ask: `Le cuistot coupe une tarte en ${d} parts égales. Pi mange ${frac(a, d)} de la tarte, Lila ${frac(b, d)}. Quelle part de la tarte ont-ils mangée en tout ?`, prompt: '', answer: key(s, d), answerText: `${s}/${d}`,
       choices: shuffle([[s, d], ...wrong]).map(([x, y]) => x === s && y === d ? { v: key(x, y), html: frac(x, y) } : { v: key(x, y), html: frac(x, y), why: y !== d ? `Tu as aussi additionné les dénominateurs. La tarte est toujours coupée en ${d} : le nombre du bas ne change pas.` : `Recompte les parts : ${a} + ${b} = ${s}.` }), log: `${a}/${d} + ${b}/${d}`,
       explain: `${frac(a, d)} + ${frac(b, d)} = ${frac(s, d)} : les parts ont la même taille, on ajoute seulement le nombre de parts (${a} + ${b} = ${s}). Le dénominateur ne change pas : la tarte est toujours coupée en ${d}.`, hint: 'On compte les parts mangées. La tarte reste coupée pareil.' }; }
-  const d = pick([4, 6, 8, 10]), a = rnd(1, d - 1), who = pick(['Pi', 'Tom', 'Lila']);
+  const d = pick([4, 6, 8, 10]), who = pick(['Pi', 'Tom', 'Lila']); let a; do { a = rnd(1, d - 1); } while (2 * a === d); // a ≠ d/2 : sinon le piège « part restante » égale la réponse et il ne reste que 2 choix
   return { kind: 'choices', ask: `Le cuistot coupe un gâteau en ${d} parts égales. ${who} en mange ${a}. Quelle part du gâteau ${who} a-t-${who === 'Lila' ? 'elle' : 'il'} mangée ?`, prompt: '', answer: `${a}/${d}`, answerText: `${a}/${d}`,
     choices: shuffle([[a, d], [d, a], [d - a, d]].filter(([x, y], k, arr) => arr.findIndex(([p, q]) => p === x && q === y) === k)).map(([x, y]) => x === a && y === d ? { v: `${x}/${y}`, html: frac(x, y) } : { v: `${x}/${y}`, html: frac(x, y), why: y !== d ? `Tu as inversé les deux nombres : en bas, le nombre de parts du gâteau (${d}) ; en haut, les parts mangées (${a}).` : `Ça, c’est la part qui reste. La question demande ce qui a été mangé.` }), log: `${a} parts sur ${d}`,
     explain: `${a} part${a > 1 ? 's' : ''} sur ${d}, c’est ${frac(a, d)}. ${FRWHY}`, hint: 'En bas : en combien de parts on a coupé. En haut : combien de parts il a mangées.' };
@@ -2213,7 +2222,7 @@ function ce1Vocab(l) {
   if (l === 2) return r < .5 ? cpVocab(3) : qAlpha(false);
   if (l === 3) return qBank('fam2');
   if (l === 4) return qBank('syn2');
-  return r < .25 ? qBank('fam2') : r < .5 ? qBank('syn2') : r < .7 ? qBank('pre2') : r < .85 ? qBank('fig2') : qAlpha(false);
+  return r < .25 ? qBank('fam2') : r < .5 ? qBank('syn2') : r < .7 ? qBank('pre2') : r < .85 ? qBank('syn2') : qAlpha(false);
 }
 
 function genCanon(l) { return CP() ? cpCanon(l) : CE1() ? ce1Canon(l) : CM1() ? cm1Canon(l) : CM2() ? cm2Canon(l) : ce2Canon(l); }
@@ -2257,7 +2266,7 @@ function cm1Foot(l) {
     else if (t === 'dbl') { const n = pick([150, 250, 350, 450, 1500, 2500, 125, 175]); ans = 2 * n; log = `double de ${fmt(n)}`; q = `Le double de ${fmt(n)} ?`; explain = `${fmt(n)} + ${fmt(n)} = ${fmt(ans)}.`; ch = opts(ans, [ans + 100, ans - 100, n + 2]); }
     else { const n = pick([300, 500, 700, 900, 1500, 3000, 5000, 1100]); ans = n / 2; log = `moitié de ${fmt(n)}`; q = `La moitié de ${fmt(n)} ?`; explain = `${fmt(ans)} + ${fmt(ans)} = ${fmt(n)}.`; ch = opts(ans, [ans + 50, ans - 50, n * 2]); } }
   else if (l === 3) { const t = pick(['add', 'add', 'half', 'dbl']);
-    if (t === 'add') { const x = rnd(1, 8) * 10 + rnd(0, 8), y = rnd(1, 9 - x % 10); /* CM1 : sans retenue */ ans = (x + y) / 10; log = `${fmtD(x / 10)} + ${fmtD(y / 10)}`; q = `${log} = ?`; const carry = x % 10 + y >= 10, dx = k => k > 1 ? `${k} dixièmes` : `${k} dixième`; explain = x % 10 ? `${dx(x % 10)} + ${dx(y)} = ${dx(x % 10 + y)}${carry ? `, et 10 dixièmes font 1 unité` : ''}. Donc ${log} = ${fmtD(ans)}.` : `${fmtD(x / 10)} + ${dx(y)} = ${fmtD(ans)}.`; ch = dch(ans, [ans + .1, ans - .1, ans + 1, carry ? `${Math.floor(x / 10)},${x % 10 + y}` : ans - 1]); hint = 'Ajoute les dixièmes entre eux. 10 dixièmes font 1 unité.'; }
+    if (t === 'add') { const x = rnd(1, 8) * 10 + rnd(0, 8), y = rnd(1, 9 - x % 10); /* CM1 : sans retenue */ ans = (x + y) / 10; log = `${fmtD(x / 10)} + ${fmtD(y / 10)}`; q = `${log} = ?`; const dx = k => k > 1 ? `${k} dixièmes` : `${k} dixième`; explain = x % 10 ? `${dx(x % 10)} + ${dx(y)} = ${dx(x % 10 + y)}. Donc ${log} = ${fmtD(ans)}.` : `${fmtD(x / 10)} + ${dx(y)} = ${fmtD(ans)}.`; ch = dch(ans, [ans + .1, ans - .1, ans + 1, ans - 1]); hint = 'Ajoute les dixièmes entre eux. 10 dixièmes font 1 unité.'; }
     else if (t === 'half') { const n = pick([3, 5, 7, 9, 11, 13, 15, 19]); ans = n / 2; log = `moitié de ${n}`; q = `La moitié de ${n} ?`; explain = `${fmtD(ans)} + ${fmtD(ans)} = ${n}. La moitié de ${n}, c’est ${Math.floor(n / 2)} et encore une demie : ${fmtD(ans)}.`; ch = dch(ans, [ans + .5, ans - .5, ans + 1]); }
     else { const x = pick([5, 15, 25, 35, 45, 12, 24, 36]); ans = 2 * x / 10; log = `double de ${fmtD(x / 10)}`; q = `Le double de ${fmtD(x / 10)} ?`; explain = `${fmtD(x / 10)} + ${fmtD(x / 10)} = ${fmtD(ans)}.`; ch = dch(ans, [ans + 1, ans - .1, `${2 * Math.floor(x / 10)},${2 * (x % 10)}`]); } }
   else if (l === 4) { const t = pick(['x10', 'd10']); /* décimal × 100 : programme du CM2 */
@@ -2437,8 +2446,8 @@ function cm2Foot(l) {
     q = `${log} = ?`; }
   else if (l === 3) { const t = pick(['add', 'add', 'dbl', 'half']);
     if (t === 'add') { let A, B; do { A = rnd(11, 89); B = rnd(11, 89); } while (!(A % 10) || !(B % 10) || A + B >= 100); const a = A / 10, b = B / 10; if (a + b >= 10) return cm2Foot(3); ans = D(a + b); log = `${D(a)} + ${D(b)}`; const carry = A % 10 + B % 10 >= 10;
-      ch = dch(ans, [carry ? `${Math.floor(A / 10) + Math.floor(B / 10)},${A % 10 + B % 10}` : D(a + b + 1), D(a + b - .1), D(a + b + .1)]); explain = `On ajoute les unités (${Math.floor(A / 10)} + ${Math.floor(B / 10)}), puis les dixièmes (${A % 10} + ${B % 10})${carry ? ` : ${A % 10 + B % 10} dixièmes, c’est 1 unité et ${(A + B) % 10} dixième${(A + B) % 10 > 1 ? 's' : ''}` : ''}. ${log} = ${ans}.`; hint = '10 dixièmes font 1 unité.'; }
-    else if (t === 'dbl') { const x = pick([36, 47, 28, 19, 65, 26, 78, 57]), v = x / 10, u = Math.floor(x / 10), dx = x % 10; ans = D(2 * v); log = `double de ${D(v)}`; ch = dch(ans, [`${2 * u},${2 * dx}`, D(2 * v + 1), D(2 * v - .1)]); explain = `Double des unités : ${2 * u}. Double des dixièmes : ${2 * dx} dixièmes, c’est 1 unité et ${2 * dx - 10} dixième${2 * dx - 10 > 1 ? 's' : ''}. ${D(v)} + ${D(v)} = ${ans}.`; hint = 'Double les unités, puis les dixièmes. 10 dixièmes font 1 unité.'; }
+      ch = dch(ans, [carry ? `${Math.floor(A / 10) + Math.floor(B / 10)},${A % 10 + B % 10}` : D(a + b + 1), D(a + b - .1), D(a + b + .1)]); explain = `On ajoute les unités (${Math.floor(A / 10)} + ${Math.floor(B / 10)}), puis les dixièmes (${A % 10} + ${B % 10})${carry ? ` : ${A % 10 + B % 10} dixièmes, c’est 1 unité${(A + B) % 10 ? ` et ${(A + B) % 10} dixième${(A + B) % 10 > 1 ? 's' : ''}` : ''}` : ''}. ${log} = ${ans}.`; hint = '10 dixièmes font 1 unité.'; }
+    else if (t === 'dbl') { const x = pick([36, 47, 28, 19, 65, 26, 78, 57]), v = x / 10, u = Math.floor(x / 10), dx = x % 10; ans = D(2 * v); log = `double de ${D(v)}`; ch = dch(ans, [`${2 * u},${2 * dx}`, D(2 * v + 1), D(2 * v - .1)]); explain = `Double des unités : ${2 * u}. Double des dixièmes : ${2 * dx} dixièmes, c’est 1 unité${2 * dx - 10 ? ` et ${2 * dx - 10} dixième${2 * dx - 10 > 1 ? 's' : ''}` : ''}. ${D(v)} + ${D(v)} = ${ans}.`; hint = 'Double les unités, puis les dixièmes. 10 dixièmes font 1 unité.'; }
     else { const odd = Math.random() < .5, v = odd ? pick([7, 9, 11, 13, 15]) : pick([7.4, 9.6, 3.8, 5.2, 8.6, 12.4]); ans = D(v / 2); log = `moitié de ${D(v)}`; ch = dch(ans, [D(v / 2 + .5), D(v / 2 + 1), D(v * 2)]); explain = odd ? `${v} = ${v - 1} + 1 : la moitié de ${v - 1} est ${(v - 1) / 2}, et la moitié de 1 est 0,5. La moitié de ${v} est ${ans}.` : `${ans} + ${ans} = ${D(v)}.`; hint = 'Partage en deux les unités, puis les dixièmes.'; }
     q = `${t === 'add' ? log + ' = ?' : log[0].toUpperCase() + log.slice(1) + ' ?'}`; }
   else if (l === 4) { const t = pick(['x5', 'x50', 'd4', 'd8']);
@@ -2540,7 +2549,7 @@ function cm2Cuisine(l) {
       explain: `On partage ${Q} en ${d} parts égales : ${Q} ÷ ${d} = ${k}. On prend ${n} parts : ${n} × ${k} = ${ans}. Donc ${frac(n, d)} de ${Q} ${U[0]}, c’est ${ans} ${U[1]}.`, hint: `Le dénominateur (en bas) dit en combien de parts on partage ${Q}, le numérateur (en haut) combien de parts on prend.` }; }
   if (l === 2) { const d = rnd(2, 9), E = rnd(1, 4), r = rnd(1, d - 1), num = E * d + r, t = pick(['dec', 'rec', 'enc']);
     if (t === 'dec') { const ans = `${E} + ${r}/${d}`;
-      return { kind: 'choices', ask: 'Quelle écriture est égale à cette fraction ?', prompt: frac(num, d), answer: ans, answerText: ans, choices: shuffle([[E, r, d], [E, (r % (d - 1)) + 1 === r ? r + 1 : (r % (d - 1)) + 1, d], [E + 1, r, d]].filter((x, k, A) => A.findIndex(y => y[1] === x[1] && y[0] === x[0]) === k)).map(([e, rr, dd]) => ({ v: `${e} + ${rr}/${dd}`, html: `${e} + ${frac(rr, dd)}` })), log: `${num}/${d} = entier + fraction`,
+      return { kind: 'choices', ask: 'Quelle écriture est égale à cette fraction ?', prompt: frac(num, d), answer: ans, answerText: ans, choices: shuffle([[E, r, d], d === 2 ? [num, r, d] : [E, r + 1 < d ? r + 1 : 1, d], [E + 1, r, d]].filter((x, k, A) => A.findIndex(y => y[1] === x[1] && y[0] === x[0]) === k)).map(([e, rr, dd]) => ({ v: `${e} + ${rr}/${dd}`, html: `${e} + ${frac(rr, dd)}` })), log: `${num}/${d} = entier + fraction`,
         explain: `${E > 1 ? `${frac(d, d)} = 1, donc ${frac(E * d, d)} = ${E}.` : `${frac(d, d)} = 1.`} ${frac(num, d)} = ${frac(E * d, d)} + ${frac(r, d)} = ${E} + ${frac(r, d)}.`, hint: `Combien de fois ${d} dans ${num} ? Ce sont les unités entières.` }; }
     if (t === 'rec') { const ans = `${num}/${d}`;
       return { kind: 'choices', ask: 'Quelle fraction est égale à :', prompt: `${E} + ${frac(r, d)}`, answer: ans, answerText: ans, choices: fch([num, d], [[E + r, d], [E * 10 + r, d], [num + 1, d], [r, E * d]]), log: `${E} + ${r}/${d} en fraction`,
@@ -2688,7 +2697,7 @@ function gFigName(set) {
   else if (t === 'trir') { const h = pick([1.3, 1.6]), w = pick([2.2, 2.6]); pts = [[0, 0], [0, h], [w, h]]; right = [1]; ans = 'triangle rectangle'; def = 'un triangle qui a un angle droit';
     wrong = [['triangle isocèle', 'Un triangle isocèle a deux côtés de même longueur : aucun codage ne l’indique ici.'], ['triangle équilatéral', 'Un triangle équilatéral a trois côtés de même longueur, et aucun angle droit.'], ['triangle', 'C’est bien un triangle, mais il a un angle droit : le nom le plus précis est « triangle rectangle ».']]; }
   else if (t === 'tri') { pts = [[0, 1.4], [2.6, 1.4], [rnd(18, 22) / 10, 0]]; ans = 'triangle'; def = 'une figure qui a trois côtés et trois sommets'; // x ≤ 2,2 : l'angle en B reste ≤ 74°, jamais droit ni presque droit
-    wrong = [['triangle rectangle', 'Un triangle rectangle a un angle droit : il n’y en a pas ici.']]; }
+    wrong = [['triangle rectangle', 'Un triangle rectangle a un angle droit : il n’y en a pas ici.'], ['triangle isocèle', 'Un triangle isocèle a deux côtés de même longueur : aucun codage ne l’indique ici.']]; }
   else if (t === 'cercle') { pts = []; ans = 'cercle'; def = 'une ligne fermée toute ronde, sans côté ni sommet, qu’on trace au compas'; wrong = []; }
   else if (t === 'triiso') { const h = pick([2.4, 0.75]); pts = [[0, h], [2, h], [1, 0]]; ticks = [[1, 2, 1], [2, 0, 1]]; ans = 'triangle isocèle'; def = 'un triangle qui a deux côtés de même longueur';
     wrong = [['triangle équilatéral', 'Un triangle équilatéral a trois côtés de même longueur : ici, seulement deux côtés sont codés égaux.'], ['triangle rectangle', 'Un triangle rectangle a un angle droit : il n’y en a pas ici.']]; }
@@ -2725,7 +2734,7 @@ function gPolyName() {
     explain: `Il a ${n} côtés et ${n} sommets : c’est un ${N[n]}.`, hint: 'Compte les côtés : 4 pour un quadrilatère, 5 pour un pentagone, 6 pour un hexagone.' });
 }
 function gCercle() {
-  const ce2 = GR() === 'ce2', t = ce2 ? pick(['seg', 'seg', 'r2d', 'd2r']) : pick(['seg', 'seg', 'seg', 'r2d', 'd2r', 'pt']); // CE2 : rayon et diamètre ; corde et arc au CM1
+  const ce2 = GR() === 'ce2', t = ce2 ? 'seg' : pick(['seg', 'seg', 'seg', 'r2d', 'd2r', 'pt']); // CE2 : vocabulaire rayon et diamètre ; d = 2 × r, corde et arc au CM1
   if (t === 'r2d' || t === 'd2r') { const r = rnd(2, 15), d = 2 * r, toD = t === 'r2d';
     return gq({ kind: 'keypad', ask: toD ? `Un cercle a un rayon de ${r} cm. Combien mesure son diamètre ?` : `Un cercle a un diamètre de ${d} cm. Combien mesure son rayon ?`, prompt: `${toD ? 'diamètre' : 'rayon'} = ${SLOT} cm`,
       answer: toD ? d : r, answerText: `${toD ? d : r} cm`, log: toD ? `diamètre d’un cercle de rayon ${r} cm` : `rayon d’un cercle de diamètre ${d} cm`,
@@ -2950,10 +2959,10 @@ function gRound(t) {
   return `<circle class="gsf" cx="${x}" cy="${y}" r="${R}"/><circle class="gs" cx="${x}" cy="${y}" r="${R}"/>${half(x, y, R, 18, true, 'gs')}${half(x, y, R, 18, false, 'gd')}`;
 }
 const GSOL = { // [nom, démonstratif, explication, pièges, faits]
-  cube: ['cube', 'ce cube', 'C’est un cube : un solide qui a 6 faces carrées, toutes identiques.', [['pavé', 'Un cube est bien un pavé particulier, mais toutes ses faces sont des carrés identiques : le nom le plus précis est « cube ».'], ['pyramide', 'Une pyramide a des faces triangulaires qui se rejoignent en un sommet. Ici, toutes les faces sont des carrés.']], 'Un cube a 6 faces carrées, 12 arêtes et 8 sommets.'],
-  pave: ['pavé', 'ce pavé', 'C’est un pavé : un solide qui a 6 faces rectangulaires ; ses faces opposées sont identiques.', [['cube', 'Un cube a 6 faces carrées identiques. Ici, les faces sont des rectangles de tailles différentes.'], ['pyramide', 'Une pyramide se termine en pointe : ce n’est pas le cas ici.']], 'Un pavé a 6 faces rectangulaires, 12 arêtes et 8 sommets.'],
+  cube: ['cube', 'ce cube', 'C’est un cube : un solide qui a 6 faces carrées, toutes identiques.', [['pavé droit', 'Un cube est bien un pavé droit particulier, mais toutes ses faces sont des carrés identiques : le nom le plus précis est « cube ».'], ['pyramide', 'Une pyramide a des faces triangulaires qui se rejoignent en un sommet. Ici, toutes les faces sont des carrés.']], 'Un cube a 6 faces carrées, 12 arêtes et 8 sommets.'],
+  pave: ['pavé droit', 'ce pavé droit', 'C’est un pavé droit : un solide qui a 6 faces rectangulaires ; ses faces opposées sont identiques.', [['cube', 'Un cube a 6 faces carrées identiques. Ici, les faces sont des rectangles de tailles différentes.'], ['pyramide', 'Une pyramide se termine en pointe : ce n’est pas le cas ici.']], 'Un pavé droit a 6 faces rectangulaires, 12 arêtes et 8 sommets.'],
   pyramide: ['pyramide', 'cette pyramide', 'C’est une pyramide : sa base est un polygone (ici un carré) et ses faces latérales sont des triangles qui se rejoignent en un même sommet.', [['prisme droit', 'Un prisme droit a deux bases identiques reliées par des rectangles. Ici, les faces triangulaires se rejoignent en un seul sommet.'], ['cône', 'Un cône a une base en forme de disque et une surface courbe. Ici, toutes les faces sont plates.']], 'Cette pyramide a une base carrée et 4 faces triangulaires : 5 faces, 8 arêtes et 5 sommets.'],
-  prisme: ['prisme droit', 'ce prisme droit', 'C’est un prisme droit : il a deux bases identiques (ici des triangles), reliées par des faces rectangulaires.', [['pyramide', 'Une pyramide se termine en pointe. Ici, deux bases triangulaires identiques sont reliées par des rectangles.'], ['pavé', 'Un pavé a 6 faces rectangulaires. Ici, deux faces sont des triangles.']], 'Ce prisme droit a 2 bases triangulaires et 3 faces rectangulaires : 5 faces, 9 arêtes et 6 sommets.'],
+  prisme: ['prisme droit', 'ce prisme droit', 'C’est un prisme droit : il a deux bases identiques (ici des triangles), reliées par des faces rectangulaires.', [['pyramide', 'Une pyramide se termine en pointe. Ici, deux bases triangulaires identiques sont reliées par des rectangles.'], ['pavé droit', 'Un pavé droit a 6 faces rectangulaires. Ici, deux faces sont des triangles.']], 'Ce prisme droit a 2 bases triangulaires et 3 faces rectangulaires : 5 faces, 9 arêtes et 6 sommets.'],
   cylindre: ['cylindre', 'ce cylindre', 'C’est un cylindre : deux disques identiques reliés par une surface courbe.', [['cône', 'Un cône n’a qu’un seul disque et se termine en pointe.'], ['prisme droit', 'Un prisme droit n’a que des faces plates. Le cylindre a une surface courbe.']]],
   cone: ['cône', 'ce cône', 'C’est un cône : une base en forme de disque et une surface courbe qui se termine en pointe.', [['cylindre', 'Un cylindre a deux disques identiques, en haut et en bas. Ici, le solide se termine en pointe.'], ['pyramide', 'Une pyramide a une base en forme de polygone et des faces plates. Ici, la base est un disque et la surface est courbe.']]],
   boule: ['boule', 'cette boule', 'C’est une boule : un solide tout rond, sans face plate ni arête.', [['cylindre', 'Un cylindre a deux disques plats. La boule n’a aucune face plate.'], ['cône', 'Un cône a une pointe et une base plate. La boule est toute ronde.']]] };
@@ -3104,7 +3113,7 @@ function gPos() {
     const r = rel[key(D)], ans = `${r} ${GPOS[b][1]}`, others = shuffle(Object.values(rel).filter(x => x !== r && x !== opp[r])), ch = [ans, `${opp[r]} ${GPOS[b][1]}`, `${others[0]} ${GPOS[b][1]}`];
     const s0 = grid + gPosSvg(a, cell(A)) + gPosSvg(b, cell(B)) + gPosSvg(c, cell(C0));
     return gq({ kind: 'choices', ask: `Où est ${GPOS[a][0]} par rapport ${GPOS[b][2]} ?`, prompt: gsvg(s0, 'des formes de couleur rangées dans un tableau'), answer: ans, answerText: ans,
-      choices: ch.map(v => v === ans ? { v, html: v } : { v, html: v, why: `Regarde l’image : ${GPOS[a][0]} est juste ${ans}.` }), log: `position : ${r}`,
+      choices: ch.map(v => v === ans ? { v, html: v } : { v, html: v, why: v === `${opp[r]} ${GPOS[b][1]}` ? `C’est le contraire ! Regarde bien : ${GPOS[a][0]} est juste ${ans}.` : `Regarde l’image : ${GPOS[a][0]} est juste ${ans}.` }), log: `position : ${r}`,
       explain: `${capF(GPOS[a][0])} est juste ${ans}, sur la même ${r === 'à gauche' || r === 'à droite' ? 'ligne. Ta main droite t’aide à te repérer : elle est du côté droit de l’image.' : 'colonne.'}`, hint: 'Pose ton doigt sur la deuxième forme, puis cherche où est la première.' }); }
   const row = Math.random() < .6, o = row ? rnd(0, 1) : 0, fix = row ? rnd(0, 2) : rnd(0, 3), P = [0, 1, 2].map(j => row ? [o + j, fix] : [fix, j]);
   const [a, m, b, d] = ids, free = []; for (let x = 0; x < 4; x++) for (let y = 0; y < 3; y++) if (!P.some(p => key(p) === key([x, y])) && (row ? y !== P[0][1] : x !== P[0][0])) free.push([x, y]);
@@ -3123,7 +3132,7 @@ function gRegle() {
   r += `<path class="gd" d="M${X(st)} ${y0 - 22}V${y0 + 2}M${X(end).toFixed(1)} ${y0 - 22}V${y0 + 2}"/><path class="gh" d="M${X(st)} ${y0 - 24}H${X(end).toFixed(1)}"/>${gDot([X(st), y0 - 24])}${gDot([X(end), y0 - 24])}<text x="${X(st) + 4}" y="${y0 + 40}" style="font:700 9px var(--f-u);fill:#7a5a2a">cm</text>`;
   const ans = `entre ${a} et ${a + 1} cm`, trap = st ? `entre ${fe} et ${fe + 1} cm` : null, nb = [`entre ${a - 1} et ${a} cm`, `entre ${a + 1} et ${a + 2} cm`].filter(v => v !== trap), ch = trap ? [ans, trap, pick(nb)] : [ans, ...nb];
   return gq({ kind: 'choices', ask: 'Quelle est la longueur du segment rouge ?', prompt: gsvg(r, 'un segment rouge posé sur une règle graduée en centimètres'), answer: ans, answerText: ans,
-    choices: ch.map(v => v === ans ? { v, html: v } : { v, html: v, why: v === trap ? `Le segment ne commence pas à 0, mais à ${st}. Il s’arrête entre ${fe} et ${fe + 1} : on enlève les ${st} premiers centimètres.` : `Regarde où s’arrête le segment : entre ${fe} et ${fe + 1} sur la règle${st ? `, en partant de ${st}` : ''}.` }),
+    choices: ch.map(v => v === ans ? { v, html: v } : { v, html: v, why: v === trap ? `Le segment ne commence pas à 0, mais à ${st}. Il s’arrête entre ${fe} et ${fe + 1} : on enlève les ${st} premiers centimètres.` : v === `entre ${a - 1} et ${a} cm` ? `Trop court : le segment dépasse la graduation ${fe}, il mesure plus de ${a} cm.` : `Trop long : le segment s’arrête avant la graduation ${fe + 1}, il mesure moins de ${a + 1} cm.` }),
     log: `règle : ${len} cm${st ? ` à partir de ${st}` : ''}`,
     explain: st ? `Le segment commence à ${st} et s’arrête entre ${fe} et ${fe + 1}. On enlève ${st} : il mesure entre ${a} et ${a + 1} cm.` : `Le segment commence à 0 et s’arrête entre ${a} et ${a + 1} : il mesure entre ${a} et ${a + 1} cm.`,
     hint: st ? `Attention : le segment commence à ${st}, pas à 0.` : 'Regarde le nombre juste avant la fin du segment, et celui juste après.' });
@@ -3134,11 +3143,11 @@ const GUNIT = [
   ['La longueur d’un crayon neuf est plutôt :', '15 cm', ['15 m', '15 km'], 'Un crayon neuf mesure environ 15 cm : il tient dans ta main.', 1],
   ['La hauteur d’une porte est plutôt :', '2 m', ['2 cm', '2 km'], 'Une porte mesure environ 2 m : un adulte passe dessous sans se baisser.', 1],
   ['La longueur d’un navire pirate est plutôt :', '30 m', ['30 cm', '30 km'], 'Un grand navire mesure quelques dizaines de mètres, environ 30 m.', 1],
-  ['La distance entre deux villes est plutôt :', '20 km', ['20 cm', '20 m'], 'Entre deux villes, on compte en kilomètres : 20 km, c’est environ 20 minutes en voiture.', 1],
+  ['La distance entre deux villes est plutôt :', '20 km', ['20 cm', '20 m'], 'Entre deux villes, on compte en kilomètres : 20 km, c’est environ 20 minutes en voiture.', 2],
   ['La longueur d’une gomme est plutôt :', '4 cm', ['4 m', '40 m'], 'Une gomme mesure quelques centimètres, environ 4 cm.', 1],
   ['La longueur d’un lit est plutôt :', '2 m', ['20 cm', '2 km'], 'Un lit mesure environ 2 m : un adulte peut s’y allonger.', 1],
   ['La taille d’un enfant de 7 ans est plutôt :', '120 cm', ['12 cm', '12 m'], 'Un enfant de 7 ans mesure environ 120 cm, soit 1 m et 20 cm.', 1],
-  ['Pour mesurer la distance entre Paris et Marseille, on utilise :', 'le kilomètre', ['le centimètre', 'le mètre'], 'Pour les grandes distances, on utilise le kilomètre (km) : 1 km = 1 000 m.', 1],
+  ['Pour mesurer la distance entre Paris et Marseille, on utilise :', 'le kilomètre', ['le centimètre', 'le mètre'], 'Pour les grandes distances, on utilise le kilomètre (km) : 1 km = 1 000 m.', 2],
   ['Pour mesurer la longueur d’un cahier, on utilise :', 'le centimètre', ['le kilomètre', 'le mètre'], 'Un cahier est petit : on le mesure en centimètres (cm) avec une règle.', 1],
   ['Pour mesurer la longueur de la cour de l’école, on utilise :', 'le mètre', ['le centimètre', 'le kilomètre'], 'La cour mesure quelques dizaines de mètres : on utilise le mètre (m).', 1],
   ['L’épaisseur d’une pièce de monnaie est plutôt :', '2 mm', ['2 cm', '2 dm'], 'Une pièce est très fine : environ 2 mm. Le millimètre sert à mesurer les toutes petites longueurs.', 2],
@@ -3152,7 +3161,7 @@ function gUnite() {
 }
 // Conversions de longueurs, sans tableau : on s'appuie sur les relations entre unités (1 m = 100 cm, 1 km = 1 000 m ; CE2 : mm et dm)
 function gConvL() {
-  const ce1 = GR() === 'ce1', t = pick(ce1 ? ['m-cm', 'm-cm', 'cm-m', 'km-m', 'mcm'] : ['cm-mm', 'cmmm', 'm-dm', 'dm-cm', 'm-cm', 'km-m', 'kmm', 'm-mm']);
+  const ce1 = GR() === 'ce1', t = pick(ce1 ? ['m-cm', 'm-cm', 'cm-m', 'mcm'] : ['cm-mm', 'cmmm', 'm-dm', 'dm-cm', 'm-cm', 'km-m', 'kmm', 'm-mm']);
   const U = { 'm-cm': ['m', 'cm', 100], 'cm-m': ['cm', 'm', 1 / 100], 'km-m': ['km', 'm', 1000], 'cm-mm': ['cm', 'mm', 10], 'm-dm': ['m', 'dm', 10], 'dm-cm': ['dm', 'cm', 10], 'm-mm': ['m', 'mm', 1000] };
   const R0 = { m: { cm: '1 m = 100 cm', dm: '1 m = 10 dm', mm: '1 m = 1 000 mm' }, km: { m: '1 km = 1 000 m' }, cm: { mm: '1 cm = 10 mm', m: '100 cm = 1 m' }, dm: { cm: '1 dm = 10 cm' } };
   if (t === 'mcm' || t === 'cmmm' || t === 'kmm') { const [a, b, u1, u2, f] = t === 'mcm' ? [1, rnd(11, 99), 'm', 'cm', 100] : t === 'cmmm' ? [rnd(2, 9), rnd(1, 9), 'cm', 'mm', 10] : [rnd(1, 9), rnd(1, 19) * 50, 'km', 'm', 1000], ans = a * f + b;
@@ -3224,8 +3233,8 @@ function gLettre() {
 // Objets du quotidien et solides (CE1)
 const GOBJ = [['Une boîte à chaussures', 'pave'], ['Une boîte de conserve', 'cylindre'], ['Une balle de tennis', 'boule'], ['Un dé à jouer', 'cube'], ['Un chapeau pointu de fête', 'cone'], ['Une bille', 'boule'],
   ['Un morceau de sucre', 'cube'], ['Une brique', 'pave'], ['Un rouleau de papier essuie-tout', 'cylindre'], ['Un ballon de football', 'boule'], ['Un carton de déménagement', 'pave'], ['Un cornet de glace', 'cone']];
-const GSA = { cube: 'd’un cube', pave: 'd’un pavé', pyramide: 'd’une pyramide', cylindre: 'd’un cylindre', cone: 'd’un cône', boule: 'd’une boule' };
-const GSD = { cube: 'Un cube a 6 faces carrées, toutes pareilles.', pave: 'Un pavé a 6 faces rectangulaires.', pyramide: 'Une pyramide a des faces triangulaires qui se rejoignent en pointe.', cylindre: 'Un cylindre a deux disques plats reliés par une surface courbe.', cone: 'Un cône a un disque plat et se termine en pointe.', boule: 'Une boule est toute ronde, sans face plate.' };
+const GSA = { cube: 'd’un cube', pave: 'd’un pavé droit', pyramide: 'd’une pyramide', cylindre: 'd’un cylindre', cone: 'd’un cône', boule: 'd’une boule' };
+const GSD = { cube: 'Un cube a 6 faces carrées, toutes pareilles.', pave: 'Un pavé droit a 6 faces rectangulaires.', pyramide: 'Une pyramide a des faces triangulaires qui se rejoignent en pointe.', cylindre: 'Un cylindre a deux disques plats reliés par une surface courbe.', cone: 'Un cône a un disque plat et se termine en pointe.', boule: 'Une boule est toute ronde, sans face plate.' };
 function gSolObjet() {
   const [o, t] = pick(GOBJ), w = shuffle(Object.keys(GSA).filter(k => k !== t)).slice(0, 2), ans = GSA[t];
   return gq({ kind: 'choices', ask: `${o} a la forme :`, prompt: '', answer: ans, answerText: ans, choices: gch(ans, w.map(k => [GSA[k], GSD[k]])), log: `objet : ${o.toLowerCase()} (${t})`,
@@ -3237,7 +3246,7 @@ function genFormes(l) {
   if (g === 'ce1') {
     if (l === 1) return r < .45 ? gFigName(['carre', 'rect', 'tri', 'trir']) : r < .75 ? gCotes() : gFigName(['cercle']);
     if (l === 2) return r < .5 ? gAngleType() : gRectOuPas('rect');
-    if (l === 3) return r < .4 ? gSolNom() : r < .7 ? gSolObjet() : gSolCompte();
+    if (l === 3) return r < .5 ? gSolNom() : gSolObjet(); // compter faces, arêtes et sommets : à partir du CE2
     if (l === 4) return r < .4 ? gRegle() : r < .7 ? gUnite() : gConvL();
     return r < .45 ? gPos() : gDepl();
   }
@@ -3268,7 +3277,7 @@ function genFormes(l) {
 // A1 au CM1 et au CM2. L'oral d'abord : l'anglais est lu par une voix anglaise du téléphone (britannique si possible), lentement, et se réécoute ;
 // l'écrit porte sur des mots déjà connus à l'oral. Ni saisie libre, ni prétérit ou futur, ni homophones (two/too, pear/pair…) en pièges.
 // Les images sont des émojis du téléphone ; les couleurs, des pastilles. Anglais britannique : colour, favourite, mum.
-const ENV = { // [anglais, français, image, classe minimale (2 = CE2, 4 = CM1, 5 = CM2)]
+const ENV = { // [anglais, français, émoji ou pastille de couleur], par thème
   col: [['red', 'rouge', '#d63a2f'], ['blue', 'bleu', '#2f6fd6'], ['green', 'vert', '#2fa34a'], ['yellow', 'jaune', '#f2cf2e'], ['orange', 'orange', '#f08a24'], ['purple', 'violet', '#8a46c2'], ['pink', 'rose', '#f07aa8'], ['black', 'noir', '#1d1712'], ['white', 'blanc', '#ffffff'], ['brown', 'marron', '#8a5a2b'], ['grey', 'gris', '#8d9499']],
   ani: [['cat', 'chat', '🐱'], ['dog', 'chien', '🐶'], ['bird', 'oiseau', '🐦'], ['fish', 'poisson', '🐟'], ['horse', 'cheval', '🐴'], ['cow', 'vache', '🐮'], ['pig', 'cochon', '🐷'], ['sheep', 'mouton', '🐑'], ['duck', 'canard', '🦆'], ['rabbit', 'lapin', '🐰'], ['mouse', 'souris', '🐭'], ['lion', 'lion', '🦁'], ['tiger', 'tigre', '🐯'], ['elephant', 'éléphant', '🐘'], ['monkey', 'singe', '🐒'], ['frog', 'grenouille', '🐸'], ['snake', 'serpent', '🐍'], ['bear', 'ours', '🐻'], ['giraffe', 'girafe', '🦒'], ['parrot', 'perroquet', '🦜'], ['shark', 'requin', '🦈'], ['whale', 'baleine', '🐳'], ['turtle', 'tortue', '🐢'], ['octopus', 'pieuvre', '🐙'], ['crab', 'crabe', '🦀'], ['bee', 'abeille', '🐝'], ['butterfly', 'papillon', '🦋'], ['owl', 'hibou', '🦉']],
   food: [['apple', 'pomme', '🍎'], ['banana', 'banane', '🍌'], ['strawberry', 'fraise', '🍓'], ['grapes', 'raisin', '🍇'], ['lemon', 'citron', '🍋'], ['cherries', 'cerises', '🍒'], ['carrot', 'carotte', '🥕'], ['tomato', 'tomate', '🍅'], ['bread', 'pain', '🍞'], ['cheese', 'fromage', '🧀'], ['egg', 'œuf', '🥚'], ['milk', 'lait', '🥛'], ['cake', 'gâteau', '🍰'], ['pizza', 'pizza', '🍕'], ['chocolate', 'chocolat', '🍫'], ['ice cream', 'glace', '🍦'], ['sandwich', 'sandwich', '🥪'], ['sweets', 'bonbons', '🍬'], ['honey', 'miel', '🍯']],
@@ -3449,7 +3458,7 @@ function enWhere() {
 const ENKIN = [['sister', 'sa sœur', 'f', 'Lucy'], ['brother', 'son frère', 'm', 'Tom'], ['mum', 'sa maman', 'f', 'Emma'], ['dad', 'son papa', 'm', 'Jack'], ['grandma', 'sa grand-mère', 'f', 'Rose'], ['grandpa', 'son grand-père', 'm', 'Sam']];
 function enWho() {
   const t = pick(['likes', 'likes', 'his', 'got']);
-  if (t === 'his') { const f = Math.random() < .5, nm = f ? pick(['Lucy', 'Emma', 'Mia', 'Zoe']) : pick(['Tom', 'Jack', 'Ben', 'Leo']), it = pick(['cat', 'dog', 'bike', 'bag']), c = pick(ENV.col.slice(0, 9)), ans = f ? 'Her' : 'His';
+  if (t === 'his') { const f = Math.random() < .5, nm = f ? pick(['Lucy', 'Emma', 'Mia', 'Zoe']) : pick(['Tom', 'Jack', 'Ben', 'Leo']), it = pick(['cat', 'dog', 'bike', 'bag']), c = ['cat', 'dog'].includes(it) ? pick(ENV.col.filter(x => ['black', 'white', 'brown', 'grey'].includes(x[0]))) : pick(ENV.col.slice(0, 9)), ans = f ? 'Her' : 'His';
     return enq({ ask: 'Lis et complète la phrase.', prompt: enTxt(`This is ${nm}. … ${it} is ${c[0]}.`), en: `This is ${nm}.`, readOnly: 1, answer: ans, answerText: `« ${ans} ${it} is ${c[0]} »`,
       choices: shuffle(['His', 'Her', 'My'].map(x => x === ans ? { v: x, html: `<span lang="en">${x}</span>` } : { v: x, html: `<span lang="en">${x}</span>`, why: x === 'My' ? '« My » veut dire « mon, ma » : c’est à moi. Ici, on parle de quelqu’un d’autre.' : `${nm} est ${f ? 'une fille' : 'un garçon'} : on dit « ${ans} » (« son, sa » ${f ? 'pour une fille' : 'pour un garçon'}).` })), log: `anglais, possessif : ${nm}`,
       explain: `${nm} est ${f ? 'une fille' : 'un garçon'} : « ${ans} ${it} » (son ${{ cat: 'chat', dog: 'chien', bike: 'vélo', bag: 'sac' }[it]}). His pour un garçon, her pour une fille.`, hint: 'His : son, sa (à lui). Her : son, sa (à elle).' }); }
@@ -3470,8 +3479,8 @@ function enPresent() {
   const [v, x] = pick(ENVB), pl = enG() >= 5 && Math.random() < .4, sub = pl ? pick(['They', 'We', 'My friends']) : pick(['She', 'He', 'Lucy', 'Tom', 'My sister', 'My dad', 'I', 'You']), third = !pl && !['I', 'You'].includes(sub), ans = third ? v + 's' : v;
   const ing = v === 'swim' ? 'swimming' : v.endsWith('e') ? v.slice(0, -1) + 'ing' : v + 'ing', choices = [v + 's', v, ing];
   return enq({ ask: 'Lis et complète la phrase.', prompt: enTxt(`${sub} … ${x}.`), en: `${sub} ${ans} ${x}.`, readOnly: 1, answer: ans, answerText: `« ${sub} ${ans} ${x} »`,
-    choices: shuffle(choices.map(c => c === ans ? { v: c, html: `<span lang="en">${c}</span>` } : { v: c, html: `<span lang="en">${c}</span>`, why: c === ing ? `« ${c} » ne va pas ici. ${third ? `Avec « ${sub} », le verbe prend un -s` : `Avec « ${sub} », pas de -s`} : « ${ans} ».` : third ? `Avec « ${sub} » (il ou elle), le verbe prend un -s : « ${ans} ».` : `Avec « ${sub} », pas de -s : le -s, c’est seulement pour he, she, it (il, elle).` })), log: `anglais, présent : ${sub} ${v}`,
-    explain: `« ${sub} ${ans} ${x} ». ${third ? 'Après he, she ou un prénom, le verbe prend un -s.' : 'Le -s ne s’ajoute qu’après he, she, it.'}`, hint: 'He, she, it : le verbe prend un -s. I, you, we, they : pas de -s.' });
+    choices: shuffle(choices.map(c => c === ans ? { v: c, html: `<span lang="en">${c}</span>` } : { v: c, html: `<span lang="en">${c}</span>`, why: c === ing ? `« ${c} » ne va pas ici. ${third ? `Avec « ${sub} », le verbe prend un -s` : `Avec « ${sub} », pas de -s`} : « ${ans} ».` : third ? `Avec « ${sub} » (il ou elle), le verbe prend un -s : « ${ans} ».` : `Avec « ${sub} », pas de -s : le -s, c’est seulement pour il ou elle : he, she, it ou un prénom.` })), log: `anglais, présent : ${sub} ${v}`,
+    explain: `« ${sub} ${ans} ${x} ». ${third ? 'Après he, she ou un prénom, le verbe prend un -s.' : 'Le -s ne s’ajoute qu’après he, she, it ou un prénom (il ou elle).'}`, hint: 'He, she, it : le verbe prend un -s. I, you, we, they : pas de -s.' });
 }
 // Comprendre un court texte : carte postale, invitation, « can / can't »
 function enText() {
@@ -3583,7 +3592,7 @@ function genAnglais(l) {
     return r < .5 ? enPresent() : enText();
   }
   if (g === 'cm2') {
-    if (l === 1) return r < .35 ? enClock() : r < .6 ? enPrice() : r < .8 ? enListenCal(true) : enListenNum(100, 1000);
+    if (l === 1) return r < .35 ? enClock() : r < .6 ? enPrice() : r < .8 ? enListenCal(true) : enListenNum(20, 100);
     if (l === 2) return r < .5 ? enDirections() : enSign();
     if (l === 3) return r < .5 ? enPortrait() : enRoutine();
     if (l === 4) return r < .65 ? enDialogue() : enQA();
@@ -3620,7 +3629,7 @@ const CULT = {
       ['Lequel est un continent ?', 'l’Afrique', ['l’Atlantique', 'la France'], 'L’Afrique est un continent. L’Atlantique est un océan et la France est un pays.'],
       ['Sur quel continent se trouve la France métropolitaine ?', 'l’Europe', ['l’Asie', 'l’Océanie'], 'La France métropolitaine est en Europe.'],
       ['Quelle est la capitale de la France ?', 'Paris', ['Lyon', 'Marseille'], 'Paris est la capitale de la France. Lyon et Marseille sont de grandes villes.'],
-      ['Quel est le plus grand océan ?', 'le Pacifique', ['l’Atlantique', 'l’océan Indien'], 'Le Pacifique est le plus grand océan du monde.'],
+      ['Comment est l’eau de la mer ?', 'salée', ['sucrée', 'sans goût'], 'L’eau de la mer est salée : on ne peut pas la boire.'],
       ['Quels sont les quatre points cardinaux ?', 'nord, sud, est, ouest', ['haut, bas, gauche, droite', 'printemps, été, automne, hiver'], 'Les quatre points cardinaux sont le nord, le sud, l’est et l’ouest. Ils servent à s’orienter.']],
     [['Lequel est vivant ?', 'un escargot', ['un caillou', 'une cuillère'], 'L’escargot est vivant : il naît, se nourrit, grandit. Le caillou et la cuillère ne sont pas vivants.'],
       ['Lequel n’est pas vivant ?', 'un caillou', ['un arbre', 'un ver de terre'], 'Le caillou n’est pas vivant. L’arbre et le ver de terre naissent, se nourrissent et grandissent.'],
@@ -3822,7 +3831,7 @@ const CULT = {
       ['« Unie dans la diversité » est la devise :', 'de l’Union européenne', ['de la République française', 'de l’ONU'], '« Unie dans la diversité » est la devise de l’Union européenne. Celle de la France est « Liberté, Égalité, Fraternité ».']],
     [['La Première République est proclamée en :', '1792', ['1515', '1945'], 'La Première République est proclamée en 1792, pendant la Révolution française.'],
       ['En 1892, la République fête :', 'ses 100 ans', ['ses 10 ans', 'ses 1 000 ans'], '1792 + 100 = 1892 : la République fête ses cent ans.'],
-      ['Les lois de Jules Ferry (1881-1882) rendent l’école primaire publique :', 'gratuite, laïque et obligatoire', ['payante', 'réservée aux garçons'], 'Grâce aux lois de Jules Ferry, l’école primaire publique devient gratuite, laïque et obligatoire.'],
+      ['Les lois de Jules Ferry (1881-1882) rendent l’école primaire publique :', 'gratuite et laïque', ['payante', 'réservée aux garçons'], 'Grâce aux lois de Jules Ferry, l’école primaire publique devient gratuite (1881) et laïque (1882). C’est l’instruction qui devient obligatoire, pas l’école.'],
       ['En 1882, l’instruction devient obligatoire pour :', 'les filles et les garçons', ['les garçons seulement', 'les enfants des villes seulement'], 'La loi de 1882 rend l’instruction obligatoire pour tous les enfants, filles et garçons.'],
       ['En France, les femmes obtiennent le droit de vote en :', '1944', ['1789', '1999'], 'En France, les femmes obtiennent le droit de vote en 1944. Elles votent pour la première fois en 1945.'],
       ['La Constitution de la Ve République date de :', '1958', ['1789', '1515'], 'La Constitution de la Ve République a été adoptée en 1958.'],
@@ -3868,7 +3877,7 @@ const CULTH = {
   ce1: ['Pense aux unités de temps : secondes, minutes, heures, jours, siècles.', 'Que mange cet animal ? Comment grandit-il ?', 'Une plante a des racines, une tige, des feuilles, des fleurs et des fruits.', 'L’eau peut geler ou fondre ; le courant passe dans les métaux.', 'Pense aux symboles qu’on voit sur les mairies et les écoles.'],
   ce2: ['Rappelle-toi l’ordre : Préhistoire, Antiquité, Moyen Âge, Temps modernes, époque contemporaine.', 'À quelle époque ce monument ou cette trace a-t-il été fait ?', 'Le Soleil éclaire ; la Terre tourne autour de lui ; la Lune tourne autour de la Terre.', 'L’eau peut être solide, liquide ou gazeuse.', 'Pense à la mairie, au maire et aux élections.'],
   cm1: ['Pense aux seigneurs, aux paysans, aux moines et aux cathédrales.', 'Pense à François Ier, à Henri IV et à Louis XIV.', 'Pense aux grands voyages en mer et à la Révolution de 1789.', 'Comment naît cet animal ? Qui mange qui ?', 'Pense aux expériences de la classe : mélanges, ombres, météo.'],
-  cm2: ['Pense aux symboles de la France et de l’Union européenne.', 'Pense aux grandes dates de la République et des droits.', 'Pense aux machines à vapeur, aux mines et aux usines.', 'Pense à l’ordre des planètes autour du Soleil.', 'Pense au trajet des aliments et aux énergies.']
+  cm2: ['Pense aux symboles de la France et de l’Union européenne.', 'Pense aux grandes dates de la République et des droits.', 'Pense aux machines à vapeur, aux mines et aux usines.', 'Pense au système solaire : le Soleil, les huit planètes, la Terre et la Lune.', 'Pense au trajet des aliments et aux énergies.']
 };
 function genCulture(l) {
   const g = CULT[GR()] ? GR() : 'ce2', lv = Math.max(1, Math.min(5, l || 1)), ap = t => t.replace(/'/g, '’');
@@ -4248,11 +4257,10 @@ const SV2 = [['La mouette', 'crier', 2, 'au-dessus du mât'], ['Les mouettes', '
 const SV4 = [['Le capitaine des pirates', 'regarder', 2, 'la mer', 'Le sujet est « le capitaine » (pas « les pirates »).'], ['Les voiles du navire', 'claquer', 5, 'au vent', 'Le sujet est « les voiles » (pas « le navire »).'],
   ['Le perroquet de mes amis', 'parler', 2, 'beaucoup', 'Le sujet est « le perroquet » (pas « mes amis »).'], ['Les amis du capitaine', 'arriver', 5, 'demain', 'Le sujet est « les amis ».'], ['Le coffre aux trésors', 'briller', 2, 'dans le noir', 'Le sujet est « le coffre » (pas « les trésors »).'],
   ['Pi les', 'regarder', 2, 'en silence', '« les » n’est pas le sujet : c’est Pi qui regarde. Le sujet est singulier.'], ['La vigie les', 'surveiller', 2, 'de loin', '« les » n’est pas le sujet : c’est la vigie qui surveille.'], ['Le capitaine leur', 'parler', 2, 'doucement', '« leur » n’est pas le sujet : c’est le capitaine qui parle.'],
-  ['Tom et Lila', 'ramer', 5, 'vers l’île', 'Deux sujets, Tom et Lila : cela fait « ils », le verbe est au pluriel.'], ['Le mousse et le perroquet', 'jouer', 5, 'aux cartes', 'Deux sujets : cela fait « ils », le verbe est au pluriel.'],
-  ['Sur le pont', 'danser', 5, 'les pirates', 'Le sujet est placé après le verbe : qui danse ? les pirates.', 1], ['Dans la cale', 'dormir', 5, 'les rats', 'Le sujet est placé après le verbe : qui dort ? les rats.', 1]];
+  ['Tom et Lila', 'ramer', 5, 'vers l’île', 'Deux sujets, Tom et Lila : cela fait « ils », le verbe est au pluriel.'], ['Le mousse et le perroquet', 'jouer', 5, 'aux cartes', 'Deux sujets : cela fait « ils », le verbe est au pluriel.']];
 VB['claquer'] = { g: 1, c: 9, x: '' }; VB['parler'] = { g: 1, c: 9, x: '' }; VB['briller'] = { g: 1, c: 9, x: '' }; VB['surveiller'] = { g: 1, c: 9, x: '' }; VB['dormir'] = { g: 3, c: 9, pr: ['dors', 'dors', 'dort', 'dormons', 'dormez', 'dorment'], im: 'dorm', fu: 'dormir', pp: 'dormi', x: '' };
 function qSV(cm1) {
-  const it = pick(cm1 ? SV4.filter(x => !x[5]) : SV2), /* sujet inversé : programme du CM2 */ F = vforms(it[1], 'pr'), ans = F[it[2]], w = [...new Set([F[2], F[5], F[1]])].filter(x => x !== ans);
+  const it = pick(cm1 ? SV4 : SV2), F = vforms(it[1], 'pr'), ans = F[it[2]], w = [...new Set([F[2], F[5], F[1]])].filter(x => x !== ans);
   const prompt = `${it[0]} ${SLOT} ${it[3]}.`;
   const why = v => `${v === F[1] ? `« ${v} » va avec « tu » (terminaison -s).` : v === F[5] ? `« ${v} » va avec un sujet pluriel (ils, elles).` : `« ${v} » va avec un sujet singulier (il, elle).`} ${it[4] || `Ici, le sujet est « ${it[0]} ».`}`;
   return { kind: 'choices', ask: `Accorde le verbe « ${it[1]} » au présent :`, prompt, promptClass: 'sent', answer: ans, answerText: ans, choices: shuffle([ans, ...w.slice(0, 2)]).map(v => v === ans ? { v, html: v } : { v, html: v, why: why(v) }), log: `accord : ${it[0]} … (${it[1]})`,
@@ -4550,7 +4558,7 @@ const ATTS = [['Les sirènes', 1, 1, HUM], ['Le capitaine', 0, 0, HUM], ['La mer
 const COP = [['être', 'est', 'sont'], ['sembler', 'semble', 'semblent'], ['devenir', 'devient', 'deviennent'], ['rester', 'reste', 'restent'], ['paraître', 'paraît', 'paraissent']];
 function qAttr() {
   const S = pick(ATTS), adj = pick(S[3]), A = GNA.find(x => x[0] === adj);
-  const [nm, f, pl] = S, V = pick(COP), ans = A[pl ? (f ? 3 : 2) : f ? 1 : 0], forms = [...new Set(A.slice(0, 4))].filter(x => x !== ans), w = shuffle(forms).slice(0, 2);
+  const [nm, f, pl] = S, V = pick(adj === 'neuf' ? COP.filter(c => c[0] !== 'devenir') : COP), ans = A[pl ? (f ? 3 : 2) : f ? 1 : 0], forms = [...new Set(A.slice(0, 4))].filter(x => x !== ans), w = shuffle(forms).slice(0, 2);
   if (w.length < 2) return qAttr();
   return { kind: 'choices', ask: `Accorde l’adjectif « ${A[0]} » :`, prompt: `${nm} ${pl ? V[2] : V[1]} ${SLOT}.`, promptClass: 'sent', answer: ans, answerText: `${nm} ${pl ? V[2] : V[1]} ${ans}.`, choices: shuffle([ans, ...w]).map(v => ({ v, html: v })), log: `attribut : ${nm} ${pl ? V[2] : V[1]} … (${A[0]})`,
     explain: `« ${ans} » est attribut du sujet « ${nm} » (verbe « ${V[0]} ») : il s’accorde avec le sujet, ${gWhy(!!f, !!pl)}${nm === 'Tom et Lila' ? ' (un garçon et une fille : masculin pluriel)' : ''}.${A[7] ? ' ' + A[7] : ''}`, hint: 'L’attribut du sujet s’accorde avec le sujet, comme un adjectif épithète.' };
@@ -4671,7 +4679,7 @@ const TXT = {
         ['a', 'Dans « et la lance dans les vagues », que remplace « la » ?', 'la bouteille', ['la lettre', 'Lila'], 'Lila glisse le papier dans une bouteille, puis elle lance la bouteille.'],
         ['v', 'Que veut dire « naviguer » ?', 'voyager en bateau', ['nager sous l’eau', 'écrire une lettre'], 'Naviguer, c’est voyager sur l’eau en bateau.'],
         ['a', 'Dans « Elle vient d’un garçon », « Elle » désigne :', 'la lettre', ['Lila', 'la bouteille'], '« Elle » reprend « une lettre », dont on vient de parler.']] },
-      { t: 'Le singe voleur', x: 'Les pirates accostent sur une île pleine de palmiers. Pendant que le capitaine dort, un singe saute sur son chapeau et l’emporte en haut d’un arbre. Le capitaine se réveille en criant. Pi éclate de rire : il n’a jamais vu son capitaine aussi décoiffé !', q: [
+      { t: 'Le singe voleur', x: 'Les pirates accostent sur une île pleine de palmiers. Pendant que le capitaine dort, un singe saute sur son chapeau et l’emporte en haut d’un arbre. Le capitaine se réveille, touche sa tête nue et pousse un grand cri. Pi éclate de rire : il n’a jamais vu son capitaine aussi décoiffé !', q: [
         ['e', 'Que vole le singe ?', 'le chapeau du capitaine', ['une banane', 'la carte'], 'Le texte dit : « un singe saute sur son chapeau et l’emporte ».'],
         ['i', 'Pourquoi le capitaine crie-t-il ?', 'Il découvre que son chapeau a disparu.', ['Il a vu un requin.', 'Il a mal au pied.'], 'On le devine : il se réveille sans son chapeau, volé pendant qu’il dormait.'],
         ['a', 'Dans « et l’emporte en haut d’un arbre », que remplace « l’ » ?', 'le chapeau', ['le singe', 'le capitaine'], 'Le singe saute sur le chapeau et emporte le chapeau.'],
@@ -4712,7 +4720,7 @@ const TXT = {
         ['v', 'Le « krill », ce sont :', 'de tout petits animaux de la mer', ['des algues', 'de gros poissons'], 'Le texte le dit : « de tout petits animaux appelés krill ».']] },
     ],
     l: [
-      { t: 'La mer qui brille', x: 'Ce soir-là, la mer est calme. Le capitaine a promis une surprise à l’équipage. Tout le monde attend sur le pont, en silence.\nSoudain, l’eau autour du bateau s’allume : des milliers de petites lumières bleues dansent dans les vagues. « Ce sont des planctons lumineux », explique le capitaine.\nLila plonge la main dans l’eau. Ses doigts brillent comme des étoiles. Pi, lui, n’est pas rassuré : il se cache sous le chapeau du capitaine. Les pirates rient. Cette nuit-là, personne ne veut aller se coucher.', q: [
+      { t: 'La mer qui brille', x: 'Ce soir-là, la mer est calme. Le capitaine a promis une surprise à l’équipage. Tout le monde attend sur le pont, en silence.\nSoudain, l’eau autour du bateau s’allume : des milliers de petites lumières bleues dansent dans les vagues. « C’est du plancton lumineux », explique le capitaine.\nLila plonge la main dans l’eau. Ses doigts brillent comme des étoiles. Pi, lui, n’est pas rassuré : il se cache sous le chapeau du capitaine. Les pirates rient. Cette nuit-là, personne ne veut aller se coucher.', q: [
         ['g', 'Quel titre convient le mieux à ce texte ?', 'La mer qui brille', ['La grande tempête', 'Le singe voleur'], 'Le texte raconte une nuit où la mer s’allume de petites lumières.'],
         ['e', 'De quelle couleur sont les lumières ?', 'bleues', ['rouges', 'jaunes'], 'Le texte dit : « des milliers de petites lumières bleues ».'],
         ['i', 'Pourquoi personne ne veut aller se coucher ?', 'Le spectacle est trop beau.', ['Il fait trop chaud.', 'Pi fait trop de bruit.'], 'Tout le monde admire la mer qui brille : on ne veut pas manquer ce spectacle.'],
@@ -4722,7 +4730,7 @@ const TXT = {
         ['g', 'Ce texte sert à :', 'expliquer comment faire quelque chose', ['raconter une histoire', 'décrire un animal'], 'Il donne des étapes dans l’ordre : d’abord, ensuite, puis, enfin.'],
         ['e', 'À quoi sert le nœud de huit ?', 'à empêcher une corde de glisser', ['à attacher un perroquet', 'à décorer le bateau'], 'Le texte dit : « Il empêche une corde de glisser. »'],
         ['e', 'Que faut-il faire en dernier ?', 'tirer doucement sur les deux côtés', ['faire une boucle', 'passer le bout derrière la corde'], 'Le mot « Enfin » annonce la dernière étape.'],
-        ['i', 'Pourquoi l’appelle-t-on « nœud de huit » ?', 'Il a la forme du chiffre 8.', ['Il faut huit cordes.', 'Il faut huit minutes.'], 'Le texte dit : « Ton nœud doit ressembler au chiffre 8. »'],
+        ['e', 'Pourquoi l’appelle-t-on « nœud de huit » ?', 'Il a la forme du chiffre 8.', ['Il faut huit cordes.', 'Il faut huit minutes.'], 'Le texte dit : « Ton nœud doit ressembler au chiffre 8. »'],
         ['v', 'Dans ce texte, un « mousse » est :', 'un jeune apprenti marin', ['une plante des rochers', 'une boisson'], 'Le mot « mousse » a plusieurs sens. Ici, on parle d’un marin qui apprend.']] },
       { t: 'Le message de la tortue', x: 'Un matin, une vieille tortue s’approche du bateau. Elle porte une algue nouée autour du cou. Tom l’aide à monter à bord et découvre un petit tube attaché à l’algue. Dedans, il y a un message : « Au secours ! Je suis coincé sur l’île aux Crabes. Signé : Jo. »\nLe capitaine fronce les sourcils. Jo est un vieux pêcheur, son ami de toujours. « Changement de cap ! » ordonne-t-il. Le Fier Calcul tourne vers le sud. La tortue, elle, retourne tranquillement dans l’eau, sa mission accomplie.', q: [
         ['g', 'Quel titre convient le mieux à ce texte ?', 'Un message pour sauver Jo', ['La recette de la soupe', 'Le singe voleur'], 'Toute l’histoire tourne autour du message de Jo, qui appelle au secours.'],
@@ -4750,7 +4758,7 @@ const TXT = {
       { t: 'Les dauphins', x: 'Les dauphins accompagnent souvent les navires. Ils nagent devant la proue et sautent hors de l’eau. Les marins disent qu’ils portent bonheur.', q: [
         ['e', 'Où nagent les dauphins ?', 'devant la proue', ['sous la cale', 'derrière le port'], 'Le texte dit : « Ils nagent devant la proue ». La proue, c’est l’avant du bateau.'],
         ['e', 'Que disent les marins des dauphins ?', 'qu’ils portent bonheur', ['qu’ils sont dangereux', 'qu’ils volent les poissons'], 'Le texte dit : « Les marins disent qu’ils portent bonheur. »']] },
-      { t: 'La boussole', x: 'Le capitaine a perdu sa boussole. Sans elle, impossible de savoir où est le nord. Heureusement, Lila connaît les étoiles : elle retrouve la bonne direction en regardant le ciel.', q: [
+      { t: 'La boussole perdue', x: 'Le capitaine a perdu sa boussole. Sans elle, impossible de savoir où est le nord. Heureusement, Lila connaît les étoiles : elle retrouve la bonne direction en regardant le ciel.', q: [
         ['e', 'Qu’a perdu le capitaine ?', 'sa boussole', ['sa carte', 'sa longue-vue'], 'Le texte dit : « Le capitaine a perdu sa boussole. »'],
         ['a', 'Dans « Sans elle », « elle » désigne :', 'la boussole', ['Lila', 'l’étoile'], '« elle » reprend « sa boussole », dont on vient de parler.'],
         ['i', 'Pourquoi Lila peut-elle aider le capitaine ?', 'Elle sait se repérer grâce aux étoiles.', ['Elle a une autre boussole.', 'Elle connaît la mer par cœur.'], 'Le texte dit qu’elle « connaît les étoiles » : elles lui indiquent la direction.']] },
@@ -4891,7 +4899,7 @@ const TXT = {
         ['v', 'Le « code des pirates », c’est ici :', 'les règles que suivent les pirates', ['un message secret', 'un mot de passe'], 'Le code dit comment partager le butin.']] },
       { t: 'La chanson de Pi', x: 'Je suis Pi, le perroquet du bord,\nJe parle, je chante et je veille encore.\nDu haut du mât, je vois le port,\nLes îles d’or et les vents du nord.\nMais quand l’orage gronde et mord,\nJe file à la cale… et je m’endors !', q: [
         ['g', 'Ce texte est :', 'un poème', ['une lettre', 'un texte documentaire'], 'Il est écrit en vers, avec des rimes.'],
-        ['i', 'Qui parle dans ce texte ?', 'le perroquet Pi', ['le capitaine', 'la vigie'], 'Le premier vers dit : « Je suis Pi, le perroquet du bord ».'],
+        ['e', 'Qui parle dans ce texte ?', 'le perroquet Pi', ['le capitaine', 'la vigie'], 'Le premier vers dit : « Je suis Pi, le perroquet du bord ».'],
         ['e', 'D’où Pi voit-il le port ?', 'du haut du mât', ['depuis la cale', 'depuis une île'], 'Le texte dit : « Du haut du mât, je vois le port ».'],
         ['i', 'Que fait Pi pendant l’orage ?', 'Il se cache et s’endort.', ['Il guide le navire.', 'Il chante plus fort.'], '« Je file à la cale… et je m’endors ! » : il n’est pas très courageux.'],
         ['a', 'Dans « je vois le port », « je » désigne :', 'Pi', ['le lecteur', 'le capitaine'], 'C’est Pi qui parle d’un bout à l’autre du poème.'],
@@ -4926,7 +4934,7 @@ const TXT = {
         ['g', 'Ce texte est :', 'une scène de théâtre', ['un poème', 'un texte documentaire'], 'Le nom de chaque personnage est écrit avant ce qu’il dit, avec des indications pour jouer.'],
         ['e', 'Quelle punition le capitaine donne-t-il à Pi ?', 'aider à faire la vaisselle pendant trois jours', ['rester dans la cale', 'ne plus manger de graines'], 'Le capitaine dit : « tu aideras Gros-Louis à faire la vaisselle pendant trois jours ».'],
         ['i', 'Pourquoi le capitaine ne croit-il pas Pi ?', 'Pi a du sucre sur le bec.', ['Pi bégaie.', 'Tom l’a vu voler la crêpe.'], 'Le sucre sur le bec prouve que Pi a mangé une crêpe.'],
-        ['i', 'Pourquoi Tom éclate-t-il de rire ?', 'Il voit bien que Pi ment : le sable ne sent pas la fleur d’oranger.', ['Il trouve la crêpe ratée.', 'Il a volé la crêpe lui-même.'], 'Les crêpes sentent la fleur d’oranger, pas le sable : l’excuse de Pi ne tient pas.'],
+        ['i', 'Pourquoi Tom éclate-t-il de rire ?', 'Il voit bien que Pi ment : son excuse du sable est ridicule.', ['Il trouve la crêpe ratée.', 'Il a volé la crêpe lui-même.'], 'Pi a du sucre sur le bec et parle d’un sable « qui sent bon » : son excuse ne tient pas, Tom se moque de lui.'],
         ['g', 'À quoi servent « furieux », « l’air innocent », « sévère » ?', 'à dire comment les personnages parlent ou se tiennent', ['à donner le nom des personnages', 'à raconter la fin de l’histoire'], 'Au théâtre, ces indications aident les acteurs à jouer la scène.'],
         ['v', '« Pour ta peine » veut dire :', 'comme punition', ['pour te consoler', 'pour te récompenser'], 'Le capitaine punit Pi pour son vol.']] },
       { t: 'La traversée du récif', x: 'Pour rejoindre le lagon, le Fier Calcul devait franchir la passe du Serpent, un étroit chenal bordé de coraux coupants. Le capitaine monta lui-même à la proue et ordonna de réduire la voilure.\n« Lila, sonde le fond ! Tom, à la barre, et doucement ! »\nMètre après mètre, le navire glissa entre les récifs. À un moment, la coque frotta contre le corail dans un grincement sinistre ; tout l’équipage retint son souffle. Mais Tom donna un coup de barre au bon moment, et le navire se dégagea.\nQuand ils entrèrent enfin dans le lagon, l’eau était si claire qu’on voyait les poissons nager sous la quille. Le capitaine ne fit aucun discours. Il se contenta d’offrir sa propre ration de chocolat à Tom.', q: [
@@ -4943,12 +4951,12 @@ const QHINT = { e: 'La réponse est écrite dans le texte : relis-le en cherchan
 function genLecture(l) {
   if (CP()) return cpLecture(l);
   if (CE1()) { if (l === 1) return cpLecture(5); l -= 1; } // CE1 : un texte court du CP, puis les textes du CE2 des niveaux 1 à 4
-  const B = TXT[CE1() ? 'ce2' : GR()], set = l === 1 ? B.m : l === 5 ? B.l : B.p, types = l === 2 ? ['e'] : l === 3 ? ['i', 'e'] : l === 4 ? ['a', 'v'] : null;
+  const B = TXT[CE1() ? 'ce2' : GR()], set = l === 1 || (CE1() && l === 2) ? B.m : l === 5 ? B.l : B.p, types = l === 2 ? ['e'] : l === 3 ? ['i', 'e'] : l === 4 ? ['a', 'v'] : null;
   // Une question est « libre » si elle n'a pas été posée dans l'escale (max 1) ni parmi les dernières de l'île (max 0)
   const used = r => qUsed('lecture', { kind: 'read', ask: typo(r[1]), answerText: typo(r[2]) }), fresh = (T, max) => T.q.filter(r => (!types || types.includes(r[0])) && used(r) <= max);
   // On reste sur le même texte tant qu'il a des questions libres : l'enfant ne relit pas un nouveau texte à chaque fois
   const stay = max => R && R.rt && set.includes(R.rt) && fresh(R.rt, max).length ? R.rt : pick(set.filter(t => fresh(t, max).length));
-  const T = stay(0) || stay(1) || pick(set), qs = fresh(T, 0).length ? fresh(T, 0) : fresh(T, 1).length ? fresh(T, 1) : T.q;
+  const T = stay(0) || stay(1) || pick(set), qsT = T.q.filter(r => !types || types.includes(r[0])), qs = fresh(T, 0).length ? fresh(T, 0) : fresh(T, 1).length ? fresh(T, 1) : qsT.length ? qsT : T.q;
   if (R) R.rt = T; const [ty, q, a, w, e] = pick(types && l === 3 ? (qs.filter(x => x[0] === 'i').length ? qs.filter(x => x[0] === 'i') : qs) : qs);
   // Quand la question demande le meilleur titre, on n'affiche pas le titre au-dessus du texte : la réponse serait sous les yeux
   return { kind: 'read', title: ty === 'g' && /titre/i.test(q) ? '' : T.t, text: typo(T.x), ask: typo(q), prompt: '', answer: a, answerText: typo(a), choices: shuffle([a, ...w]).map(v => ({ v, html: esc(typo(v)) })), log: `${T.t} · ${q}`, explain: esc(typo(e)), hint: QHINT[ty] };
@@ -4965,7 +4973,7 @@ const SKILLS = {
     cuisine: ['trouver la moitié de 2, 4 ou 6 parts', 'trouver la moitié de 8, 10 ou 12', 'partager en deux parts égales', 'résoudre un problème de groupes ou de partage', 'résoudre un problème (ajout, retrait, ce qui manque)'],
     horloge: ['connaître l’ordre des jours et les moments de la journée', 'dire le jour d’hier, savoir qu’une semaine a 7 jours', 'lire l’heure pile', 'connaître l’ordre des mois', 'me repérer dans le temps'],
     lecture: ['lire une phrase simple', 'comprendre une ou deux phrases', 'comprendre deux phrases', 'comprendre un petit texte', 'trouver une information dans un texte'],
-    conjug: ['reconnaître la première lettre d’un mot', 'entendre les rimes', 'compter les syllabes', 'trouver la syllabe qui manque dans un mot', 'lire ou, on, an, oi, ch, conjuguer être et avoir'],
+    conjug: ['reconnaître la première lettre d’un mot', 'entendre les rimes', 'compter les syllabes', 'trouver la syllabe qui manque dans un mot', 'lire les mots avec ou, on, an, oi, ch'],
     gram: ['trouver un mot dans une phrase', 'compter les mots d’une phrase', 'repérer la majuscule et le point', 'reconnaître une phrase qui a du sens', 'reconnaître une phrase bien écrite et qui a du sens'],
     accords: ['choisir le ou la', 'choisir un ou une', 'écrire le pluriel avec un s', 'reconnaître un mot au pluriel', 'remplacer un nom par il ou elle'],
     culture: ['nommer les jours, les mois et les saisons', 'reconnaître les symboles de la France, les continents et les océans', 'distinguer le vivant du non-vivant', 'nommer des parties de mon corps et des gestes bons pour ma santé', 'reconnaître l’eau solide ou liquide et la matière des objets'],
@@ -4983,7 +4991,7 @@ const SKILLS = {
     gram: ['repérer majuscule et point, trouver le type de phrase', 'trouver le verbe', 'trouver les noms et les déterminants', 'trouver le sujet et le verbe', 'utiliser la négation, trouver le sujet et le verbe'],
     accords: ['choisir le, la ou les, reconnaître un pluriel', 'mettre un nom au pluriel', 'accorder l’adjectif au féminin et au pluriel', 'accorder le groupe nominal et le verbe', 'faire tous les accords, a / à, et / est'],
     culture: ['utiliser le calendrier et les unités de durée', 'dire ce que mangent des animaux et comment ils grandissent', 'dire ce dont une plante a besoin', 'nommer les changements de l’eau et utiliser l’électricité sans danger', 'reconnaître les symboles et la devise de la République'],
-    vocab: ['ranger lettres et mots dans l’ordre alphabétique', 'trouver un contraire, ranger des mots', 'trouver les mots de la même famille', 'trouver un synonyme ou un contraire', 'reconnaître familles, synonymes, préfixes et expressions'] },
+    vocab: ['ranger lettres et mots dans l’ordre alphabétique', 'trouver un contraire, ranger des mots', 'trouver les mots de la même famille', 'trouver un synonyme ou un contraire', 'reconnaître familles, synonymes et préfixes'] },
   ce2: { canons: ['utiliser les tables de 2, 5 et 10', 'utiliser les tables de 2, 3, 4, 5 et 10', 'utiliser toutes les tables', 'trouver le nombre caché d’une multiplication', 'multiplier, trouver le nombre caché, diviser'],
     stade: ['additionner et soustraire jusqu’à 20', 'trouver le double ou la moitié d’un nombre', 'ajouter et enlever des unités ou des dizaines', 'multiplier par 10 et 100, doubler et partager en deux', 'calculer de tête jusqu’à 100 avec des astuces'],
     mine: ['lire et construire les nombres jusqu’à 999', 'lire et construire les nombres jusqu’à 9 999', 'lire les nombres écrits en lettres', 'faire les échanges entre unités, dizaines, centaines', 'écrire un nombre à partir de sa décomposition'],
@@ -5171,7 +5179,7 @@ setInterval(() => { if (R && !R.done && !document.hidden) { sessionMs += 1000; c
 
 /* ================= Écrans ================= */
 let tab = 'map', R = null, mapScroll = null;
-function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass'; t.textContent = msg; app.appendChild(t); setTimeout(() => t.remove(), 3200); announce(msg); }
+function toast(msg) { const t = document.createElement('div'); t.className = 'toast glass'; t.textContent = typo(msg); app.appendChild(t); setTimeout(() => t.remove(), 3200); announce(msg); }
 // Région live dédiée : les lecteurs d'écran annoncent les messages sans relire tout l'écran
 function announce(msg) { const l = document.getElementById('live'); if (!l) return; l.textContent = ''; setTimeout(() => { l.textContent = msg; }, 50); }
 function hudHTML() {
@@ -5191,7 +5199,7 @@ function bindCog() {
   const go = e => { e.preventDefault(); held = false; c.classList.add('hold'); tm = setTimeout(() => { held = true; c.classList.remove('hold'); parentGate(openParents); }, 2000); };
   const stop = () => { if (tm) clearTimeout(tm); c.classList.remove('hold'); };
   c.addEventListener('pointerdown', go); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => c.addEventListener(ev, stop));
-  c.addEventListener('click', () => { if (!held) toast('Espace parents : maintiens le bouton 2 secondes.'); held = false; });
+  c.addEventListener('click', () => { if (!held) toast('Espace parents : maintenez le bouton 2 secondes.'); held = false; });
 }
 
 function renderMap() {
@@ -5206,7 +5214,7 @@ function renderMap() {
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
     if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b>${i.n}</b><span class="lvl-pill lock">Bientôt</span></span></button>`;
-    return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : ''}">
+    return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : rk(s) === 2 ? ', île maîtrisée' : `, rang ${IRANK[rk(s)].n}, niveau ${Math.min(s.node, NODES)} sur ${NODES}`}">
       <img class="lag" src="${IMG(i.lag)}" alt=""><img class="land" src="${IMG(i.img)}" alt="">
       <span class="lbl"><b>${!lk ? penSVG(rk(s)) : ''}${i.n}</b>${lk ? `<span class="lvl-pill lock">${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner</span>` : `<span class="lvl-pill r${rk(s)}">${rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span>`}</span></button>`;
   }).join('');
@@ -5254,7 +5262,7 @@ function trophyHTML(i, s) {
   if (s.node <= CHEST) { const left = CHEST - s.node; ic = `<div class="ti"><img src="${IMG('chest-closed')}" alt=""></div>`; top = left ? `Prochain trésor · encore ${left} niveau${left > 1 ? 'x' : ''}` : 'Prochain trésor · c’est maintenant\u00a0!'; title = !i.chestCrew || has(i.chestCrew) ? 'Le coffre de l’île' : 'Un coffre et un nouvel équipier'; }
   else if (s.node <= BOSS) { const left = BOSS - s.node; ic = `<div class="ti boss"><img src="${IMG(i.boss.img)}" alt=""></div>`; top = left ? `Prochain défi · encore ${left} niveau${left > 1 ? 'x' : ''}` : 'Prochain défi · c’est maintenant\u00a0!'; title = i.boss.n; }
   else if (rk(s) === 2) { ic = `<div class="ti">${penSVG(2)}</div>`; top = 'Île maîtrisée\u00a0!'; title = 'Rejoue quand tu veux pour t’entraîner'; }
-  else { ic = `<div class="ti">${penSVG(rk(s) + 1)}</div>`; top = `Route terminée · ${routeStars(s)} étoiles sur ${max}`; title = `Rebats ${i.boss.n} pour le rang ${IRANK[rk(s) + 1].n}`; }
+  else { ic = `<div class="ti">${penSVG(rk(s) + 1)}</div>`; top = `Route terminée · ${routeStars(s)} étoiles sur ${max}`; title = `Rebats ${i.boss.n.replace(/^(Le|La) /, a => a.toLowerCase())} pour le rang ${IRANK[rk(s) + 1].n}`; }
   return `<div class="trophy">${ic}<div class="tt"><span>${top}</span><b>${title}</b></div><div class="st"><i>★</i> ${total}<small>sur ${max}</small></div></div>`;
 }
 function renderIsle(id) {
@@ -5366,7 +5374,7 @@ function nextQ() {
   else if (rv) { q = Object.assign({}, rv.q, { rev: true }); R.qi = isleById(rv.g); R.revs++; setTimeout(() => voice('revanche', true), 500); }
   else { const src = R.i.id === 'mix' ? mixPick() : { i: R.i, l: tp ? tp.lv : rankLv() }; R.qi = src.i; q = pickQ(src.i, src.l); if (tp) q.tgt = 1; q = recall(q); }
   if (q.tgt) setTimeout(() => R && R.q === q && (R.cible || (R.cible = voice('boss-cible')), pop(R.i.boss.img, `${R.i.boss.n} vise ton point faible : ${q.lv ? skillName(R.i.id, q.lv) : 'une question déjà ratée'}`)), 700);
-  if (QI().sea === 'f' && !q.typo) { ['ask', 'prompt', 'explain', 'hint', 'answerText'].forEach(k => { if (typeof q[k] === 'string') q[k] = typo(q[k]); }); (q.choices || []).forEach(c => { c.html = typo(String(c.html)); }); q.typo = 1; }
+  if (!q.typo) { ['ask', 'prompt', 'explain', 'hint', 'answerText'].forEach(k => { if (typeof q[k] === 'string') q[k] = typo(q[k]); }); (q.choices || []).forEach(c => { c.html = typo(String(c.html)); if (c.why) c.why = typo(c.why); }); q.typo = 1; }
   // La bonne réponse change de place à chaque question, et jamais trois fois de suite au même endroit (les signes <, =, > gardent leur ordre)
   if (q.choices && q.kind !== 'compare' && !q.keep) { const at = c => c.findIndex(x => x.v === q.answer); let c, t2 = 0; do { c = shuffle(q.choices); t2++; } while (t2 < 10 && R.lastAt && R.lastAt[0] === at(c) && R.lastAt[1] === at(c)); q.choices = c; R.lastAt = [at(c), R.lastAt ? R.lastAt[0] : -1]; }
   if (!q.retry) { const k = q.qk || qKey(q), id = QI().id, rec = (P().recent || (P().recent = {}))[id] || []; R.seen.add(q.log); R.seenK.add(k);
@@ -5486,7 +5494,7 @@ function qcardHTML(q) {
   if (q.kind === 'mineRead') body = `<div class="mine-cols" style="margin:6px 0 0;grid-template-columns:repeat(${q.cols || 4},1fr)">${q.counts.map((n, k) => k < 4 - (q.cols || 4) ? '' : `<div class="mcol"><span class="mcol-h">${COLS[k]}</span><div class="pile">${pileHTML(k, n)}</div><span class="cnt">${n}</span></div>`).join('')}</div>`;
   if (q.kind === 'line') body = lineSVG(q, R.pick);
   if (q.kind === 'lineRead') body = lineSVG(q, null, q.k);
-  if (q.kind === 'money') { const tr = R.tray || []; body = `${q.price ? `<div style="text-align:center"><span class="pricetag">${q.price}</span></div>` : ''}<div class="tray">${tr.map((c, k) => `<button class="${c >= 500 ? `bill b${c / 100}` : `coin ${c >= 100 ? 'bi' : c >= 10 ? 'au' : 'cu'}`}" data-a="untray" data-i="${k}" aria-label="Reprendre">${coinLabel(c)}</button>`).join('')}</div>`; }
+  if (q.kind === 'money') { const tr = R.tray || []; body = `${q.price ? `<div style="text-align:center"><span class="pricetag">${q.price}</span></div>` : ''}<div class="tray">${tr.map((c, k) => `<button class="${c >= 500 ? `bill b${c / 100}` : `coin ${c >= 100 ? 'bi' : c >= 10 ? 'au' : 'cu'}`}" data-a="untray" data-i="${k}" aria-label="Reprendre ${coinLabel(c)}">${coinLabel(c)}</button>`).join('')}</div>`; }
   if (q.kind === 'pizza') body = `<div style="text-align:center">${pizzaSVG(q.parts, R.sel || (R.sel = new Set()))}</div>`;
   if (q.kind === 'compare') body = `<div class="fbars">${q.fr.map(([n, d]) => barHTML(n, d)).join('')}</div>`;
   if (q.cake) body = `<div style="text-align:center">${pizzaSVG(q.cake, new Set(), 'food-cake', false)}</div>`;
@@ -5691,7 +5699,7 @@ function shoot(hit) {
   // Trajectoire en cloche calculée point par point : x avance régulièrement, y suit une parabole, le boulet tourne et rapetisse un peu en s'éloignant
   const pts = Array.from({ length: 25 }, (_, k) => { const t = k / 24, x = x0 + (x1 - x0) * t, y = y0 + (y1 - y0) * t - 4 * top * t * (1 - t);
     return { opacity: 1, transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${Math.round(t * 540)}deg) scale(${(1.15 - t * .35).toFixed(2)})` }; });
-  b.animate(pts, { duration: 520, easing: 'linear' });
+  if (!calm()) b.animate(pts, { duration: 520, easing: 'linear' });
   const me = $('.ship.me', sc); if (me) { me.classList.remove('recoil'); void me.offsetWidth; me.classList.add('recoil'); }
   fx('smoke', 'fx-smoke', 34, 56, 110); SND.cannon();
   setTimeout(() => b.remove(), 520);
@@ -5830,7 +5838,7 @@ function openChest() {
   setTimeout(() => { if (tags.includes('Carte')) { sfx('unlock'); voice('ile', true); } else if (tags.includes('Histoire')) { sfx('page'); voice('chapitre', true); } else if (tags.includes('Rare') || tags.includes('Commun') || tags.includes('Épique')) { sfx('crew-join'); voice('equipier', true); } else if (tags.includes('Navire')) voice('navire', true); else voice('coffre', true); }, 700);
   { const g = document.createElement('img'); g.className = 'coinburst'; g.src = IMG('fx-coins'); g.alt = ''; c.appendChild(g); setTimeout(() => g.remove(), 1400); }
   const r = c.getBoundingClientRect(), ar = app.getBoundingClientRect();
-  for (let k = 0; k < 14; k++) { const im = document.createElement('img'); im.className = 'coinfly'; im.src = IMG('coin-doublon'); im.alt = '';
+  if (!calm()) for (let k = 0; k < 14; k++) { const im = document.createElement('img'); im.className = 'coinfly'; im.src = IMG('coin-doublon'); im.alt = '';
     const x = (r.left - ar.left + r.width / 2) / UIZ, y = (r.top - ar.top + r.height * .4) / UIZ; im.style.left = x + 'px'; im.style.top = y + 'px'; app.appendChild(im);
     const dx = (Math.random() - .5) * 320, dy = -120 - Math.random() * 160;
     im.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: 1 }, { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(1)`, opacity: 1, offset: .55 }, { transform: `translate(calc(-50% + ${dx * 1.2}px),calc(-50% + ${dy + 260}px)) scale(.8)`, opacity: 0 }], { duration: 1300 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.4,1)' });
@@ -5838,7 +5846,7 @@ function openChest() {
   // Le butin apparaît après la gerbe de doublons ; le coffre glisse doucement vers le haut (mesure avant/après puis transition)
   setTimeout(() => { const rw = $('#rewards'), sc = $('.result'); if (!rw || !sc) return; const y0 = c.getBoundingClientRect().top;
     sc.classList.remove('closed'); rw.hidden = false; const dy = (y0 - c.getBoundingClientRect().top) / UIZ;
-    c.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 550, easing: 'cubic-bezier(.3,.8,.3,1)' });
+    if (!calm()) c.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 550, easing: 'cubic-bezier(.3,.8,.3,1)' });
     setTimeout(centerRays, 250); }, 1000);
 }
 
@@ -6049,9 +6057,9 @@ function sendFeedback() {
   else copyText(text).then(ok => { toast(ok ? 'Avis copié : collez-le dans un message' : 'Copiez le texte ci-dessous'); showText(ok ? 'Le texte est copié. Collez-le dans un message ou un e-mail :' : 'Copiez ce texte et envoyez-le par message ou e-mail :'); });
 }
 const BKP = 'ARCHIPEL1:';
-function backupCode() { return BKP + btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
+function backupCode() { return BKP + b64enc(JSON.stringify(S)); }
 function restoreFrom(code) {
-  try { const o = JSON.parse(decodeURIComponent(escape(atob(code.trim().replace(BKP, '').replace(/\s/g, ''))))); if (!o || typeof o !== 'object' || !(o.isl || o.g)) throw 0;
+  try { const o = parseSave(b64dec(code.trim().replace(BKP, '').replace(/\s/g, ''))); if (!o || typeof o !== 'object' || !(o.isl || o.g)) throw 0;
     S = migrate(Object.assign(DEF(), o)); save(); return true; } catch (e) { return false; }
 }
 
@@ -6061,7 +6069,7 @@ function onboarding(oldName) {
   const m = document.createElement('div'); m.className = 'modal'; const ask = !S.grade; let gr = S.grade;
   const closable = oldName != null || justAdded();
   m.innerHTML = `<form class="box paper" id="ob" autocomplete="off">${closable ? `<button type="button" class="obx" data-a="obclose" aria-label="${oldName != null ? 'Annuler' : 'Annuler l’ajout de cet enfant'}">${ico('iClose')}</button>` : ''}<img src="${IMG('guide-capitaine')}" alt="Le capitaine Barbe-Grise" style="width:${ask ? 130 : 160}px;margin:-70px auto 0;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3))">
-    <div class="disp" style="font-size:28px">Bienvenue à bord !</div><p style="margin:0;color:var(--ink-2)">Le capitaine Barbe-Grise et son perroquet Pi vont t’accompagner d’île en île. Comment s’appelle le capitaine ?</p>
+    <div class="disp" style="font-size:28px">Bienvenue à bord !</div><p style="margin:0;color:var(--ink-2)">Le capitaine Barbe-Grise et son perroquet Pi vont t’accompagner d’île en île. Et toi, moussaillon, quel est ton nom de pirate ?</p>
     <label for="nm" class="smallcaps" style="color:var(--ink-2)">Ton nom de pirate</label><input id="nm" maxlength="14" placeholder="Ex. : Léo" value="${esc(S.name)}">
     <div class="smallcaps" style="color:var(--ink-2)">Ton portrait</div><div class="avs ob" role="group" aria-label="Ton portrait">${AVATARS.map(a => `<button type="button" data-v="${a}" aria-pressed="${capt() === 'capt-' + a}" aria-label="Portrait ${a.toUpperCase()}"><img src="${IMG('capt-' + a)}" alt=""></button>`).join('')}</div>
     ${ask ? `<div class="smallcaps" style="color:var(--ink-2)">Ta classe</div><div class="grades" role="group" aria-label="Ta classe">${Object.entries(GRADES).map(([k, g]) => `<button type="button" data-g="${k}" aria-pressed="false"><b>${g.n}</b><span>${g.age}</span></button>`).join('')}</div>` : ''}
@@ -6205,6 +6213,17 @@ app.addEventListener('pointerup', e => {
   const svg = e.target.closest && e.target.closest('#line'); if (!svg || !R || R.locked || R.q.kind !== 'line') return;
   const r = svg.getBoundingClientRect(), vx = (e.clientX - r.left) / r.width * 340; R.pick = Math.max(0, Math.min(10, Math.round((vx - 30) / 28))); SND.tap(); refreshBottom();
 });
+// Restitution du focus : l'élément actif à l'ouverture d'un dialogue le retrouve à la fermeture (clavier, lecteurs d'écran)
+let focusBack = null;
+const isDlg = n => n.nodeType === 1 && ((n.matches && n.matches('.modal,.parents,.pgate,.sheet-err')) || (n.querySelector && n.querySelector('[role="dialog"],[role="alertdialog"]')));
+new MutationObserver(ms => { ms.forEach(m => {
+  if ([...m.addedNodes].some(isDlg) && !focusBack) focusBack = document.activeElement;
+  if ([...m.removedNodes].some(isDlg)) setTimeout(() => {
+    if ($('.modal,.parents,.pgate,.sheet-err,[role="dialog"],[role="alertdialog"]')) return;
+    if (focusBack && focusBack.isConnected && focusBack.focus) focusBack.focus();
+    focusBack = null;
+  }, 0);
+}); }).observe(app, { childList: true, subtree: true });
 document.addEventListener('keydown', e => {
   // Tabulation contenue dans la boîte de dialogue ouverte (porte parentale, saga, « Qui joue ? »…) : l'arrière-plan ne prend plus le focus
   if (e.key === 'Tab') { const ds = $$('[role="dialog"],[role="alertdialog"]'), dl = ds[ds.length - 1];
@@ -6213,7 +6232,7 @@ document.addEventListener('keydown', e => {
         if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
         else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); } } } }
   if ($('.title') && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); $('.title').click(); return; }
-  if (!R || R.done) { if (e.key === 'Enter' && $('#chest.shake')) openChest(); return; }
+  if (!R || R.done) { if ($('#chest.shake') && (e.key === 'Enter' || (e.key === ' ' && document.activeElement === $('#chest')))) { if (e.key === ' ') e.preventDefault(); openChest(); } return; }
   if ($('.coach')) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('[data-a="coachnext"]').click(); } return; }
   const qm = $('.quitm'); if (qm) { if (e.key === 'Escape') qm.remove(); return; }
   const sh = $('.sheet-err'); if (sh) { if (e.key === 'Enter') { e.preventDefault(); $('[data-a="next"]', sh).click(); } return; }
@@ -6477,7 +6496,8 @@ renderJournal = after(renderJournal, 'crew'); renderCrew = after(renderCrew, 'cr
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 let goNow = false; try { goNow = !!sessionStorage.getItem('mous-go'); sessionStorage.removeItem('mous-go'); } catch (e) {}
 if (location.hash === '#direct' || goNow) { show('map'); if (!S.intro) onboarding(); else if (goNow) setTimeout(() => toast(`À toi de jouer, ${S.name} !`), 400); } else titleScreen();
-window.__arch = { get R() { return R; }, get S() { return S; }, startEscale, endEscale, IS, renderIsle, get BUF() { return BUF; }, openParents, voice, FX, speakable, diagnose, answer, skillState, nextQ: () => nextQ(), gens: { genCanon, genFoot, genMine, genChasse, genMarche, genCuisine, genHorloge, genFormes, genAnglais, genCulture }, geo: { gNet, gFigName, gPolyName, gCercle, gDroites, gAngleType, gAngleCmp, gDegres, gAngleNom, gCarreaux, gDemi, gCmpAB, gRectMes, gConv, gQuelRect, gSolNom, gSolCompte, gSolFaces, gPatron, gSym, gDepl }, words, ISLES, setGrade, check, labN };
+// Crochets de test (Playwright) : web dans un navigateur seulement, jamais dans les applis ni en affichage installé (code de test embarqué, règle Apple 2.2)
+if (!nativeApp && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches))) window.__arch = { get R() { return R; }, get S() { return S; }, startEscale, endEscale, IS, renderIsle, get BUF() { return BUF; }, openParents, voice, FX, speakable, diagnose, answer, skillState, nextQ: () => nextQ(), gens: { genCanon, genFoot, genMine, genChasse, genMarche, genCuisine, genHorloge, genFormes, genAnglais, genCulture }, geo: { gNet, gFigName, gPolyName, gCercle, gDroites, gAngleType, gAngleCmp, gDegres, gAngleNom, gCarreaux, gDemi, gCmpAB, gRectMes, gConv, gQuelRect, gSolNom, gSolCompte, gSolFaces, gPatron, gSym, gDepl }, words, ISLES, setGrade, check, labN };
 })();
 </script>
 

@@ -32,6 +32,7 @@ global.history = { replaceState() {} };
 Object.defineProperty(global, 'navigator', { value: { userAgent: 'node' }, configurable: true });
 global.innerWidth = 375; global.innerHeight = 700;
 global.addEventListener = () => {}; global.matchMedia = () => ({ matches: false });
+global.MutationObserver = class { observe() {} disconnect() {} takeRecords() { return []; } };
 global.requestAnimationFrame = () => 0;
 global.Image = class { set src(v) {} };
 global.fetch = () => Promise.reject(new Error('x'));
