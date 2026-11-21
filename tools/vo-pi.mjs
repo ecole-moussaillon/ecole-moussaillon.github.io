@@ -65,6 +65,22 @@ const LINES = [
   ['vo-cap-vocab-1', '[warm, treasure-hunt tone] Jette l’ancre dans la Baie des Mots : ton vocabulaire, c’est ton trésor !'],
 ];
 
+// Leçons « Pi t'explique » (lot D) : 40 phrases, voix de Pi, posées et claires (registre pédagogique).
+// Fichiers vo-l-<île>-<étape>.mp3, chargés à l'ouverture de la leçon (hors cache initial).
+const LECONS = {
+  canons: ['Trois rangées de quatre boulets… Combien de boulets en tout ?', 'Une rangée, c’est 4 boulets. Et il y a 3 rangées pareilles.', 'On peut additionner : 4 plus 4 plus 4, ça fait 12.', 'Multiplier, c’est plus rapide : 3 fois 4 égale 12 !'],
+  stade: ['Pour calculer vite, cherche toujours ce qui manque pour faire 10.', '7 billes… il en manque 3 pour en avoir 10 : 7 plus 3 égale 10.', 'Pour 8 plus 5 : je prends 2 pour aller à 10, et il reste 3.', 'Dix plus 3, c’est facile : 13 ! Passe toujours par le 10.'],
+  mine: ['Un nombre se lit par paquets : centaines, dizaines, unités.', 'Dans 235 : 2 centaines, 3 dizaines et 5 unités.', 'Dix unités font une dizaine. Et dix dizaines font une centaine !', 'La place d’un chiffre fait sa valeur : un 3 suivi de deux chiffres vaut 300.'],
+  cuisine: ['Une fraction, c’est un partage en parts égales.', 'La tarte est coupée en 4 parts égales : chaque part est un quart.', 'Trois parts sur quatre : ça s’écrit 3 sur 4, trois quarts.', 'Quatre parts sur quatre, c’est la tarte entière !'],
+  horloge: ['La petite aiguille montre les heures : ici, elle est sur le 3.', 'La grande aiguille, sur le 12, dit que c’est l’heure pile : 3 heures.', 'Quand la grande aiguille est sur le 6, c’est la demie : 3 heures et demie.', 'Pour la grande aiguille, chaque chiffre vaut 5 minutes : sur le 3, c’est 15.'],
+  jungle: ['Une droite graduée, c’est une règle : les nombres sont rangés dans l’ordre.', 'On part toujours de zéro, tout à gauche.', 'Pour lire la flèche, compte les sauts depuis zéro : un, deux, trois… sept !', 'Chaque petit trait vaut 1. La flèche est sur le 7.'],
+  marche: ['Pour payer, on assemble des billets et des pièces.', 'Commence par les grosses pièces, puis complète avec les petites.', 'Je paie 5 euros, ça coûte 3 : on me rend 2 euros de monnaie.', 'Un euro, c’est 100 centimes. Un euro cinquante, c’est 150 centimes !'],
+  formes: ['Un angle droit, c’est le coin d’un carré, comme le coin d’une feuille.', 'Plus fermé qu’un angle droit ? C’est un angle aigu.', 'Plus ouvert qu’un angle droit ? C’est un angle obtus.', 'Pour vérifier, pose le coin d’une équerre ou d’une feuille dessus !'],
+  accords: ['Au pluriel, le nom prend presque toujours un s.', 'L’adjectif s’accorde aussi : il prend la marque du pluriel.', 'Avec ils ou elles, le verbe prend E-N-T. On ne l’entend pas, mais il s’écrit !', 'Repère les petits mots : les, des, mes… ils annoncent le pluriel.'],
+  conjug: ['Au présent, la terminaison change avec la personne.', 'Je chante, tu chantes, il chante : e, e-s, e.', 'Nous chantons, vous chantez : faciles à reconnaître !', 'Ils chantent : E-N-T ne s’entend pas, mais ne l’oublie jamais à l’écrit.'],
+};
+for (const [id, steps] of Object.entries(LECONS)) steps.forEach((t, k) => LINES.push([`vo-l-${id}-${k + 1}`, `[Warm, clear, unhurried, teaching tone] ${t}`]));
+
 const KEY = process.env.ELEVENLABS_API_KEY;
 if (!KEY) { console.error('ELEVENLABS_API_KEY absente de l’environnement. Dans ce terminal : $env:ELEVENLABS_API_KEY = \'…\' puis relancer.'); process.exit(1); }
 const only = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : null;

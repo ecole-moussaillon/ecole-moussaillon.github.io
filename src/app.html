@@ -425,6 +425,19 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .tassem{position:relative;width:min(100%,340px);aspect-ratio:4/3;margin:-70px auto 4px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
 .tassem i{position:absolute;width:25%;height:33.4%;background:url('assets/tmap-full.webp');background-size:400% 300%;opacity:0;animation:tpiece .55s cubic-bezier(.25,.8,.35,1.1) both}
 @keyframes tpiece{0%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rr)) scale(.55)}100%{opacity:1;transform:none}}
+/* Pi t'explique : mini-leçons */
+.modal.lesson .box{max-width:370px}
+.lesson .pil{width:106px;margin:-72px auto 0;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3))}
+.lesson .lviz{min-height:138px;display:grid;place-items:center;margin:2px 0}
+.lesson .lviz svg{max-width:250px;max-height:168px;width:100%;height:auto}
+.lesson .lbig{font:800 29px var(--f-d);color:var(--ink);letter-spacing:.02em}
+.lesson .ltxt{min-height:48px;margin:0;color:var(--ink-2);font-size:16px;line-height:1.45}
+.lesson .ldots{display:flex;gap:7px;justify-content:center;margin-top:2px}
+.lesson .ldots i{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.15)}
+.lesson .ldots i.on{background:var(--brass)}
+.lesson .lcoins{display:flex;gap:12px;align-items:center}
+.lesson .lcoins img{width:62px}
+.lchip{height:40px;border-radius:20px;cursor:pointer;color:#ffe2a6;font:700 14px var(--f-u)}
 .showship::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,26,36,.55),transparent 55%);pointer-events:none}
 .showship .cap{z-index:2;max-width:52%}
 .showship .cap{position:absolute;left:14px;top:12px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
@@ -5199,6 +5212,91 @@ function openSaga(id) {
   const tx = $('.stxt', m), fade = () => tx.classList.toggle('more', tx.scrollHeight - tx.scrollTop - tx.clientHeight > 4); fade(); tx.addEventListener('scroll', fade, { passive: true });
 }
 
+/* ================= Pi t'explique : mini-leçons ================= */
+// Une leçon par île : 4 étapes (visuel + une phrase), avancées par l'enfant, lues par la voix vo-l-<île>-<n>
+// (chargée à l'ouverture, hors cache initial comme la saga ; sans fichier, le texte affiché suffit).
+// Visuels : SVG légers dédiés + les dessins du jeu (horloge, pizza), tous décoratifs (aria-hidden), le texte porte tout.
+const ldots = (rows, cols, hl = -1) => `<svg class="lsvg" viewBox="0 0 ${cols * 26 + 6} ${rows * 26 + 6}" aria-hidden="true">${range(0, rows - 1).map(r => range(0, cols - 1).map(c => `<circle cx="${c * 26 + 16}" cy="${r * 26 + 16}" r="10" fill="${r === hl ? '#c9973f' : '#4f8aa8'}" stroke="#2e1c0a" stroke-width="1.5"/>`).join('')).join('')}</svg>`;
+const ldix = n => `<svg class="lsvg" viewBox="0 0 266 36" aria-hidden="true">${range(0, 9).map(k => `<circle cx="${k * 26 + 16}" cy="18" r="10" fill="${k < n ? '#4f8aa8' : '#f4e8cc'}" stroke="#2e1c0a" stroke-width="1.5"/>`).join('')}</svg>`;
+const lline = at => `<svg class="lsvg" viewBox="0 0 264 62" aria-hidden="true"><line x1="10" y1="34" x2="254" y2="34" stroke="#2e1c0a" stroke-width="3"/>${range(0, 10).map(k => `<line x1="${10 + k * 24.4}" y1="${k % 5 ? 27 : 24}" x2="${10 + k * 24.4}" y2="${k % 5 ? 41 : 44}" stroke="#2e1c0a" stroke-width="${k % 5 ? 2 : 3}"/>`).join('')}<text x="10" y="60" text-anchor="middle" font-size="14" font-weight="700">0</text><text x="132" y="60" text-anchor="middle" font-size="14" font-weight="700">5</text><text x="254" y="60" text-anchor="middle" font-size="14" font-weight="700">10</text>${at == null ? '' : `<path d="M${10 + at * 24.4} 20l-7 -12h14z" fill="#c9973f" stroke="#2e1c0a"/>`}</svg>`;
+const langle = (deg, mark) => { const r = deg * Math.PI / 180, x = 90 + 78 * Math.cos(r), y = 92 - 78 * Math.sin(r); return `<svg class="lsvg" viewBox="0 0 190 104" aria-hidden="true"><line x1="90" y1="92" x2="178" y2="92" stroke="#2e1c0a" stroke-width="4"/><line x1="90" y1="92" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#2e1c0a" stroke-width="4"/>${mark ? '<path d="M90 74 h18 v18" fill="none" stroke="#b8442c" stroke-width="3"/>' : `<path d="M118 92 A28 28 0 0 0 ${(90 + 28 * Math.cos(r)).toFixed(1)} ${(92 - 28 * Math.sin(r)).toFixed(1)}" fill="none" stroke="#b8442c" stroke-width="3"/>`}</svg>`; };
+const lbig = t => `<div class="lbig" aria-hidden="true">${t}</div>`;
+const lcoin = list => `<div class="lcoins" aria-hidden="true">${list.map(c => `<img src="${IMG(c)}" alt="">`).join('')}</div>`;
+const LESSONS = {
+  canons: { t: 'La multiplication', steps: [
+    [() => ldots(3, 4), 'Trois rangées de quatre boulets… Combien de boulets en tout ?'],
+    [() => ldots(3, 4, 0), 'Une rangée, c’est 4 boulets. Et il y a 3 rangées pareilles.'],
+    [() => lbig('4 + 4 + 4 = 12'), 'On peut additionner : 4 plus 4 plus 4, ça fait 12.'],
+    [() => lbig('3 × 4 = 12'), 'Multiplier, c’est plus rapide : 3 fois 4 égale 12 !']] },
+  stade: { t: 'Passer par le 10', steps: [
+    [() => ldix(10), 'Pour calculer vite, cherche toujours ce qui manque pour faire 10.'],
+    [() => ldix(7), '7 billes… il en manque 3 pour en avoir 10 : 7 plus 3 égale 10.'],
+    [() => lbig('8 + 5 = 8 + 2 + 3'), 'Pour 8 plus 5 : je prends 2 pour aller à 10, et il reste 3.'],
+    [() => lbig('10 + 3 = 13'), 'Dix plus 3, c’est facile : 13 ! Passe toujours par le 10.']] },
+  mine: { t: 'Dizaines et centaines', steps: [
+    [() => lbig('235'), 'Un nombre se lit par paquets : centaines, dizaines, unités.'],
+    [() => lbig('235 = 200 + 30 + 5'), 'Dans 235 : 2 centaines, 3 dizaines et 5 unités.'],
+    [() => ldix(10), 'Dix unités font une dizaine. Et dix dizaines font une centaine !'],
+    [() => lbig('3__ → 300'), 'La place d’un chiffre fait sa valeur : un 3 suivi de deux chiffres vaut 300.']] },
+  cuisine: { t: 'Les fractions', steps: [
+    [() => pizzaSVG(4, new Set(), 'food-pizza', false), 'Une fraction, c’est un partage en parts égales.'],
+    [() => pizzaSVG(4, new Set([0]), 'food-pizza', false), 'La tarte est coupée en 4 parts égales : chaque part est un quart.'],
+    [() => pizzaSVG(4, new Set([0, 1, 2]), 'food-pizza', false), 'Trois parts sur quatre : ça s’écrit 3 sur 4, trois quarts.'],
+    [() => pizzaSVG(4, new Set([0, 1, 2, 3]), 'food-pizza', false), 'Quatre parts sur quatre, c’est la tarte entière !']] },
+  horloge: { t: 'Lire l’heure', steps: [
+    [() => clockSVG(3, 0), 'La petite aiguille montre les heures : ici, elle est sur le 3.'],
+    [() => clockSVG(3, 0), 'La grande aiguille, sur le 12, dit que c’est l’heure pile : 3 heures.'],
+    [() => clockSVG(3, 30), 'Quand la grande aiguille est sur le 6, c’est la demie : 3 heures et demie.'],
+    [() => clockSVG(4, 15), 'Pour la grande aiguille, chaque chiffre vaut 5 minutes : sur le 3, c’est 15.']] },
+  jungle: { t: 'La droite graduée', steps: [
+    [() => lline(null), 'Une droite graduée, c’est une règle : les nombres sont rangés dans l’ordre.'],
+    [() => lline(0), 'On part toujours de zéro, tout à gauche.'],
+    [() => lline(7), 'Pour lire la flèche, compte les sauts depuis zéro : un, deux, trois… sept !'],
+    [() => lline(7), 'Chaque petit trait vaut 1. La flèche est sur le 7.']] },
+  marche: { t: 'Payer et rendre la monnaie', steps: [
+    [() => lcoin(['bill-blue', 'coin-gold', 'coin-copper']), 'Pour payer, on assemble des billets et des pièces.'],
+    [() => lbig('2 € + 1 € = 3 €'), 'Commence par les grosses pièces, puis complète avec les petites.'],
+    [() => lbig('5 € − 3 € = 2 €'), 'Je paie 5 euros, ça coûte 3 : on me rend 2 euros de monnaie.'],
+    [() => lbig('1 € = 100 c'), 'Un euro, c’est 100 centimes. Un euro cinquante, c’est 150 centimes !']] },
+  formes: { t: 'L’angle droit', steps: [
+    [() => langle(90, true), 'Un angle droit, c’est le coin d’un carré, comme le coin d’une feuille.'],
+    [() => langle(50, false), 'Plus fermé qu’un angle droit ? C’est un angle aigu.'],
+    [() => langle(135, false), 'Plus ouvert qu’un angle droit ? C’est un angle obtus.'],
+    [() => langle(90, true), 'Pour vérifier, pose le coin d’une équerre ou d’une feuille dessus !']] },
+  accords: { t: 'L’accord du pluriel', steps: [
+    [() => lbig('le chat → les chats'), 'Au pluriel, le nom prend presque toujours un s.'],
+    [() => lbig('les chats noirs'), 'L’adjectif s’accorde aussi : il prend la marque du pluriel.'],
+    [() => lbig('ils jouent'), 'Avec ils ou elles, le verbe prend -ent. On ne l’entend pas, mais il s’écrit !'],
+    [() => lbig('les · des · mes'), 'Repère les petits mots : les, des, mes… ils annoncent le pluriel.']] },
+  conjug: { t: 'Le présent des verbes en -er', steps: [
+    [() => lbig('je chante · tu chantes'), 'Au présent, la terminaison change avec la personne.'],
+    [() => lbig('-e · -es · -e'), 'Je chante, tu chantes, il chante : e, e-s, e.'],
+    [() => lbig('nous -ons · vous -ez'), 'Nous chantons, vous chantez : faciles à reconnaître !'],
+    [() => lbig('ils chantent'), 'Ils chantent : -ent ne s’entend pas, mais ne l’oublie jamais à l’écrit.']] },
+};
+const lessonVoLoad = {};
+function loadLessonVo(id, n) { if (!AC || location.protocol === 'file:') return;
+  range(1, n).forEach(k => { const f = `vo-l-${id}-${k}`; if (BUF[f] || lessonVoLoad[f]) return; lessonVoLoad[f] = 1; decode(f).then(b => { BUF[f] = b; }).catch(() => { delete lessonVoLoad[f]; }); }); }
+function openLesson(id) {
+  const L = LESSONS[id]; if (!L || $('.modal.lesson')) return;
+  loadLessonVo(id, L.steps.length); let k = 0;
+  const m = document.createElement('div'); m.className = 'modal lesson';
+  m.innerHTML = `<div class="box paper" role="dialog" aria-label="${esc(L.t)}">
+    <img class="pil" src="${IMG('guide-perroquet-montre')}" alt="">
+    <div class="smallcaps" style="color:var(--ink-2)">Pi t’explique</div><div class="disp" style="font-size:26px">${typo(L.t)}</div>
+    <div class="lviz" id="lviz"></div><p class="ltxt" id="ltxt"></p>
+    <div class="ldots" aria-hidden="true">${L.steps.map(() => '<i></i>').join('')}</div>
+    <div class="errbtns"><button class="ghost-btn dark" data-a="lprev">Retour</button><button class="brass-btn" data-a="lnext">Suite</button></div></div>`;
+  app.appendChild(m);
+  const show = () => { const [v, t] = L.steps[k];
+    $('#lviz', m).innerHTML = v(); $('#ltxt', m).textContent = typo(t);
+    $$('.ldots i', m).forEach((d, j) => d.classList.toggle('on', j <= k));
+    $('[data-a="lprev"]', m).style.visibility = k ? '' : 'hidden';
+    $('[data-a="lnext"]', m).textContent = k === L.steps.length - 1 ? 'J’ai compris !' : 'Suite';
+    announce(t); say(`vo-l-${id}-${k + 1}`); };
+  m.lstep = d => { const end = k === L.steps.length - 1; if (d > 0 && end) { if (window.speechSynthesis) speechSynthesis.cancel(); stopVoice(); m.remove(); return; } k = Math.max(0, Math.min(L.steps.length - 1, k + d)); show(); };
+  show();
+}
 /* ================= Plan du navire ================= */
 // Le navire se construit toute la saison : coque (étoiles des îles), voiles, figures de proue, canons, ancre, chaloupe, lanternes (doublons)
 function shipPlan() {
@@ -5349,7 +5447,7 @@ function renderIsle(id) {
   const hero = `<img class="bg" src="${IMG(i.hero)}" alt="">`;
   app.innerHTML = `<div class="screen"><div class="hero">${hero}
       <div class="tt"><div class="smallcaps" style="color:#ffd9a0"><span class="gradeb" style="margin-right:6px;vertical-align:1px">${GRADES[GR()].n}</span>${i.notion}</div><div class="disp">${i.n}</div></div></div>
-    <div class="topbar"><button class="round glass" data-a="home" aria-label="Retour à la carte">${ico('iBack')}</button><span class="chip glass" style="height:40px;border-radius:20px;color:#ffe2a6">${penArt(rk(s))}Rang ${IRANK[rk(s)].n} · ${s.node > CHEST ? 'Coffre ouvert' : 'Coffre au niveau 5'}</span></div>
+    <div class="topbar"><button class="round glass" data-a="home" aria-label="Retour à la carte">${ico('iBack')}</button><span class="chip glass" style="height:40px;border-radius:20px;color:#ffe2a6">${penArt(rk(s))}Rang ${IRANK[rk(s)].n} · ${s.node > CHEST ? 'Coffre ouvert' : 'Coffre au niveau 5'}</span>${LESSONS[i.id] ? `<button class="chip glass lchip" data-a="lesson" data-l="${i.id}">Pi t’explique</button>` : ''}</div>
     <div class="sheet paper">${trophyHTML(i, s)}<div class="stats" hidden>
         <div class="stat"><svg width="58" height="58" viewBox="0 0 58 58"><circle cx="29" cy="29" r="24" fill="none" stroke="rgba(138,98,36,.2)" stroke-width="6"/><circle cx="29" cy="29" r="24" fill="none" stroke="url(#gBrass)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(acc / 100 * 150.8).toFixed(1)} 150.8" transform="rotate(-90 29 29)"/><text x="29" y="34.5" text-anchor="middle" font-family="Fraunces,serif" font-weight="800" font-size="15" fill="#2a1c12">${acc}%</text></svg><span>Réussite</span></div>
         <div class="stat"><b>${node}<span style="font-size:15px;color:#6b5440;font-weight:600"> /${NODES}</span></b><span>Niveau</span></div>
@@ -5751,7 +5849,7 @@ function answer(ok, givenText, btn) {
     if (R.i.id === 'canons') missFx();
     setTimeout(() => {
       const sh = document.createElement('div'); sh.className = 'sheet-err';
-      sh.innerHTML = `<div class="errcard paper" role="alertdialog" aria-modal="true"><div class="who"><img src="${IMG('guide-perroquet-hmm')}" alt=""><div><h3>${nearMiss(givenText) ? 'Raté de peu !' : 'Pas tout à fait !'}</h3><div class="good">La bonne réponse : <span style="color:#2b7a4d">${esc(R.q.answerText)}</span></div></div></div><p class="why">${R.q.kind === 'money' && R.tray ? (() => { const s = R.tray.reduce((a, b) => a + b, 0), d = R.q.target - s; return `<b>Tu as donné ${fmtE(s)} : ${d > 0 ? `il manque ${fmtC(d)}` : `c’est ${fmtC(-d)} de trop`}.</b><br>`; })() : ''}${R.dg ? `<span class="diag"><b>Ta réponse : ${esc(givenText)}${/[.!?…]\s*$/.test(givenText) ? '' : '.'}</b> ${R.dg}</span>` : ''}${R.q.explain}</p><div class="errbtns">${sayBtn('e')}<button class="brass-btn" data-a="next">J’ai compris</button></div></div>`;
+      sh.innerHTML = `<div class="errcard paper" role="alertdialog" aria-modal="true"><div class="who"><img src="${IMG('guide-perroquet-hmm')}" alt=""><div><h3>${nearMiss(givenText) ? 'Raté de peu !' : 'Pas tout à fait !'}</h3><div class="good">La bonne réponse : <span style="color:#2b7a4d">${esc(R.q.answerText)}</span></div></div></div><p class="why">${R.q.kind === 'money' && R.tray ? (() => { const s = R.tray.reduce((a, b) => a + b, 0), d = R.q.target - s; return `<b>Tu as donné ${fmtE(s)} : ${d > 0 ? `il manque ${fmtC(d)}` : `c’est ${fmtC(-d)} de trop`}.</b><br>`; })() : ''}${R.dg ? `<span class="diag"><b>Ta réponse : ${esc(givenText)}${/[.!?…]\s*$/.test(givenText) ? '' : '.'}</b> ${R.dg}</span>` : ''}${R.q.explain}</p><div class="errbtns">${sayBtn('e')}${LESSONS[qi.id] ? `<button class="mini-btn" data-a="lesson" data-l="${qi.id}">La leçon</button>` : ''}<button class="brass-btn" data-a="next">J’ai compris</button></div></div>`;
       app.firstElementChild.appendChild(sh); $('[data-a="next"]', sh).focus();
     }, R.i.id === 'canons' ? 700 : 350);
   }
@@ -6229,6 +6327,9 @@ app.addEventListener('click', e => {
     case 'start': FX.sparkles(e.clientX || innerWidth / 2, e.clientY || innerHeight / 2, 26, 240); ac(); { const st = $('.title'); st && st.remove(); } show('map'); if (!S.intro) { onboarding(); welcome(true); } else welcome(false); break;
     case 'tipclose': { const t = el.closest('.pi-tip'); t && t.remove(); break; }
     case 'codesay': SND.tap(); speak(el.dataset.say); break;
+    case 'lesson': SND.tap(); openLesson(el.dataset.l); break;
+    case 'lnext': { const lm = el.closest('.modal.lesson'); SND.tap(); lm && lm.lstep(1); break; }
+    case 'lprev': { const lm = el.closest('.modal.lesson'); SND.tap(); lm && lm.lstep(-1); break; }
     case 'key': key(el.dataset.k); break;
     case 'choice': { if (!R || R.locked) break; const c = R.q.choices[+el.dataset.i]; const [ok, g] = check(c); answer(ok, g, el); break; }
     case 'digpick': R.dig = +el.dataset.k; SND.tap(); refreshBottom(); break;
