@@ -63,6 +63,7 @@ const LINES = [
   ['vo-cap-gram-1', '[playful warning] Prudence sur le Récif des Phrases : sujet, verbe… et pas de naufrage !'],
   ['vo-cap-accords-1', '[encouraging] Pour traverser le Pont des Accords, accorde chaque mot comme il faut !'],
   ['vo-cap-vocab-1', '[warm, treasure-hunt tone] Jette l’ancre dans la Baie des Mots : ton vocabulaire, c’est ton trésor !'],
+  ['vo-cap-enigmes-1', '[curious, encouraging] Bienvenue dans la Baie des Défis : lis bien, réfléchis… et résous le problème !'],
 ];
 
 // Leçons « Pi t'explique » (lot D) : 40 phrases, voix de Pi, posées et claires (registre pédagogique).

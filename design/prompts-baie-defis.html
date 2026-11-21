@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — Baie des Défis</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Baie des Défis — 3 images (lot E)</h1>
+<p class="sub">Nouvelle île de résolution de problèmes (mer des Chiffres). Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image (fond transparent pour l’île et le boss).</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre comme références de style : <code>assets/isle-canons.webp</code> (île), <code>assets/boss-horloge.webp</code> (boss), <code>assets/hero-marche.webp</code> (décor).</li>
+<li>Tailles des assets existants : île ~800×800 transparent, boss ~800×800 transparent, décor (hero) ~1200×800 plein cadre.</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/&lt;nom&gt;.webp</code>. À la pose des trois fichiers, je bascule l’île de « Bientôt » à jouable.</li>
+</ul></div>
+
+<div class="card"><h3><code>isle-enigmes.webp</code> — l’île <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main, même style, même échelle et même angle de vue (trois quarts de dessus) que l’île de référence jointe. Une petite baie abritée consacrée aux énigmes et aux défis : une plage en croissant, de grands rochers gravés de signes mystérieux (points d’interrogation discrets, spirales, entailles de comptage), une cabane de guetteur avec un grand tableau d’ardoise où sont dessinés des schémas à la craie, des coffres entrouverts remplis de parchemins roulés, un vieux ponton de bois, deux palmiers. Chaleureux et intrigant, jamais inquiétant. Lumière dorée, couleurs riches, touches picturales douces. Sujet isolé sur fond entièrement transparent, sans eau autour (le lagon est séparé), sans texte lisible, sans filigrane. Toile carrée 800 × 800.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style, same style, scale and three-quarter top-down angle as the attached reference island. A small sheltered cove devoted to riddles and challenges: a crescent beach, tall rocks carved with mysterious signs (subtle question marks, spirals, tally notches), a lookout hut with a large slate board covered in chalk diagrams, half-open chests full of rolled parchments, an old wooden pontoon, two palm trees. Warm and intriguing, never unsettling. Golden light, rich colors, soft painterly strokes. Isolated subject on a fully transparent background, no surrounding water (the lagoon is separate), no readable text, no watermark. Square canvas 800x800.</pre></div>
+
+<div class="card"><h3><code>boss-enigmes.webp</code> — Le Morse Savant <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main, même style et même cadrage que le boss de référence joint. LE MORSE SAVANT : un gros morse majestueux et débonnaire, assis comme un vieux professeur des mers, avec de petites lunettes rondes en demi-lune sur le museau, de longues défenses d’ivoire, une redingote d’érudit usée par le sel, un rouleau de parchemin sous une nageoire et une plume d’oie derrière l’oreille. Expression malicieuse et bienveillante de maître à défis — impressionnant mais jamais effrayant (public 6-10 ans). Lumière dorée chaude, détails picturaux riches. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile carrée 800 × 800.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style, same style and framing as the attached reference boss. THE SCHOLAR WALRUS: a big, majestic, good-natured walrus seated like an old professor of the seas, small round half-moon spectacles on his muzzle, long ivory tusks, a salt-worn scholar's frock coat, a parchment scroll under one flipper and a quill tucked behind his ear. A mischievous, kindly challenge-master expression — impressive but never scary (audience 6-10). Warm golden light, rich painterly detail. Isolated subject on a fully transparent background, no text, no watermark. Square canvas 800x800.</pre></div>
+
+<div class="card"><h3><code>hero-enigmes.webp</code> — le décor d’escale <button class="copy">Copier EN</button></h3>
+<p>Décor de jeu pour enfants, style livre d’images peint à la main, même style et même composition que le décor de référence joint (plan large, horizon marin, zone basse plus calme pour l’interface). L’intérieur de la cabane du guetteur ouverte sur la baie : au premier plan une grande table de bois avec parchemins, encrier, boulier et jetons de comptage ; au mur un grand tableau d’ardoise avec des schémas en barres dessinés à la craie (rectangles segmentés, flèches) SANS chiffres ni lettres lisibles ; par la large ouverture, la baie turquoise, les rochers gravés et le ponton au soleil doré. Chaleureux, studieux et aventureux. Pas de personnage. Plein cadre (pas de transparence), sans texte lisible, sans filigrane. Toile 1200 × 800.</p>
+<pre class="prompt-en" hidden>Children's game backdrop, hand-painted storybook style, same style and composition as the attached reference backdrop (wide shot, sea horizon, calmer lower zone for the UI). The inside of the lookout's hut opening onto the bay: in the foreground a big wooden table with parchments, an inkwell, an abacus and counting tokens; on the wall a large slate board with chalk bar diagrams (segmented rectangles, arrows) with NO readable digits or letters; through the wide opening, the turquoise bay, the carved rocks and the pontoon in golden sunlight. Warm, studious and adventurous. No characters. Full frame (no transparency), no readable text, no watermark. Canvas 1200x800.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>

@@ -20,6 +20,7 @@ const CAST = [
   ['sage', ['wise ancient wizard storyteller'], ['culture']],
   ['melodieuse', ['enchantress', 'witch female', 'mysterious female seductive'], ['lecture', 'gram']],
   ['bourru', ['gruff old sea captain'], ['conjug']],
+  ['savant', ['wise old professor deep', 'grandfather storyteller', 'old scholar'], ['enigmes']], // le Morse Savant (Baie des Défis)
 ];
 // Voix créées sur mesure (Voice Design) : retours de Pierre du 21/11 — géants plus graves et effrayants,
 // pieuvre monstrueuse, chouette aiguë et tordue pour l'horloge, perroquet nasillard pour l'anglais.
@@ -105,6 +106,11 @@ const LINES = [
   ['vo-b-gram-rev-1', '[refined, vexed, sharp] Je reviendrai… avec des phrases PLUS retorses encore !'],
   ['vo-b-accords-rev-1', '[huge, slow, stubborn] Toi pas perdre rien pour attendre ! Troll revenir ! Troll TOUJOURS revenir !'],
   ['vo-b-vocab-rev-1', '[deep, placid, amused] Note bien ce mot, moussaillon : « revanche »… Nous le relirons ensemble.'],
+  // Baie des Défis — Le Morse Savant (lot E)
+  ['vo-b-enigmes-in-1', '[Deep, warm, scholarly, intrigued] Hmmm… un défi se présente à moi ! Voyons si ta logique vaut mes moustaches.'],
+  ['vo-b-enigmes-mid-1', '[deep, impressed] Par mes défenses… tu raisonnes étape par étape, comme un vrai savant !'],
+  ['vo-b-enigmes-out-1', '[deep, gracious, warm] Magistral… Tu as résolu tous mes défis. Le vieux morse s’incline.'],
+  ['vo-b-enigmes-rev-1', '[deep, amused, determined] Je retourne à mes parchemins… préparer des défis encore plus retors ! À bientôt !'],
 ];
 
 const KEY = process.env.ELEVENLABS_API_KEY;

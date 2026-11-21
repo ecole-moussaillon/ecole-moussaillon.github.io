@@ -1306,7 +1306,7 @@ const VO = { parents: 2, titre: 3, intro: 1, carte: 3, accueil: 3, depart: 3, co
   'tuto-keypad': 3, 'tuto-choices': 2, 'tuto-mine': 4, 'tuto-line': 2, 'tuto-money': 4, 'tuto-pizza': 2, 'tuto-words': 3, 'tuto-read': 3, lettres: 3,
   test: 2, 'test-fin': 2, melange: 3, 'boss-cible': 2, quete: 3, chapitre: 3, journal: 3, 'tuto-type': 3,
   // Lot B (voix de Pi) : premier lancement du jour, retour après 3 jours ou plus, et une consigne par île (cap-<île>)
-  jour: 3, retour: 2, ...Object.fromEntries(['canons', 'stade', 'mine', 'formes', 'jungle', 'marche', 'cuisine', 'horloge', 'lecture', 'conjug', 'anglais', 'culture', 'gram', 'accords', 'vocab'].map(i => ['cap-' + i, 1])) };
+  jour: 3, retour: 2, ...Object.fromEntries(['canons', 'stade', 'mine', 'formes', 'jungle', 'marche', 'cuisine', 'horloge', 'lecture', 'conjug', 'anglais', 'culture', 'gram', 'accords', 'vocab', 'enigmes'].map(i => ['cap-' + i, 1])) };
 const BUF = {}; let audioAsked = false, BUS = null, musSrc = null, musName = null, musWant = null, lastVo = 0;
 function bus() { const a = ac(); if (!a) return null; if (!BUS) { BUS = { sfx: a.createGain(), mus: a.createGain(), vo: a.createGain() }; BUS.mus.gain.value = .3; BUS.sfx.gain.value = .8; Object.values(BUS).forEach(g => g.connect(a.destination)); } return BUS; }
 // Les longues boucles de musique (2 à 4 min, 60 à 90 Mo une fois décodées) sont chargées quand elles doivent jouer,
@@ -1396,6 +1396,7 @@ const BOSSVO = {
   gram: { in: 'Sujet, verbe, complément… Une phrase de travers… et je mords !', mid: 'Scandale… tes phrases sont PARFAITEMENT construites !', out: 'Je rends les armes… et le complément. Ta grammaire est sans défaut.', rev: 'Je reviendrai… avec des phrases PLUS retorses encore !' },
   accords: { in: 'MOI, Troll du Pont ! Toi pas passer… sans accorder tes mots !', mid: 'Gné ?!… Toi JAMAIS te tromper sur les accords ?!', out: 'Troll battu… Toi passer. Toi très fort avec les mots.', rev: 'Toi pas perdre rien pour attendre ! Troll revenir ! Troll TOUJOURS revenir !' },
   vocab: { in: 'Hmmm… Un nouveau mot entre dans mon dictionnaire : « moussaillon téméraire ».', mid: 'Fascinant… tu connais des mots que j’avais oubliés.', out: 'Je t’offre la dernière page de mon dictionnaire : « victoire »… C’est la tienne.', rev: 'Note bien ce mot, moussaillon : « revanche »… Nous le relirons ensemble.' },
+  enigmes: { in: 'Hmmm… un défi se présente à moi ! Voyons si ta logique vaut mes moustaches.', mid: 'Par mes défenses… tu raisonnes étape par étape, comme un vrai savant !', out: 'Magistral… Tu as résolu tous mes défis. Le vieux morse s’incline.', rev: 'Je retourne à mes parchemins… préparer des défis encore plus retors ! À bientôt !' },
 };
 const bossVoLoad = {}, capSaid = new Set(); // consignes d'îles déjà dites cette session
 function loadBossVo(id) { if (!BOSSVO[id] || !AC || location.protocol === 'file:') return;
@@ -1584,6 +1585,8 @@ const ISLES = [
   { id: 'marche', sea: 'm', cm1: 'Monnaie et prix', hero: 'hero-marche', boss: { img: 'boss-marchand', n: 'Le Marchand Fantôme' }, chestCrew: 'calmar', art: 'le Marché du Port', n: 'Marché du Port', notion: 'Monnaie et euros', img: 'isle-marche', lag: 'lagoon-round', x: 28, y: 570, gen: genMarche, ep: 'Main-d’Or', unlock: 6, sfx: ['VENDU !', 'PILE LE COMPTE !'] },
   { id: 'cuisine', sea: 'm', cm1: 'Fractions et fractions décimales', hero: 'hero-cuisine', boss: { img: 'boss-chef', n: 'Le Chef Pieuvre' }, chestCrew: 'poisson', art: 'la Cuisine du Navire', n: 'Cuisine du Navire', notion: 'Fractions', img: 'isle-cuisine', lag: 'lagoon-rocks', x: 72, y: 350, gen: genCuisine, ep: 'Fine Lame', unlock: 9, sfx: ['MIAM !', 'PARFAIT, CHEF !'] },
   { id: 'horloge', sea: 'm', cm1: 'Heures et durées', hero: 'hero-horloge', boss: { img: 'boss-horloge', n: 'Le Maître des Heures' }, chestCrew: null, art: 'l’Île de l’Horloge', n: 'Île de l’Horloge', notion: 'Heures et durées', img: 'isle-horloge', lag: 'lagoon-oval', x: 28, y: 150, gen: genHorloge, ep: 'Maître du Temps', unlock: 12, sfx: ['TIC-TAC !', 'PILE À L’HEURE !'] },
+  // Baie des Défis (lot E) : wip tant que isle-enigmes, hero-enigmes et boss-enigmes ne sont pas dans assets/ — l'île paraît en « Bientôt »
+  { id: 'enigmes', wip: true, sea: 'm', cm1: 'Problèmes à étapes', hero: 'hero-enigmes', boss: { img: 'boss-enigmes', n: 'Le Morse Savant' }, chestCrew: null, art: 'la Baie des Défis', n: 'Baie des Défis', notion: 'Problèmes à résoudre', img: 'isle-enigmes', lag: 'lagoon-oval', x: 72, y: 470, gen: genEnigmes, ep: 'Maître des Défis', unlock: 10, sfx: ['TROUVÉ !', 'BIEN RAISONNÉ !', 'QUEL FLAIR !'] },
   // Mer des Lettres (lot 5 d'illustrations reçu le 18 octobre 2026)
   { id: 'lecture', sea: 'f', hero: 'hero-lecture', boss: { img: 'boss-lecture', n: 'La Sirène des Contes' }, chestCrew: null, art: 'la Grotte aux Histoires', n: 'Grotte aux Histoires', notion: 'Lecture et compréhension', img: 'isle-lecture', lag: 'lagoon-round', x: 28, y: 1450, gen: genLecture, ep: 'Grand Liseur', unlock: 0, sfx: ['BIEN LU !', 'QUEL LECTEUR !'] },
   { id: 'conjug', sea: 'f', hero: 'hero-conjug', boss: { img: 'boss-conjug', n: 'Le Forgeron des Temps' }, chestCrew: null, art: 'la Forge des Verbes', n: 'Forge des Verbes', notion: 'Conjugaison', img: 'isle-conjug', lag: 'lagoon-oval', x: 72, y: 1230, gen: genConjug, ep: 'Maître des Verbes', unlock: 0, sfx: ['BIEN FORGÉ !', 'VERBE PARFAIT !'] },
@@ -1608,7 +1611,7 @@ const SEAS = { m: { n: 'Mer des Chiffres', s: 'Maths', ic: '123' }, f: { n: 'Mer
 // Une île réservée à une classe (only) est cachée ailleurs. Avec huit îles (CM2), la Mer des Chiffres se resserre ;
 // le zigzag part alors vers la droite pour que la dernière île reste à gauche, sous le repaire du Kraken.
 function applyGrade() {
-  ISLES.forEach(i => { i.notion = i[GR()] || i.ce2; i.soon = i.hide = !!i.only && !i.only.includes(GR()); });
+  ISLES.forEach(i => { i.notion = i[GR()] || i.ce2; const gate = !!i.only && !i.only.includes(GR()); i.soon = !!i.wip || gate; i.hide = gate; });
   const m = ISLES.filter(i => i.sea === 'm' && !i.hide);
   m.forEach((i, k) => { if (m.length > 7) { i.x = (k + 1) % 2 ? 72 : 28; i.y = 1470 - k * 188; } else { i.x = i.x0; i.y = i.y0; } });
   const f = ISLES.filter(i => i.sea === 'f' && !i.hide);
@@ -5029,7 +5032,8 @@ function genLecture(l) {
 /* ================= Compétences « Je sais… » ================= */
 // Une compétence par niveau d'île (1 à 5), pour chaque classe. Elles suivent le contenu des générateurs.
 const SKILLS = {
-  cp: { canons: ['additionner jusqu’à 5', 'additionner jusqu’à 10', 'trouver le complément à 10', 'ajouter à un nombre entre 10 et 20', 'passer la dizaine et trouver ce qui manque'],
+  cp: { enigmes: ['résoudre un petit problème d’ajout ou de retrait', 'trouver ce qui manque dans une petite histoire', 'écrire la réponse d’un problème d’ajout ou de retrait', 'trouver combien il en manque', 'résoudre toutes sortes de problèmes jusqu’à 20'],
+    canons: ['additionner jusqu’à 5', 'additionner jusqu’à 10', 'trouver le complément à 10', 'ajouter à un nombre entre 10 et 20', 'passer la dizaine et trouver ce qui manque'],
     stade: ['dire le nombre juste avant et juste après', 'soustraire jusqu’à 10', 'trouver le double d’un nombre', 'ajouter ou enlever 10', 'calculer avec des dizaines'],
     mine: ['construire un nombre jusqu’à 30', 'construire un nombre jusqu’à 99', 'lire un nombre en dizaines et unités', 'trouver les dizaines et les unités', 'comparer des nombres jusqu’à 99'],
     jungle: ['placer un nombre de 0 à 10', 'placer un nombre de 10 à 20', 'placer un nombre entre 20 et 60', 'placer un nombre jusqu’à 100', 'lire une droite graduée sans aide'],
@@ -5042,7 +5046,8 @@ const SKILLS = {
     accords: ['choisir le ou la', 'choisir un ou une', 'écrire le pluriel avec un s', 'reconnaître un mot au pluriel', 'remplacer un nom par il ou elle'],
     culture: ['nommer les jours, les mois et les saisons', 'reconnaître les symboles de la France, les continents et les océans', 'distinguer le vivant du non-vivant', 'nommer des parties de mon corps et des gestes bons pour ma santé', 'reconnaître l’eau solide ou liquide et la matière des objets'],
     vocab: ['reconnaître les animaux et les fruits', 'ranger un mot dans sa catégorie', 'trouver le contraire', 'connaître l’ordre de l’alphabet', 'trouver l’intrus'] },
-  ce1: { canons: ['additionner et compléter jusqu’à 20', 'utiliser les tables de 2 et de 10', 'utiliser les tables de 2, 5 et 10', 'utiliser les tables de 2, 3, 4 et 5', 'utiliser les tables et trouver le nombre caché'],
+  ce1: { enigmes: ['choisir la bonne opération dans un problème', 'résoudre un problème d’ajout ou de retrait jusqu’à 100', 'trouver ce qui manque pour atteindre le tout', 'résoudre un problème de doubles et de moitiés', 'résoudre un problème en deux étapes'],
+    canons: ['additionner et compléter jusqu’à 20', 'utiliser les tables de 2 et de 10', 'utiliser les tables de 2, 5 et 10', 'utiliser les tables de 2, 3, 4 et 5', 'utiliser les tables et trouver le nombre caché'],
     stade: ['additionner et soustraire jusqu’à 20', 'trouver le double ou la moitié d’un nombre', 'ajouter ou enlever 10 et 100', 'compléter à 100 avec des dizaines (70 + 30)', 'ajouter un petit nombre ou des dizaines'],
     mine: ['construire un nombre jusqu’à 499', 'construire un nombre jusqu’à 999', 'trouver le nombre formé par des centaines, dizaines, unités', 'trouver le chiffre des centaines, des dizaines, des unités', 'comparer des nombres jusqu’à 1 000'],
     jungle: ['lire une graduation de 10 en 10', 'lire une graduation de 1 en 1', 'lire une graduation de 100 en 100', 'lire une graduation de 10 en 10 entre deux centaines', 'lire toutes sortes de graduations'],
@@ -5056,7 +5061,8 @@ const SKILLS = {
     accords: ['choisir le, la ou les, reconnaître un pluriel', 'mettre un nom au pluriel', 'accorder l’adjectif au féminin et au pluriel', 'accorder le groupe nominal et le verbe', 'faire tous les accords, a / à, et / est'],
     culture: ['utiliser le calendrier et les unités de durée', 'dire ce que mangent des animaux et comment ils grandissent', 'dire ce dont une plante a besoin', 'nommer les changements de l’eau et utiliser l’électricité sans danger', 'reconnaître les symboles et la devise de la République'],
     vocab: ['ranger lettres et mots dans l’ordre alphabétique', 'trouver un contraire, ranger des mots', 'trouver les mots de la même famille', 'trouver un synonyme ou un contraire', 'reconnaître familles, synonymes et préfixes'] },
-  ce2: { canons: ['utiliser les tables de 2, 5 et 10', 'utiliser les tables de 2, 3, 4, 5 et 10', 'utiliser toutes les tables', 'trouver le nombre caché d’une multiplication', 'multiplier, trouver le nombre caché, diviser'],
+  ce2: { enigmes: ['résoudre un problème de groupes avec la multiplication', 'partager équitablement, sans reste', 'résoudre un problème de monnaie en euros', 'résoudre un problème en deux étapes (ajouter puis enlever)', 'résoudre un problème en deux étapes (multiplier puis ajouter)'],
+    canons: ['utiliser les tables de 2, 5 et 10', 'utiliser les tables de 2, 3, 4, 5 et 10', 'utiliser toutes les tables', 'trouver le nombre caché d’une multiplication', 'multiplier, trouver le nombre caché, diviser'],
     stade: ['additionner et soustraire jusqu’à 20', 'trouver le double ou la moitié d’un nombre', 'ajouter et enlever des unités ou des dizaines', 'multiplier par 10 et 100, doubler et partager en deux', 'calculer de tête jusqu’à 100 avec des astuces'],
     mine: ['lire et construire les nombres jusqu’à 999', 'lire et construire les nombres jusqu’à 9 999', 'lire les nombres écrits en lettres', 'faire les échanges entre unités, dizaines, centaines', 'écrire un nombre à partir de sa décomposition'],
     jungle: ['lire une graduation de 10 en 10', 'lire une graduation de 100 en 100', 'placer un nombre entre deux centaines (de 10 en 10)', 'lire une graduation de 1 000 en 1 000', 'lire une graduation de 1 en 1'],
@@ -5071,7 +5077,8 @@ const SKILLS = {
     anglais: ['reconnaître un mot anglais que j’entends', 'comprendre une consigne en anglais', 'comprendre une petite phrase sur quelqu’un', 'choisir la bonne réponse à une question', 'lire des mots anglais déjà connus'],
     culture: ['ranger les grandes périodes de l’histoire', 'associer un monument à son époque', 'situer la Terre, le Soleil et la Lune', 'nommer les trois états de l’eau', 'dire qui sont les élus de la commune et de la République'],
     vocab: ['ranger des mots dans l’ordre alphabétique', 'trouver les mots de la même famille', 'comprendre les préfixes et les suffixes', 'trouver un synonyme ou un contraire', 'comprendre le sens figuré'] },
-  cm1: { canons: ['utiliser les tables, trouver le nombre caché', 'diviser avec les tables', 'multiplier et diviser des dizaines, des centaines', 'faire une division avec reste', 'multiplier un nombre à 2 chiffres, diviser avec reste'],
+  cm1: { enigmes: ['comparer des quantités (de plus, de moins)', 'résoudre un problème en deux étapes (multiplier puis ajouter)', 'faire un partage avec reste', 'résoudre un problème en deux étapes (enlever puis partager)', 'résoudre des problèmes à plusieurs étapes et des comparaisons pièges'],
+    canons: ['utiliser les tables, trouver le nombre caché', 'diviser avec les tables', 'multiplier et diviser des dizaines, des centaines', 'faire une division avec reste', 'multiplier un nombre à 2 chiffres, diviser avec reste'],
     stade: ['multiplier et diviser par 10, 100, 1 000', 'compléter à 1 000, trouver un double ou une moitié', 'ajouter des dixièmes, doubler et partager en deux', 'multiplier ou diviser un décimal par 10', 'prendre une fraction d’un nombre et calculer vite'],
     mine: ['construire un nombre jusqu’à 9 999', 'écrire un grand nombre en chiffres', 'distinguer chiffre des milliers et nombre de milliers', 'écrire un nombre à partir de sa décomposition', 'utiliser dixièmes et centièmes'],
     jungle: ['lire une graduation de 100 en 100', 'lire une graduation de 10 000 en 10 000', 'placer un grand nombre', 'lire les dixièmes', 'lire les centièmes'],
@@ -5086,7 +5093,8 @@ const SKILLS = {
     anglais: ['comprendre les nombres, les jours et les dates', 'suivre une consigne, dire où sont les choses', 'savoir qui parle et de qui on parle', 'réagir dans un petit échange', 'lire un court texte et compléter une phrase'],
     culture: ['décrire la vie au Moyen Âge', 'situer François Ier, Henri IV et Louis XIV', 'situer les grandes explorations et 1789', 'classer des animaux et dire qui mange qui', 'séparer un mélange, expliquer une ombre, décrire la météo'],
     vocab: ['ranger des mots, comprendre préfixes et suffixes', 'comprendre préfixes, suffixes et radicaux', 'classer des synonymes, reconnaître les niveaux de langue', 'comprendre les sens d’un mot et les expressions', 'utiliser les mots génériques et les homonymes'] },
-  cm2: { canons: ['reconnaître multiples, diviseurs, divisibles par 2, 5, 10', 'trouver des diviseurs et des multiples communs', 'faire une division avec reste au-delà des tables', 'calculer avec des parenthèses', 'multiplier des dizaines, centaines, utiliser la distributivité'],
+  cm2: { enigmes: ['résoudre un problème de proportionnalité', 'résoudre un problème d’achat en deux étapes', 'repérer la donnée inutile d’un problème', 'résoudre un problème en trois étapes', 'résoudre des problèmes complexes, avec ou sans donnée inutile'],
+    canons: ['reconnaître multiples, diviseurs, divisibles par 2, 5, 10', 'trouver des diviseurs et des multiples communs', 'faire une division avec reste au-delà des tables', 'calculer avec des parenthèses', 'multiplier des dizaines, centaines, utiliser la distributivité'],
     stade: ['multiplier et diviser un décimal par 10, 100, 1 000', 'ajouter un entier à un décimal, ajouter 9, 19… 99', 'ajouter des décimaux, doubler et partager en deux', 'multiplier par 5 et 50, diviser par 4 et 8', 'écrire 1/2, 1/4, 3/4 en décimal'],
     mine: ['écrire les nombres jusqu’à 999 999 999', 'trouver la valeur d’un chiffre dans un grand nombre', 'comparer de grands nombres', 'utiliser les millièmes', 'comparer, encadrer et arrondir des décimaux'],
     jungle: ['lire une graduation de million en million', 'lire une graduation de 100 000 en 100 000', 'lire les centièmes', 'lire les millièmes', 'placer une fraction sur une droite graduée'],
@@ -5211,6 +5219,334 @@ function openSaga(id) {
   // Texte plus long que la fenêtre (petit écran) : un fondu en bas montre qu'il y a une suite, il disparaît à la fin du texte
   const tx = $('.stxt', m), fade = () => tx.classList.toggle('more', tx.scrollHeight - tx.scrollTop - tx.clientHeight > 4); fade(); tx.addEventListener('scroll', fade, { passive: true });
 }
+
+/* ===== Baie des Défis : résolution de problèmes (île « enigmes ») ===== */
+// Schéma en barres (modèle « parties / tout ») pour les explications.
+// parts : [{ v: valeur, q: 1 si c'est la part cherchée }] ; total : nombre, '?' (c'est le tout qu'on cherche) ou null (pas d'accolade).
+// aria-hidden : le texte de l'explication porte tout le sens, la barre ne fait qu'illustrer.
+function probBar(parts, total) {
+  const bh = 30, pad = 4, y = 4, sum = parts.reduce((s, p) => s + p.v, 0) || 1, cols = ['#2b7a4d', '#b5541c', '#1d6fa5', '#7a5ad0'];
+  let x = pad, segs = '';
+  parts.forEach((p, k) => {
+    const w = Math.max(30, Math.round(150 * p.v / sum)), tx = x + w / 2, ty = y + bh / 2 + 5;
+    segs += p.q
+      ? `<rect x="${x}" y="${y}" width="${w}" height="${bh}" rx="6" fill="#fdf3dc" stroke="#8a6a3c" stroke-width="2" stroke-dasharray="5 4"/><text x="${tx}" y="${ty}" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6a3c">?</text>`
+      : `<rect x="${x}" y="${y}" width="${w}" height="${bh}" rx="6" fill="${cols[k % cols.length]}"/><text x="${tx}" y="${ty}" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">${fmt(p.v)}</text>`;
+    x += w + 3;
+  });
+  const tw = x - 3 + pad, H = total == null ? y + bh + 6 : y + bh + 34;
+  const acc = total == null ? '' : `<path d="M ${pad} ${y + bh + 5} v 5 H ${tw - pad} v -5" fill="none" stroke="#8a6a3c" stroke-width="2"/><text x="${tw / 2}" y="${y + bh + 29}" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6a3c">${total === '?' ? '?' : fmt(total)}</text>`;
+  return `<svg viewBox="0 0 ${tw} ${H}" width="${tw}" height="${H}" aria-hidden="true" focusable="false" style="display:block;margin:10px auto 0;max-width:100%;height:auto">${segs}${acc}</svg>`;
+}
+// Personnages (nom, pronom) et objets (pluriel, singulier) : noms réguliers, jamais de voyelle initiale (pas d'élision à gérer)
+const ENP = [['Tom', 'il'], ['Lila', 'elle'], ['Pi', 'il'], ['le capitaine', 'il'], ['le cuistot', 'il'], ['le mousse', 'il'], ['la vigie', 'elle']];
+const ENO = [['doublons', 'doublon'], ['perles', 'perle'], ['coquillages', 'coquillage'], ['boulets', 'boulet'], ['biscuits', 'biscuit'], ['sardines', 'sardine'], ['citrons', 'citron'], ['bananes', 'banane'], ['rubans', 'ruban'], ['noisettes', 'noisette']];
+const ENL = ['dans la cale', 'sur le pont', 'dans son coffre', 'au marché du port', 'sur la plage', 'dans la cuisine du navire'];
+const ENC = [['caisses', 'caisse'], ['sacs', 'sac'], ['paniers', 'panier'], ['coffres', 'coffre'], ['filets', 'filet']];
+const enN = (n, o) => `${fmt(n)} ${n > 1 ? o[0] : o[1]}`;
+const enQ = (qcm, ask, ans, rest) => Object.assign(qcm
+  ? { kind: 'choices', ask, prompt: '', answer: ans, answerText: fmt(ans) }
+  : { kind: 'keypad', ask, prompt: SLOT, answer: ans, answerText: fmt(ans) }, rest);
+
+// CP : problèmes en 1 étape (réunion, retrait, complément, état initial) jusqu'à 20. Niveaux 1-2 : QCM ; 3-5 : réponse tapée.
+function cpEnig(l) {
+  const [w0, pr] = pick(ENP), W = cap(w0), P = cap(pr), o = pick(ENO), lieu = pick(ENL);
+  const mx = l === 1 ? 10 : l === 2 ? 15 : 20, qcm = l <= 2;
+  const t = l === 1 ? pick(['reu', 'ret']) : l === 2 ? pick(['reu', 'ret', 'man']) : l === 3 ? pick(['reu', 'ret']) : l === 4 ? pick(['man', 'man', 'ret']) : pick(['reu', 'ret', 'man', 'deb']);
+  let ask, ans, log, explain, hint, extra;
+  if (t === 'reu') { const a = rnd(2, mx - 2), b = rnd(1, Math.min(9, mx - a)); ans = a + b; log = `problème ${a} + ${b}`;
+    ask = pick([
+      `${W} a ${enN(a, o)} ${lieu}. ${P} en trouve encore ${b}. Combien en a-t-${pr} maintenant ?`,
+      `${W} ramasse ${enN(a, o)} le matin, puis ${b} le soir. Combien en a-t-${pr} en tout ?`,
+      `Tom pose ${enN(a, o)} ${lieu}, et Lila en pose ${b} à côté. Combien y en a-t-il en tout ?`]);
+    explain = `On cherche le tout. On réunit les deux parts : ${a} + ${b} = ${ans}.${probBar([{ v: a }, { v: b }], '?')}`;
+    hint = 'Cherche d’abord ce qui se passe : les deux groupes se réunissent, alors on ajoute.';
+    extra = [[a - b, 'Tu as enlevé : ici, les deux groupes se réunissent, on ajoute.'], ans + 1]; }
+  else if (t === 'ret') { const a = rnd(Math.min(6, mx - 1), mx), b = rnd(2, Math.min(9, a - 1)); ans = a - b; log = `problème ${a} − ${b}`;
+    ask = pick([
+      `${W} a ${enN(a, o)}. ${P} en donne ${b} à un ami. Combien lui en reste-t-il ?`,
+      `${W} garde ${enN(a, o)} ${lieu}. Une vague en emporte ${b}. Combien en reste-t-il ?`,
+      `${W} a ${enN(a, o)}. ${P} en perd ${b} pendant la tempête. Combien en a-t-${pr} encore ?`]);
+    explain = `Au début, il y en a ${a}. ${b} s’en vont : ${a} − ${b} = ${ans}. On vérifie : ${ans} + ${b} = ${a}.${probBar([{ v: ans, q: 1 }, { v: b }], a)}`;
+    hint = 'Cherche d’abord ce qui se passe : une partie s’en va, alors on enlève.';
+    extra = [[a + b, 'Tu as ajouté : ici, une partie s’en va, on enlève.'], ans + 1]; }
+  else if (t === 'man') { const s = rnd(7, mx), a = rnd(2, s - 2); ans = s - a; log = `problème ${a} + … = ${s}`;
+    ask = pick([
+      `Il faut ${enN(s, o)} pour le grand banquet des pirates. ${W} en a déjà ${a}. Combien en manque-t-il ?`,
+      `${W} veut remplir un panier avec ${enN(s, o)}. Il y en a déjà ${a} dedans. Combien en manque-t-il encore ?`,
+      `Pour décorer le navire, il faut ${enN(s, o)}. ${W} en a trouvé ${a}. Combien doit-${pr} encore en trouver ?`]);
+    explain = `On connaît le tout (${s}) et une part (${a}). On cherche la part qui manque : ${a} + ${ans} = ${s}. On peut aussi calculer ${s} − ${a} = ${ans}.${probBar([{ v: a }, { v: ans, q: 1 }], s)}`;
+    hint = `Cherche d’abord le tout, puis pars de ${a} et compte jusqu’à ${s}.`;
+    extra = [[s + a, 'Tu as tout ajouté : on cherche seulement ce qui manque pour arriver au tout.'], Math.max(1, ans - 1)]; }
+  else { const b = rnd(2, 8), r = rnd(3, mx - b); ans = r + b; log = `problème … − ${b} = ${r}`;
+    ask = pick([
+      `${W} donne ${enN(b, o)} à un ami. Il lui en reste ${r}. Combien en avait-${pr} au début ?`,
+      `Pendant la nuit, ${b} ${o[0]} roulent hors du coffre. Il en reste ${r} dedans. Combien y en avait-il au début ?`]);
+    explain = `Au début, il y avait le reste (${r}) et les ${b} partis. On remet tout ensemble : ${r} + ${b} = ${ans}.${probBar([{ v: r }, { v: b }], '?')}`;
+    hint = 'Le début, c’est ce qui reste plus ce qui est parti.';
+    extra = [[Math.abs(r - b), 'Tu as enlevé : le début, c’est le reste plus ce qui est parti.'], ans + 1]; }
+  return enQ(qcm, ask, ans, Object.assign({ log, explain, hint }, qcm ? { choices: opts(ans, extra), sayChoices: true } : {}));
+}
+// CE1 : 1 étape jusqu'à 100 (sans retenue en soustraction), complément à une dizaine ronde, doubles et moitiés, puis 2 étapes (a + b − c)
+function ce1Enig(l) {
+  const [w0, pr] = pick(ENP), W = cap(w0), P = cap(pr), o = pick(ENO), lieu = pick(ENL);
+  if (l === 1) { const add = Math.random() < .5; let a, b, ans, ask, explain, extra, hint, log;
+    if (add) { a = rnd(12, 34); b = rnd(3, Math.min(15, 40 - a)); ans = a + b; log = `problème ${a} + ${b}`;
+      ask = pick([
+        `${W} a ${enN(a, o)} ${lieu}. ${P} en reçoit encore ${b}. Combien en a-t-${pr} maintenant ?`,
+        `${W} compte ${enN(a, o)}, puis en découvre encore ${b} ${lieu}. Combien cela fait-il en tout ?`,
+        `Tom apporte ${enN(a, o)} et Lila en apporte ${b}. Combien en apportent-ils à eux deux ?`]);
+      explain = `On réunit les deux parts : ${a} + ${b} = ${ans}.${probBar([{ v: a }, { v: b }], '?')}`;
+      extra = [[a - b, 'Tu as enlevé : ici, les quantités se réunissent, on ajoute.'], ans + 10];
+      hint = 'Demande-toi : à la fin, y en a-t-il plus ou moins qu’au début ?'; }
+    else { a = rnd(2, 3) * 10 + rnd(4, 9); b = rnd(2, a % 10); ans = a - b; log = `problème ${a} − ${b}`;
+      ask = pick([
+        `${W} a ${enN(a, o)}. ${P} en vend ${b} au marché du port. Combien lui en reste-t-il ?`,
+        `${W} transporte ${enN(a, o)}. ${P} en fait tomber ${b} à l’eau. Combien en reste-t-il ?`,
+        `${W} a ${enN(a, o)} ${lieu}. Les mouettes en emportent ${b}. Combien en reste-t-il ?`]);
+      explain = `Une partie s’en va : ${a} − ${b} = ${ans}. On vérifie : ${ans} + ${b} = ${a}.${probBar([{ v: ans, q: 1 }, { v: b }], a)}`;
+      extra = [[a + b, 'Tu as ajouté : ici, une partie s’en va, on enlève.'], ans - 1];
+      hint = 'Demande-toi : à la fin, y en a-t-il plus ou moins qu’au début ?'; }
+    return enQ(true, ask, ans, { log, explain, hint, choices: opts(ans, extra), sayChoices: true }); }
+  if (l === 2) { const add = Math.random() < .5; let a, b, ans, ask, explain, log;
+    if (add) { const ta = rnd(2, 6), tb = rnd(1, 8 - ta), ua = rnd(1, 8), ub = rnd(0, 9 - ua); a = ta * 10 + ua; b = tb * 10 + ub; ans = a + b; log = `problème ${a} + ${b}`;
+      ask = pick([
+        `Le navire transporte ${enN(a, o)}. Au port, on en charge encore ${b}. Combien en transporte-t-il maintenant ?`,
+        `${W} a ${enN(a, o)} et en gagne ${b} à la fête du port. Combien en a-t-${pr} maintenant ?`,
+        `Tom compte ${enN(a, o)} et Lila en compte ${b} de son côté. Combien en comptent-ils en tout ?`]);
+      explain = `On réunit les deux parts. Dizaines : ${ta * 10} + ${tb * 10} = ${(ta + tb) * 10}. Unités : ${ua} + ${ub} = ${ua + ub}. Donc ${a} + ${b} = ${ans}.${probBar([{ v: a }, { v: b }], '?')}`; }
+    else { const ta = rnd(4, 9), ua = rnd(3, 9), tb = rnd(1, ta - 1), ub = rnd(1, ua); a = ta * 10 + ua; b = tb * 10 + ub; ans = a - b; log = `problème ${a} − ${b}`;
+      ask = pick([
+        `Le marchand a ${enN(a, o)}. Il en vend ${b} dans la journée. Combien lui en reste-t-il ?`,
+        `${W} a ${enN(a, o)} ${lieu}. ${P} en offre ${b} à l’équipage. Combien lui en reste-t-il ?`,
+        `Le cuistot avait ${enN(a, o)}. Il en a utilisé ${b} pour la soupe. Combien en reste-t-il ?`]);
+      explain = `Une partie s’en va : ${a} − ${b} = ${ans}. On vérifie : ${ans} + ${b} = ${a}.${probBar([{ v: ans, q: 1 }, { v: b }], a)}`; }
+    return enQ(false, ask, ans, { log, explain, hint: 'Cherche d’abord la bonne opération : on réunit, ou une partie s’en va ?' }); }
+  if (l === 3) { const s = rnd(4, 10) * 10, ans = pick([5, 10, 15, 20, 25, 30].filter(x => x < s)), a = s - ans;
+    const ask = pick([
+      `Il faut ${enN(s, o)} pour remplir le grand tonneau. ${W} en a déjà versé ${a}. Combien en manque-t-il ?`,
+      `L’équipage doit ramasser ${enN(s, o)}. Il en a déjà ${a}. Combien en manque-t-il ?`,
+      `${W} veut ${enN(s, o)} pour le marché. ${P} en a ${a}. Combien doit-${pr} encore en trouver ?`]);
+    return enQ(false, ask, ans, { log: `problème ${a} + … = ${s}`,
+      explain: `On connaît le tout (${s}) et une part (${a}). De ${a} pour aller à ${s}, il faut ${ans} : ${a} + ${ans} = ${s}.${probBar([{ v: a }, { v: ans, q: 1 }], s)}`,
+      hint: `Cherche d’abord le tout. Puis pars de ${a} et avance jusqu’à ${s} : compte ce que tu ajoutes.` }); }
+  if (l === 4) { const [c1, c2] = shuffle(ENP).slice(0, 2);
+    if (Math.random() < .5) { const n = rnd(13, 45), ans = 2 * n;
+      const ask = pick([
+        `${cap(c1[0])} a ${enN(n, o)}. ${cap(c2[0])} en a le double. Combien ${c2[0]} en a-t-${c2[1]} ?`,
+        `${W} pêche ${enN(n, ['sardines', 'sardine'])} lundi, et le double mardi. Combien de sardines mardi ?`,
+        `Un petit coffre contient ${enN(n, o)}. Le grand coffre en contient le double. Combien dans le grand coffre ?`]);
+      return enQ(false, ask, ans, { log: `double de ${n} (problème)`,
+        explain: `Le double, c’est deux fois le même nombre : ${n} + ${n} = ${ans}.${probBar([{ v: n }, { v: n }], '?')}`,
+        hint: `Le double de ${n}, c’est ${n} + ${n}.` }); }
+    const ans = rnd(12, 40), n = 2 * ans;
+    const ask = pick([
+      `${W} a ${enN(n, o)}. ${P} en met la moitié dans le coffre. Combien en met-${pr} dans le coffre ?`,
+      `Le cuistot partage ${enN(n, o)} en deux parts égales. Combien y en a-t-il dans chaque part ?`,
+      `${cap(c1[0])} et ${c2[0]} se partagent ${enN(n, o)} en deux parts égales. Combien chacun en reçoit-il ?`]);
+    return enQ(false, ask, ans, { log: `moitié de ${n} (problème)`,
+      explain: `On partage ${n} en deux parts égales : ${ans} + ${ans} = ${n}. La moitié de ${n}, c’est ${ans}.${probBar([{ v: ans, q: 1 }, { v: ans, q: 1 }], n)}`,
+      hint: `Cherche le nombre qui, ajouté à lui-même, donne ${n}.` }); }
+  const a = rnd(15, 40), b = rnd(5, 25), c = rnd(5, Math.min(30, a + b - 10)), ans = a + b - c, ami = pick(['Tom', 'Lila', 'Pi'].filter(n => n !== w0));
+  const ask = pick([
+    `${W} a ${enN(a, o)}. ${P} en gagne ${b} au jeu du port, puis en donne ${c} à ${ami}. Combien lui en reste-t-il ?`,
+    `Le cuistot prépare ${a} biscuits le matin et ${b} l’après-midi. Les pirates en mangent ${c}. Combien en reste-t-il ?`,
+    `${W} ramasse ${enN(a, o)}, puis encore ${b}. En chemin, ${pr} en perd ${c}. Combien en rapporte-t-${pr} ?`]);
+  return enQ(false, ask, ans, { log: `problème ${a} + ${b} − ${c}`,
+    explain: `Il y a deux étapes. Étape 1, on réunit : ${a} + ${b} = ${a + b}. Étape 2, une partie s’en va : ${a + b} − ${c} = ${ans}.${probBar([{ v: ans, q: 1 }, { v: c }], a + b)}`,
+    hint: 'Fais une étape à la fois : d’abord le tout, puis ce qui s’en va.' });
+}
+// CE2 : multiplication (groupes), partage sans reste, monnaie en euros entiers, 2 étapes (+ puis −, × puis +)
+function ce2Enig(l) {
+  const [w0, pr] = pick(ENP), W = cap(w0), P = cap(pr), o = pick(ENO), c = pick(ENC);
+  if (l === 1) { const g = rnd(2, 5), e = rnd(2, 6), ans = g * e;
+    const ask = pick([
+      `Dans la cale, il y a ${g} ${c[0]} de ${enN(e, o)}. Combien de ${o[0]} en tout ?`,
+      `${W} remplit ${g} ${c[0]} avec ${enN(e, o)} dans chaque ${c[1]}. Combien de ${o[0]} en tout ?`,
+      `${g} pirates portent chacun ${enN(e, o)}. Combien de ${o[0]} portent-ils en tout ?`]);
+    return enQ(true, ask, ans, { log: `problème ${g} × ${e}`,
+      explain: `${g} groupes de ${e}, c’est ${Array(g).fill(e).join(' + ')} = ${ans}. On écrit : ${g} × ${e} = ${ans}.${probBar(range(1, g).map(() => ({ v: e })), '?')}`,
+      hint: 'Cherche d’abord combien de groupes, et combien dans chaque groupe : c’est une multiplication.',
+      choices: opts(ans, [[g + e, `Tu as ajouté ${g} et ${e} : il y a ${g} groupes de ${e}, on multiplie.`], [ans + e, 'Tu as compté un groupe de trop.']]) }); }
+  if (l === 2) { const k = rnd(2, 6), e = rnd(3, 9), n = k * e;
+    const ask = pick([
+      `${W} partage ${enN(n, o)} entre ${k} pirates. Chacun en reçoit autant. Combien chacun en reçoit-il ?`,
+      `Le cuistot range ${enN(n, o)} dans ${k} ${c[0]}, autant dans chaque ${c[1]}. Combien dans chaque ${c[1]} ?`,
+      `${k} mousses se partagent ${enN(n, o)} en parts égales. Combien chacun en reçoit-il ?`]);
+    return enQ(false, ask, e, { log: `partage ${n} ÷ ${k}`,
+      explain: `On partage ${n} en ${k} parts égales : ${n} ÷ ${k} = ${e}. On vérifie : ${k} × ${e} = ${n}.${probBar(range(1, k).map(() => ({ v: e, q: 1 })), n)}`,
+      hint: `Cherche dans la table de ${k} : ${k} × ? = ${n}.` }); }
+  if (l === 3) { const [i1, i2] = shuffle(ITEMS);
+    if (Math.random() < .55) { const a = rnd(4, 45), b = rnd(3, 40), ans = a + b;
+      const ask = pick([
+        `Au marché du port, ${w0} achète ${i1} à ${a} € et ${i2} à ${b} €. Combien paye-t-${pr} en tout ?`,
+        `${W} achète ${i1} à ${a} € et ${i2} à ${b} €. Combien cela coûte-t-il en tout ?`]);
+      return enQ(false, ask, ans, { log: `monnaie ${a} € + ${b} €`, prompt: `${SLOT} €`, answerText: `${fmt(ans)} €`,
+        explain: `On additionne les deux prix : ${a} € + ${b} € = ${ans} €.${probBar([{ v: a }, { v: b }], '?')}`,
+        hint: 'Le prix total, c’est le premier prix plus le deuxième.' }); }
+    const bill = pick([20, 50]), p = rnd(bill === 20 ? 6 : 21, bill - 4), ans = bill - p;
+    const ask = pick([
+      `${W} achète ${i1} à ${p} € et paye avec un billet de ${bill} €. Combien le marchand lui rend-il ?`,
+      `${W} choisit ${i1} à ${p} € et donne un billet de ${bill} €. Combien doit-on lui rendre ?`]);
+    return enQ(false, ask, ans, { log: `monnaie : rendre sur ${bill} € pour ${p} €`, prompt: `${SLOT} €`, answerText: `${fmt(ans)} €`,
+      explain: `De ${p} € pour aller à ${bill} €, il manque ${ans} € : ${p} + ${ans} = ${bill}. On rend donc ${ans} €.${probBar([{ v: p }, { v: ans, q: 1 }], bill)}`,
+      hint: 'Pars du prix et complète jusqu’au billet : ce que tu ajoutes, c’est la monnaie.' }); }
+  if (l === 4) { const a = rnd(25, 60), b = rnd(10, 40), cc = rnd(10, Math.min(50, a + b - 10)), ans = a + b - cc;
+    const ask = pick([
+      `Le cuistot a ${a} biscuits. Il en cuit encore ${b}, puis l’équipage en mange ${cc}. Combien en reste-t-il ?`,
+      `${W} a ${enN(a, o)}. ${P} en gagne ${b} à la chasse au trésor, puis en donne ${cc}. Combien lui en reste-t-il ?`,
+      `Le navire charge ${enN(a, o)}, puis encore ${b}. À l’escale, on en débarque ${cc}. Combien en reste-t-il à bord ?`]);
+    return enQ(false, ask, ans, { log: `problème ${a} + ${b} − ${cc}`,
+      explain: `Étape 1, on réunit : ${a} + ${b} = ${a + b}. Étape 2, une partie s’en va : ${a + b} − ${cc} = ${ans}.${probBar([{ v: ans, q: 1 }, { v: cc }], a + b)}`,
+      hint: 'Fais une étape à la fois : d’abord le tout, puis ce qui s’en va.' }); }
+  const k = rnd(3, 6), e = rnd(4, 10), cc = rnd(5, 30), ans = k * e + cc;
+  const ask = pick([
+    `${W} rapporte ${k} ${c[0]} de ${enN(e, o)} et encore ${enN(cc, o)}. Combien de ${o[0]} en tout ?`,
+    `Le cuistot prépare ${k} plateaux de ${e} biscuits et garde ${cc} biscuits de côté. Combien de biscuits en tout ?`,
+    `${k} mousses rapportent chacun ${enN(e, o)}, et la vigie en rapporte ${cc}. Combien de ${o[0]} en tout ?`]);
+  return enQ(false, ask, ans, { log: `problème ${k} × ${e} + ${cc}`,
+    explain: `Étape 1, les groupes : ${k} × ${e} = ${k * e}. Étape 2, on ajoute le reste : ${k * e} + ${cc} = ${ans}.${probBar([{ v: k * e }, { v: cc }], '?')}`,
+    hint: 'Calcule d’abord les groupes avec une multiplication, puis ajoute ce qui est à part.' });
+}
+// CM1 : comparaisons (de plus / de moins), 2 étapes (× puis + ; − puis ÷), partage avec reste, pièges de comparaison inverse
+function cm1Enig(l) {
+  const [A, B] = shuffle(ENP).slice(0, 2), o = pick(ENO), c = pick(ENC);
+  if (l === 1) { const a = rnd(25, 80), d = rnd(3, Math.min(30, a - 5)), more = Math.random() < .5, ans = more ? a + d : a - d;
+    const qui = A[1] === 'elle' ? 'qu’elle' : 'que lui';
+    const ask = more
+      ? pick([
+        `${cap(A[0])} a ${enN(a, o)}. ${cap(B[0])} en a ${d} de plus. Combien ${B[0]} en a-t-${B[1]} ?`,
+        `${cap(A[0])} a trouvé ${enN(a, o)}, et ${B[0]} en a trouvé ${d} de plus ${qui}. Combien ${B[0]} en a-t-${B[1]} trouvé ?`])
+      : pick([
+        `${cap(A[0])} a ${enN(a, o)}. ${cap(B[0])} en a ${d} de moins. Combien ${B[0]} en a-t-${B[1]} ?`,
+        `${cap(A[0])} a pêché ${enN(a, ['sardines', 'sardine'])}, et ${B[0]} en a pêché ${d} de moins ${qui}. Combien ${B[0]} en a-t-${B[1]} pêché ?`]);
+    return enQ(true, ask, ans, { log: `comparer : ${a}, ${d} de ${more ? 'plus' : 'moins'}`,
+      explain: more
+        ? `${cap(B[0])} en a autant que ${A[0]}, et encore ${d} : ${a} + ${d} = ${ans}.${probBar([{ v: a }, { v: d }], '?')}`
+        : `${cap(B[0])} en a autant que ${A[0]}, moins ${d} : ${a} − ${d} = ${ans}.${probBar([{ v: ans, q: 1 }, { v: d }], a)}`,
+      hint: 'Dessine deux barres, une par personnage : laquelle est la plus longue ?',
+      choices: opts(ans, [[more ? a - d : a + d, more ? 'Tu as enlevé : « de plus », c’est davantage.' : 'Tu as ajouté : « de moins », c’est moins.'], [d, `${d}, c’est l’écart entre les deux, pas ce qu’on cherche.`]]) }); }
+  if (l === 2) { const k = rnd(3, 9), e = rnd(6, 25), cc = rnd(8, 60), ans = k * e + cc;
+    const ask = pick([
+      `Le capitaine achète ${k} cordes à ${e} doublons pièce et un drapeau à ${cc} doublons. Combien dépense-t-il en tout ?`,
+      `${cap(A[0])} remplit ${k} ${c[0]} de ${enN(e, o)} et garde ${enN(cc, o)} à part. Combien de ${o[0]} en tout ?`,
+      `Le cuistot sert ${k} tablées de ${e} sardines et met ${cc} sardines dans la soupe. Combien de sardines en tout ?`]);
+    return enQ(false, ask, ans, { log: `problème ${k} × ${e} + ${cc}`,
+      explain: `Étape 1, les groupes : ${k} × ${e} = ${k * e}. Étape 2, on ajoute le reste : ${k * e} + ${cc} = ${ans}.${probBar([{ v: k * e }, { v: cc }], '?')}`,
+      hint: 'Cherche d’abord ce que valent les groupes (multiplication), puis ajoute ce qui est à part.' }); }
+  if (l === 3) { const k = rnd(3, 8), e = rnd(3, 9), r = rnd(1, k - 1), n = k * e + r, reste = Math.random() < .6, ans = reste ? r : e;
+    const fin = reste ? 'Combien en reste-t-il à la fin ?' : 'Combien chacun en reçoit-il ?';
+    const ask = pick([
+      `${cap(A[0])} partage ${enN(n, o)} entre ${k} pirates. Chacun en reçoit le plus possible, et tous autant. ${fin}`,
+      `On répartit ${enN(n, o)} dans ${k} ${c[0]}, autant dans chaque ${c[1]}, le plus possible. ${reste ? 'Combien en reste-t-il à la fin ?' : `Combien y en a-t-il dans chaque ${c[1]} ?`}`]);
+    return enQ(false, ask, ans, { log: `partage avec reste : ${n} ÷ ${k}`,
+      explain: `${n} = (${k} × ${e}) + ${r}. Chaque part reçoit ${e}, et il reste ${r} : pas assez pour redonner 1 à chacune des ${k} parts.${probBar([...range(1, k).map(() => ({ v: e, q: reste ? 0 : 1 })), { v: r, q: reste ? 1 : 0 }], n)}`,
+      hint: `Cherche dans la table de ${k} le multiple juste en dessous de ${n}.` }); }
+  if (l === 4) { const e = rnd(3, 12), k = rnd(2, 6), cc = rnd(5, 30), n = e * k + cc;
+    const ask = pick([
+      `Le cuistot a ${n} biscuits. Il en garde ${cc} pour le capitaine et partage le reste entre ${k} mousses, en parts égales. Combien chaque mousse en reçoit-il ?`,
+      `${cap(A[0])} a ${enN(n, o)}. ${cap(A[1])} en met ${cc} de côté et partage le reste entre ${k} amis, en parts égales. Combien chaque ami en reçoit-il ?`]);
+    return enQ(false, ask, e, { log: `problème (${n} − ${cc}) ÷ ${k}`,
+      explain: `Étape 1, on enlève ce qui est mis de côté : ${n} − ${cc} = ${e * k}. Étape 2, on partage : ${e * k} ÷ ${k} = ${e}.${probBar([...range(1, k).map(() => ({ v: e, q: 1 })), { v: cc }], n)}`,
+      hint: 'Enlève d’abord ce qui est mis de côté, puis partage ce qui reste.' }); }
+  const t = pick(['inv', 'xplus', 'divr']);
+  if (t === 'inv') { const a = rnd(30, 95), d = rnd(4, 25), ans = a - d;
+    const ask = pick([
+      `${cap(A[0])} a ${enN(a, o)}. C’est ${d} de plus que ${B[0]}. Combien ${B[0]} en a-t-${B[1]} ?`,
+      `${cap(A[0])} a gagné ${enN(a, o)}. C’est ${d} de plus que ${B[0]}. Combien ${B[0]} en a-t-${B[1]} gagné ?`]);
+    return enQ(false, ask, ans, { log: `comparer (piège) : ${a}, ${d} de plus que…`,
+      explain: `Attention : c’est ${A[0]} qui en a le plus. ${cap(B[0])} en a ${d} de moins : ${a} − ${d} = ${ans}.${probBar([{ v: ans, q: 1 }, { v: d }], a)}`,
+      hint: 'Relis bien : qui en a le plus ? Dessine les deux barres avant de calculer.' }); }
+  if (t === 'xplus') { const k = rnd(4, 9), e = rnd(12, 25), cc = rnd(15, 80), ans = k * e + cc;
+    const ask = pick([
+      `${cap(A[0])} achète ${k} lanternes à ${e} doublons pièce et un tonneau à ${cc} doublons. Combien dépense-t-${A[1]} en tout ?`,
+      `${k} coffres contiennent ${enN(e, o)} chacun, et un grand coffre en contient ${cc}. Combien de ${o[0]} en tout ?`]);
+    return enQ(false, ask, ans, { log: `problème ${k} × ${e} + ${cc}`,
+      explain: `Étape 1 : ${k} × ${e} = ${k * e}. Étape 2 : ${k * e} + ${cc} = ${ans}.${probBar([{ v: k * e }, { v: cc }], '?')}`,
+      hint: 'Deux étapes : les groupes d’abord, puis ce qui s’ajoute.' }); }
+  const k = rnd(4, 9), e = rnd(6, 12), r = rnd(1, k - 1), n = k * e + r;
+  const ask = pick([
+    `Le capitaine distribue ${enN(n, o)} à ${k} pirates, le plus possible et tous autant. Combien en garde-t-il à la fin ?`,
+    `${cap(A[0])} range ${enN(n, o)} dans ${k} ${c[0]}, autant dans chaque ${c[1]}, le plus possible. Combien en reste-t-il à la fin ?`]);
+  return enQ(false, ask, r, { log: `partage avec reste : ${n} ÷ ${k}`,
+    explain: `${n} = (${k} × ${e}) + ${r}. Chacun reçoit ${e}, et il reste ${r}.${probBar([...range(1, k).map(() => ({ v: e })), { v: r, q: 1 }], n)}`,
+    hint: `Cherche dans la table de ${k} le multiple juste en dessous de ${n}.` });
+}
+// CM2 : proportionnalité (passage par l'unité), 2-3 étapes, données inutiles signalées dans l'explication
+function cm2Enig(l) {
+  const [A] = shuffle(ENP), o = pick(ENO), c = pick(ENC);
+  const prop = (uMax, mMax) => { const u = rnd(2, uMax), n = rnd(2, 6); let m; do { m = rnd(3, mMax); } while (m === n);
+    const p = n * u, ans = m * u;
+    const T = pick([
+      { a: `${n} ${c[0]} identiques contiennent en tout ${enN(p, o)}. Combien de ${o[0]} y a-t-il dans ${m} ${c[0]} ?`, un: `dans 1 ${c[1]}` },
+      { a: `Pour ${n} pirates, le cuistot prévoit ${enN(p, o)}. Combien de ${o[0]} faut-il pour ${m} pirates ?`, un: 'pour 1 pirate' },
+      { a: `${cap(A[0])} fabrique ${n} colliers identiques avec ${p} perles en tout. Combien de perles faut-il pour ${m} colliers ?`, un: 'pour 1 collier' }]);
+    return enQ(false, T.a, ans, { log: `proportion : ${n} → ${p}, ${m} → ?`,
+      explain: `On passe par 1 : ${T.un}, ${p} ÷ ${n} = ${u}. Puis pour ${m} : ${m} × ${u} = ${ans}.${probBar(range(1, n).map(() => ({ v: u })), p)}${m <= 9 ? probBar(range(1, m).map(() => ({ v: u })), '?') : ''}`,
+      hint: 'Cherche d’abord ce que vaut 1 seul (passe par l’unité), puis multiplie.' }); };
+  if (l === 1) return prop(9, 9);
+  if (l === 2) { if (Math.random() < .55) { const k = rnd(3, 9), M = pick([100, 200, 500]), e = rnd(8, Math.floor((M - 10) / k)), ans = M - k * e;
+      const ask = pick([
+        `${cap(A[0])} achète ${k} lanternes à ${e} doublons pièce et paye avec ${fmt(M)} doublons. Combien lui rend-on ?`,
+        `Le capitaine paye ${k} ${c[0]} de poudre à ${e} doublons pièce avec ${fmt(M)} doublons. Combien lui rend-on ?`]);
+      return enQ(false, ask, ans, { log: `problème ${M} − ${k} × ${e}`,
+        explain: `Étape 1, le prix total : ${k} × ${e} = ${k * e}. Étape 2, la monnaie : ${fmt(M)} − ${k * e} = ${ans}.${probBar([{ v: k * e }, { v: ans, q: 1 }], M)}`,
+        hint: 'Cherche d’abord le prix payé, puis ce qu’on doit rendre.' }); }
+    const k = rnd(6, 12), e = rnd(15, 60), cc = rnd(20, 90), ans = k * e + cc;
+    const ask = pick([
+      `Le navire embarque ${k} ${c[0]} de ${enN(e, o)} et encore ${enN(cc, o)} en vrac. Combien de ${o[0]} embarque-t-il ?`,
+      `${cap(A[0])} vend ${k} colliers à ${e} doublons pièce et un coffret à ${cc} doublons. Combien gagne-t-${A[1]} en tout ?`]);
+    return enQ(false, ask, ans, { log: `problème ${k} × ${e} + ${cc}`,
+      explain: `Étape 1 : ${k} × ${e} = ${fmt(k * e)}. Étape 2 : ${fmt(k * e)} + ${cc} = ${fmt(ans)}.${probBar([{ v: k * e }, { v: cc }], '?')}`,
+      hint: 'Deux étapes : les groupes d’abord, puis ce qui s’ajoute.' }); }
+  if (l === 3) { const t = pick(['mult', 'add', 'sub']); let ask, ans, xLab, steps, extra, log;
+    if (t === 'mult') { const k = rnd(3, 9), e = rnd(4, 12), x = rnd(10, 35); ans = k * e; log = `donnée inutile : ${k} × ${e}`;
+      const T = pick([
+        { a: `Le navire a ${x} canons et transporte ${k} ${c[0]} de ${enN(e, o)}. Combien de ${o[0]} transporte-t-il ?`, x: `${x} canons` },
+        { a: `L’équipage compte ${x} pirates. ${cap(A[0])} empile ${k} ${c[0]} de ${enN(e, o)} dans la cale. Combien de ${o[0]} y a-t-il ?`, x: `${x} pirates` }]);
+      ask = T.a; xLab = T.x; steps = `${k} ${c[0]} de ${e} : ${k} × ${e} = ${ans}.`;
+      extra = [[ans + x, `Tu as utilisé « ${xLab} » : cette donnée ne sert à rien ici.`], [k + e, 'Tu as ajouté au lieu de multiplier les groupes.']]; }
+    else if (t === 'add') { const a = rnd(25, 80), b = rnd(15, 60), x = rnd(8, 40); ans = a + b; log = `donnée inutile : ${a} + ${b}`;
+      const T = pick([
+        { a: `Le capitaine a ${x} ans. Il range ${enN(a, o)} dans son coffre, puis en ajoute ${b}. Combien y en a-t-il dans le coffre ?`, x: `${x} ans` },
+        { a: `La traversée dure ${x} jours. Le navire charge ${enN(a, o)}, puis encore ${b}. Combien en charge-t-il en tout ?`, x: `${x} jours` }]);
+      ask = T.a; xLab = T.x; steps = `On réunit : ${a} + ${b} = ${ans}.`;
+      extra = [[ans + x, `Tu as utilisé « ${xLab} » : cette donnée ne sert à rien ici.`], [a - b, 'Tu as enlevé : ici, les quantités s’ajoutent.']]; }
+    else { const a = rnd(40, 95), cc = rnd(10, 35), x = rnd(5, 30); ans = a - cc; log = `donnée inutile : ${a} − ${cc}`;
+      const T = pick([
+        { a: `Le voyage dure ${x} jours. Le cuistot embarque ${a} biscuits, et l’équipage en mange ${cc} la première semaine. Combien de biscuits reste-t-il ?`, x: `${x} jours` },
+        { a: `Le port compte ${x} bateaux. ${cap(A[0])} avait ${enN(a, o)} et en a vendu ${cc}. Combien lui en reste-t-il ?`, x: `${x} bateaux` }]);
+      ask = T.a; xLab = T.x; steps = `Une partie s’en va : ${a} − ${cc} = ${ans}.`;
+      extra = [[ans - x > 0 ? ans - x : ans + x, `Tu as utilisé « ${xLab} » : cette donnée ne sert à rien ici.`], [a + cc, 'Tu as ajouté : ici, une partie s’en va.']]; }
+    return enQ(true, ask, ans, { log,
+      explain: `La donnée « ${xLab} » est en trop : elle ne sert pas au calcul, on la laisse de côté. ${steps}`,
+      hint: 'Avant de calculer, demande-toi : de quelles données ai-je vraiment besoin ?',
+      choices: opts(ans, extra) }); }
+  if (l === 4) { const k = rnd(3, 8), e = rnd(5, 20), qq = rnd(10, 60), tot = k * e + qq, M = pick([200, 300, 500].filter(v => v > tot + 5)), ans = M - tot;
+    const ask = pick([
+      `${cap(A[0])} achète ${k} cartes au trésor à ${e} doublons pièce et une longue-vue à ${qq} doublons, puis paye avec ${fmt(M)} doublons. Combien lui rend-on ?`,
+      `Le capitaine commande ${k} tonneaux de jus à ${e} doublons pièce et un coffre à ${qq} doublons. Il paye avec ${fmt(M)} doublons. Combien lui rend-on ?`]);
+    return enQ(false, ask, ans, { log: `problème ${M} − (${k} × ${e} + ${qq})`,
+      explain: `Trois étapes. Étape 1 : ${k} × ${e} = ${k * e}. Étape 2, le prix total : ${k * e} + ${qq} = ${tot}. Étape 3, la monnaie : ${fmt(M)} − ${tot} = ${ans}.${probBar([{ v: k * e }, { v: qq }, { v: ans, q: 1 }], M)}`,
+      hint: 'Avance pas à pas : le prix des groupes, puis le prix total, puis la monnaie.' }); }
+  const t = pick(['prop2', 'inut2', 'et3']);
+  if (t === 'prop2') return prop(12, 12);
+  if (t === 'inut2') { const x = rnd(4, 30), k = rnd(4, 9), e = rnd(6, 15), cc = rnd(10, 50), ans = k * e + cc;
+    const ask = pick([
+      `Le navire a ${x} voiles. ${cap(A[0])} charge ${k} ${c[0]} de ${enN(e, o)} et encore ${enN(cc, o)} en vrac. Combien de ${o[0]} en tout ?`,
+      `L’île est à ${x} jours de mer. Le cuistot embarque ${k} ${c[0]} de ${enN(e, o)} et ${enN(cc, o)} en plus. Combien de ${o[0]} embarque-t-il ?`]);
+    return enQ(false, ask, ans, { log: `donnée inutile : ${k} × ${e} + ${cc}`,
+      explain: `La donnée « ${x} » du début est en trop : elle ne sert pas au calcul. Étape 1 : ${k} × ${e} = ${k * e}. Étape 2 : ${k * e} + ${cc} = ${ans}.${probBar([{ v: k * e }, { v: cc }], '?')}`,
+      hint: 'Trie d’abord les données : laquelle ne sert à rien ? Puis calcule en deux étapes.' }); }
+  const k = rnd(4, 9), e = rnd(12, 30), qq = rnd(25, 90), tot = k * e + qq, M = pick([500, 400].filter(v => v > tot + 5)), ans = M - tot;
+  const ask = pick([
+    `${cap(A[0])} achète ${k} sabres de bois à ${e} doublons pièce et un perroquet de bois à ${qq} doublons, puis paye avec ${fmt(M)} doublons. Combien lui rend-on ?`,
+    `Pour la fête du port, on achète ${k} guirlandes à ${e} doublons pièce et un feu d’artifice à ${qq} doublons. On paye avec ${fmt(M)} doublons. Combien rend-on ?`]);
+  return enQ(false, ask, ans, { log: `problème ${M} − (${k} × ${e} + ${qq})`,
+    explain: `Trois étapes. Étape 1 : ${k} × ${e} = ${fmt(k * e)}. Étape 2 : ${fmt(k * e)} + ${qq} = ${fmt(tot)}. Étape 3 : ${fmt(M)} − ${fmt(tot)} = ${fmt(ans)}.${probBar([{ v: k * e }, { v: qq }, { v: ans, q: 1 }], M)}`,
+    hint: 'Avance pas à pas et note chaque résultat avant de passer à l’étape suivante.' });
+}
+function genEnigmes(l) { return CP() ? cpEnig(l) : CE1() ? ce1Enig(l) : CM1() ? cm1Enig(l) : CM2() ? cm2Enig(l) : ce2Enig(l); }
 
 /* ================= Pi t'explique : mini-leçons ================= */
 // Une leçon par île : 4 étapes (visuel + une phrase), avancées par l'enfant, lues par la voix vo-l-<île>-<n>
@@ -5626,7 +5962,7 @@ function inputHTML(q) {
 const canSay = () => 'speechSynthesis' in window && typeof SpeechSynthesisUtterance === 'function';
 const sayBtn = (what = 'q') => canSay() ? `<button class="say" data-a="say" data-w="${what}" aria-label="Écouter">${ico('iSound')}</button>` : '';
 function speakable(html) {
-  const t = document.createElement('div'); t.innerHTML = String(html).replace(/<span class="frac"[^>]*><b>(\d+)<\/b><b>(\d+)<\/b><\/span>(<span class="sr">[^<]*<\/span>)?/g, ' $1 sur $2 ').replace(/<span class="slot"[^>]*>[^<]*<\/span>/g, ' … ');
+  const t = document.createElement('div'); t.innerHTML = String(html).replace(/<svg[^>]*aria-hidden[\s\S]*?<\/svg>/g, ' ').replace(/<span class="frac"[^>]*><b>(\d+)<\/b><b>(\d+)<\/b><\/span>(<span class="sr">[^<]*<\/span>)?/g, ' $1 sur $2 ').replace(/<span class="slot"[^>]*>[^<]*<\/span>/g, ' … ');
   let x = t.textContent.replace(/___/g, ' … ');
   // Dans un calcul, la case vide se dit « combien » ; dans une phrase, c'est un blanc
   if (/\d/.test(x) && /[=+×÷−]/.test(x)) x = x.replace(/…\s*\?|\?\s*…|…|(=\s*)\?/g, (m, eq) => eq ? `${eq}combien` : ' combien ');
@@ -6683,6 +7019,6 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.se
 let goNow = false; try { goNow = !!sessionStorage.getItem('mous-go'); sessionStorage.removeItem('mous-go'); } catch (e) {}
 if (location.hash === '#direct' || goNow) { show('map'); if (!S.intro) onboarding(); else if (goNow) setTimeout(() => toast(`À toi de jouer, ${S.name} !`), 400); } else titleScreen();
 // Crochets de test (Playwright) : web dans un navigateur seulement, jamais dans les applis ni en affichage installé (code de test embarqué, règle Apple 2.2)
-if (!nativeApp && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches))) window.__arch = { get R() { return R; }, get S() { return S; }, startEscale, endEscale, IS, renderIsle, get BUF() { return BUF; }, openParents, voice, FX, speakable, diagnose, answer, skillState, nextQ: () => nextQ(), gens: { genCanon, genFoot, genMine, genChasse, genMarche, genCuisine, genHorloge, genFormes, genAnglais, genCulture }, geo: { gNet, gFigName, gPolyName, gCercle, gDroites, gAngleType, gAngleCmp, gDegres, gAngleNom, gCarreaux, gDemi, gCmpAB, gRectMes, gConv, gQuelRect, gSolNom, gSolCompte, gSolFaces, gPatron, gSym, gDepl }, words, ISLES, setGrade, check, labN };
+if (!nativeApp && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches))) window.__arch = { get R() { return R; }, get S() { return S; }, startEscale, endEscale, IS, renderIsle, get BUF() { return BUF; }, openParents, voice, FX, speakable, diagnose, answer, skillState, nextQ: () => nextQ(), gens: { genCanon, genFoot, genMine, genChasse, genMarche, genCuisine, genHorloge, genFormes, genAnglais, genCulture, genEnigmes }, geo: { gNet, gFigName, gPolyName, gCercle, gDroites, gAngleType, gAngleCmp, gDegres, gAngleNom, gCarreaux, gDemi, gCmpAB, gRectMes, gConv, gQuelRect, gSolNom, gSolCompte, gSolFaces, gPatron, gSym, gDepl }, words, ISLES, setGrade, check, labN };
 })();
 </script>
