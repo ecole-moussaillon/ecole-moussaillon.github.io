@@ -94,6 +94,10 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .chip .pen{margin-right:6px}.trophy .ti .pen{width:34px;height:42px;margin:0}
 .lvl-pill.r0{background:linear-gradient(#f6cfa4,#c98a4a)}.lvl-pill.r1{background:linear-gradient(#f3f6f8,#b9c4cc)}.lvl-pill.r2{background:linear-gradient(#ffe9a8,#e0a92e)}
 .rkm .box{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}.rkm .rkb .pen{width:46px;height:56px;margin:0}
+/* Cinématique de rang : le fanion se hisse */
+.rkm .rkb{overflow:hidden;padding-top:4px}
+.rkm .rkb .pen{animation:penhoist 1s cubic-bezier(.25,.9,.4,1.12) .15s both}
+@keyframes penhoist{0%{transform:translateY(52px) rotate(-4deg);opacity:0}100%{transform:none;opacity:1}}
 .rkl{margin:0;padding:0 0 0 18px;text-align:left;color:var(--ink);font-size:15px;line-height:1.45}
 .lvl-pill{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font:700 11px var(--f-u);letter-spacing:.06em;color:#2a1a07;background:linear-gradient(#f7dc93,#c9973f);padding:3px 9px;border-radius:10px;box-shadow:0 2px 0 var(--brass-lo)}
 .lvl-pill.lock{background:none;box-shadow:none;padding:0 2px;color:#f6efdc;text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.75)}
@@ -443,6 +447,13 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .showship{position:relative;border-radius:24px;overflow:hidden;height:200px;margin-bottom:16px}
 .showship img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
 .showship .sh{position:absolute;right:-2%;bottom:8px;width:64%;animation:shipr 3.4s ease-in-out infinite}
+/* Cinématique : un navire nouvellement acquis (ou agrandi) entre en scène toutes voiles dehors */
+.showship .sh.sailin{animation:sailin 1.8s cubic-bezier(.22,.75,.3,1) both,shipr 3.4s ease-in-out 1.8s infinite}
+@keyframes sailin{0%{transform:translateX(-130%) rotate(-3deg)}70%{transform:translateX(3%) rotate(1.4deg)}100%{transform:none}}
+/* Cinématique du chapitre final : assemblage des douze morceaux de la carte */
+.tassem{position:relative;width:min(100%,340px);aspect-ratio:4/3;margin:-70px auto 4px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+.tassem i{position:absolute;width:25%;height:33.4%;background:url('assets/tmap-full.webp');background-size:400% 300%;opacity:0;animation:tpiece .55s cubic-bezier(.25,.8,.35,1.1) both}
+@keyframes tpiece{0%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rr)) scale(.55)}100%{opacity:1;transform:none}}
 .showship::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,26,36,.55),transparent 55%);pointer-events:none}
 .showship .cap{z-index:2;max-width:52%}
 .showship .cap{position:absolute;left:14px;top:12px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
@@ -5199,11 +5210,16 @@ function sagaHTML() {
 }
 // Chapitres illustrés (lot 6) ; les autres gardent l'île du chapitre en médaillon
 const SAGA_ART = { prologue: 'saga-prologue', jungle: 'saga-croco', cuisine: 'saga-tarte', lecture: 'saga-lunettes', final: 'saga-final' };
+// Cinématique du chapitre final : les douze morceaux de la carte au trésor s'assemblent sous les yeux de l'enfant
+function tmapAssemble() {
+  return `<div class="tassem" role="img" aria-label="La carte au trésor, enfin assemblée">${range(0, 11).map(k => { const x = k % 4, y = Math.floor(k / 4), dx = (x < 2 ? -1 : 1) * rnd(40, 90), dy = (y === 0 ? -1 : y === 2 ? 1 : (k % 2 ? 1 : -1)) * rnd(30, 80), rr = rnd(-18, 18);
+    return `<i style="left:${x * 25}%;top:${(y / 3 * 100).toFixed(2)}%;background-position:${(x / 3 * 100).toFixed(2)}% ${(y / 2 * 100).toFixed(2)}%;--dx:${dx}px;--dy:${dy}px;--rr:${rr}deg;animation-delay:${(k * .16 + .3).toFixed(2)}s"></i>`; }).join('')}</div>`;
+}
 function openSaga(id) {
   const c = SAGA.find(x => x.id === id); if (!c || !chapterOpen(c)) return; const k = SAGA.indexOf(c), i = isleById(id);
   P().sagaRead = [...new Set([...(P().sagaRead || []), id])]; save();
   const m = document.createElement('div'); m.className = 'modal saga';
-  m.innerHTML = `<div class="box paper" role="dialog" aria-label="${esc(c.t)}">${SAGA_ART[id] ? `<img class="sscene" src="${IMG(SAGA_ART[id])}" alt="">` : `<img src="${IMG(i ? i.img : id === 'final' ? 'chest-open' : 'guide-capitaine')}" alt="" style="width:${i ? 150 : 130}px;margin:-74px auto 0;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3))">`}
+  m.innerHTML = `<div class="box paper" role="dialog" aria-label="${esc(c.t)}">${id === 'final' ? tmapAssemble() : SAGA_ART[id] ? `<img class="sscene" src="${IMG(SAGA_ART[id])}" alt="">` : `<img src="${IMG(i ? i.img : 'guide-capitaine')}" alt="" style="width:${i ? 150 : 130}px;margin:-74px auto 0;filter:drop-shadow(0 10px 10px rgba(0,0,0,.3))">`}
     <div class="smallcaps" style="color:var(--ink-2)">${k === 0 ? 'Prologue' : k === SAGA.length - 1 ? 'Chapitre final' : 'Chapitre ' + k}</div><div class="disp" style="font-size:28px">${typo(c.t)}</div>
     <div class="stxt">${c.x.map(t => `<p>${esc(typo(t))}</p>`).join('')}</div>
     <div class="errbtns">${canSay() ? `<button class="say" data-a="sagasay" aria-label="Écouter">${ico('iSound')}</button>` : ''}<button class="brass-btn" data-a="sagaclose">Fermer</button></div></div>`;
@@ -5955,8 +5971,10 @@ function yardHTML() {
       return `<button class="paint${on ? ' on' : ''}${can ? '' : ' cant'}" data-a="gear" data-g="${id}" aria-pressed="${on}">${img ? `<img src="${IMG(img)}" alt="">` : GEARSVG[id]}<b>${n}</b><span>${on ? 'À bord' : own ? 'Poser' : `<img src="${IMG('coin-doublon')}" alt="">${fmt(price)}`}</span></button>`; }).join('')}</div></section>`;
 }
 function renderCrew() {
+  // Cinématique : si le navire a changé depuis la dernière visite (achat, taille), il entre en scène
+  const sail = S.seenShip !== shipImg(); if (sail) { S.seenShip = shipImg(); save(); }
   app.innerHTML = `<div class="screen" style="background:radial-gradient(ellipse at 50% 0%,#16384a,#0b2230 60%)">${hudHTML()}<div class="tabpage">
-    <div class="showship"><img class="bg" src="${IMG('bg-sea-golden')}" alt="">${shipArt('sh')}${flagHTML(S.flag, 'mini')}</div>
+    <div class="showship"><img class="bg" src="${IMG('bg-sea-golden')}" alt="">${shipArt(sail ? 'sh sailin' : 'sh')}${flagHTML(S.flag, 'mini')}</div>
     <div class="shipcap"><div class="smallcaps" style="color:#ffd9a0">Ton navire · ${paintDef()[4] ? paintDef()[1] : SHIPS[shipLv()][2]}</div><div class="disp">Le Fier Calcul</div>${(() => { const nx = SHIPS[shipLv() + 1]; if (!nx) return '<div class="nx">Le plus grand navire de l’archipel !</div>'; const from = SHIPS[shipLv()][0], st = starTotal(), left = Math.max(1, nx[0] - st); return `<div class="nx">Encore ${left} étoile${left > 1 ? 's' : ''} pour le ${nx[2]}</div><div class="bar"><i style="width:${Math.max(0, Math.min(100, Math.round((st - from) / (nx[0] - from) * 100)))}%"></i></div>`; })()}</div>
     ${yardHTML()}
     <h1>Équipage</h1><p class="sub">${S.crew.length} équipier${S.crew.length > 1 ? 's' : ''} sur 12. Chacun apporte un pouvoir pendant les escales.</p>
