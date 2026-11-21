@@ -1,0 +1,77 @@
+{
+  "canons": {
+    "voice_id": "NxGA8X3YhTrnf3TRQf6Q",
+    "name": "Jerry B. - Dark Villain & Cinematic",
+    "fam": "monstre"
+  },
+  "culture": {
+    "voice_id": "LvmvHEBEmMJBJw9UuhwO",
+    "name": "Eldrin - Wise Ancient Wizard Storyteller",
+    "fam": "sage"
+  },
+  "conjug": {
+    "voice_id": "4Vl3K2x290GidNvuaLm7",
+    "name": "Matthew Schmitz - Old Pirate Captain",
+    "fam": "bourru"
+  },
+  "vocab": {
+    "voice_id": "nMLAJvHm96aMWubKsf0q",
+    "name": "Hijiri - Calm & Deep Female Narration",
+    "fam": "profonde"
+  },
+  "mine": {
+    "voice_id": "Y9HVWy6RX08vmpO3P45I",
+    "name": "Moussaillon boss · geant",
+    "fam": "geant"
+  },
+  "accords": {
+    "voice_id": "Y9HVWy6RX08vmpO3P45I",
+    "name": "Moussaillon boss · geant",
+    "fam": "geant"
+  },
+  "formes": {
+    "voice_id": "Y9HVWy6RX08vmpO3P45I",
+    "name": "Moussaillon boss · geant",
+    "fam": "geant"
+  },
+  "stade": {
+    "voice_id": "Z7RrOqZFTyLpIlzCgfsp",
+    "name": "Toby - Little Mythical Monster",
+    "fam": "nasillard"
+  },
+  "jungle": {
+    "voice_id": "j9qIyycr9PcZ7d4yj21f",
+    "name": "Grimble – Twitchy & Sneaky creature",
+    "fam": "fourbe"
+  },
+  "marche": {
+    "voice_id": "j9qIyycr9PcZ7d4yj21f",
+    "name": "Grimble – Twitchy & Sneaky creature",
+    "fam": "fourbe"
+  },
+  "cuisine": {
+    "voice_id": "WPz2n1jQHukLQ6YDWe0o",
+    "name": "Moussaillon boss · pieuvre",
+    "fam": "pieuvre"
+  },
+  "anglais": {
+    "voice_id": "bQPhQlMzhoOM52mI1B4I",
+    "name": "Moussaillon boss · ara",
+    "fam": "ara"
+  },
+  "horloge": {
+    "voice_id": "Biy1gX2CtjYHdLIlawZj",
+    "name": "Moussaillon boss · chouette",
+    "fam": "chouette"
+  },
+  "lecture": {
+    "voice_id": "fgDJOgmENIR82PueQrVs",
+    "name": "Minerva Nightshade",
+    "fam": "melodieuse"
+  },
+  "gram": {
+    "voice_id": "fgDJOgmENIR82PueQrVs",
+    "name": "Minerva Nightshade",
+    "fam": "melodieuse"
+  }
+}

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VO lot B — boss, Pi, consignes</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:880px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+h2{font-size:20px;margin:36px 0 10px;color:#f3d58c}
+h3{font-size:16px;margin:22px 0 6px;color:#ffe2a6}
+.sub{color:#9fb9bb;margin:0 0 14px}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+.boss{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:14px 16px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.boss h3{color:#2a1c12;margin:0}
+.boss .vx{font-size:13px;color:#7a6450;margin:2px 0 10px}
+.vo{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:start;padding:8px 0;border-top:1px solid rgba(0,0,0,.08)}
+section.pi .vo{border-color:rgba(255,255,255,.1)}
+.vo code{font-size:12.5px;background:rgba(0,0,0,.08);border-radius:7px;padding:3px 7px;white-space:nowrap}
+section.pi .vo code{background:rgba(255,255,255,.08)}
+.vo pre{margin:0;font:13.5px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 12.5px system-ui;padding:6px 11px;cursor:pointer}
+button.copy.done{background:#2f8f5a}
+section.pi,section.cap{background:rgba(255,255,255,.045);border-radius:14px;padding:14px 16px;margin:12px 0}
+</style>
+</head>
+<body>
+<main>
+<h1>Voix du lot B — boss, Pi, consignes d’îles</h1>
+<p class="sub">90 répliques balisées pour Eleven v4, prêtes à coller. Le bouton copie le texte balisé tel quel.</p>
+
+<div class="note"><b>Réglages pour toute la série</b>
+<ul>
+<li>Modèle <b>eleven_v4</b> · Stability <b>milieu</b> (les boss : bas-milieu pour l’expressivité) · Similarity <b>haut</b>. Générer 3-4 prises, garder la meilleure.</li>
+<li><b>Pi et les consignes</b> : la même voix que les <code>vo-*</code> existants. <b>Les boss</b> : une voix distincte par boss (suggestion de caractère sur chaque fiche) — caricature rigolote, jamais vraiment effrayante (catégorie Enfants).</li>
+<li>Export : MP3 mono, normalisé au niveau des <code>vo-*</code> actuels, nommé <b>exactement</b> comme indiqué, déposé dans <code>assets/audio/</code>.</li>
+<li>Intégration (je m’en charge au retour des fichiers) : les boss en chargement différé comme la saga (préfixe <code>vo-b-</code> exclu du cache initial), les répliques affichées à l’écran en même temps (enfants sourds), déclencheurs : entrée du boss / 3 bonnes réponses d’affilée / défaite du boss ; les consignes <code>vo-cap-*</code> jouées à l’arrivée sur l’île ; les événements <code>vo-jour</code> (premier lancement du jour) et <code>vo-retour</code> (retour après 3 jours ou plus) sont de nouveaux crochets.</li>
+</ul></div>
+
+<h2>A · Les 15 boss (3 répliques chacun : entrée, mi-combat, défaite)</h2>
+
+<div class="boss"><h3>Le Kraken des Tables — Île des Canons (tables de multiplication)</h3><div class="vx">Voix : caverneuse et roulante, monstre marin grandiloquent. EN: deep booming sea-monster voice, theatrical, comedic menace.</div>
+<div class="vo"><code>vo-b-canons-in-1</code><pre>[Low, booming, theatrical menace] QUI ose réciter ses tables dans MES eaux ? [chuckles] Approche, moussaillon…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-canons-mid-1</code><pre>[annoyed, grumbling] Grrr… tu calcules plus vite que mes HUIT bras !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-canons-out-1</code><pre>[frustrated sigh] Vaincu… par une table de multiplication. [sulking, slower] Je retourne me coucher au fond de l’eau.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-canons-rev-1</code><pre>[booming, vengeful, theatrical] Profite de ta victoire, moussaillon… Les tentacules reviennent TOUJOURS !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Crabe Gardien — Stade des Vagues (calcul mental)</h3><div class="vx">Voix : pincée, nasillarde, débit rapide et sec. EN: pinched nasal voice, quick clipped delivery, fussy referee energy.</div>
+<div class="vo"><code>vo-b-stade-in-1</code><pre>[Quick, clipped, bossy] Pas si vite ! Ici, c’est MOI qui donne le tempo, petit mousse !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-stade-mid-1</code><pre>[surprised, flustered] Pince alors… tu comptes plus vite que mes pinces !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-stade-out-1</code><pre>[grumbling, deflated] D’accord, d’accord, tu as gagné… [quietly] Je file me cacher sous mon rocher.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-stade-rev-1</code><pre>[quick, indignant, snippy] Tu ne perds rien pour attendre ! Je reviendrai… et je pincerai deux fois plus vite !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Golem des Blocs — Mine aux Blocs (grands nombres)</h3><div class="vx">Voix : très lente, pierreuse, grave, presque endormie. EN: very slow, deep, gravelly stone-giant voice, sleepy pauses.</div>
+<div class="vo"><code>vo-b-mine-in-1</code><pre>[Very slow, deep, rumbling] Mille… dix mille… cent mille… Personne ne compte plus loin que moi.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-mine-mid-1</code><pre>[slow, startled] Hein ?!… Tu empiles les nombres… plus vite que mes blocs…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-mine-out-1</code><pre>[yawning, slow] Je retourne à la sieste… Réveille-moi dans… cent mille ans.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-mine-rev-1</code><pre>[very slow, rumbling, sleepy menace] Je reviendrai… dans très… très… longtemps. [yawns] Mais je reviendrai.</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Colosse des Formes — Île des Formes (géométrie)</h3><div class="vx">Voix : majestueuse, résonnante, un peu solennelle. EN: grand resonant statue voice, solemn, slight echo feel.</div>
+<div class="vo"><code>vo-b-formes-in-1</code><pre>[Grand, resonant, solemn] Carré, triangle, losange… Montre-moi si ton œil est aussi droit que mes angles !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-formes-mid-1</code><pre>[impressed, resonant] Par tous les polygones… rien ne t’échappe !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-formes-out-1</code><pre>[slow, dignified defeat] Mes angles s’effondrent… Tu es le vrai maître des formes.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-formes-rev-1</code><pre>[grand, resonant, defiant] Les statues ne tombent jamais longtemps… Je me redresserai, et mes angles aussi !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Serpent Mesureur — Jungle des Créatures (droite graduée)</h3><div class="vx">Voix : sifflante, étirée sur les S, faussement douce. EN: hissing sibilant snake voice, stretched S sounds, sly but friendly.</div>
+<div class="vo"><code>vo-b-jungle-in-1</code><pre>[Hissing, sly, slow] Sssalut, moussaillon… Sauras-tu te repérer sssur ma longue droite graduée ?</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-jungle-mid-1</code><pre>[hissing, vexed] Ssssapristi… tu vises juste à CHAQUE graduation !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-jungle-out-1</code><pre>[hissing, resigned, softer] Je m’enroule et je m’en vais… Tu mesures mieux que moi, sssans rancune.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-jungle-rev-1</code><pre>[hissing, sly, lingering] Ce n’est qu’un au revoir, moussssaillon… je ramperai jusqu’à toi !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Marchand Fantôme — Marché du Port (monnaie)</h3><div class="vx">Voix : chuchotée, aigre, roublarde de camelot. EN: raspy whispery peddler voice, scheming, comedic.</div>
+<div class="vo"><code>vo-b-marche-in-1</code><pre>[Raspy, scheming whisper] Hé hé… tes doublons contre ma camelote ! Sauras-tu compter ta monnaie ?</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-marche-mid-1</code><pre>[raspy, annoyed] Petit malin… impossible de te rouler sur les prix !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-marche-out-1</code><pre>[wailing, comedic despair] Ruiné ! Me voilà ruiné… [sighs] Garde ta monnaie, tu comptes trop bien.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-marche-rev-1</code><pre>[raspy, scheming chuckle] Hé hé… on se retrouvera au prochain marché, petit malin !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Chef Pieuvre — Cuisine du Navire (fractions)</h3><div class="vx">Voix : chef débordé, emphatique, grands airs de cuisine. EN: flamboyant overworked chef voice, dramatic, warm.</div>
+<div class="vo"><code>vo-b-cuisine-in-1</code><pre>[Dramatic, indignant chef] Dans MA cuisine ?! Voyons si tu sais partager une tarte… sans te faire pincer !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-cuisine-mid-1</code><pre>[astonished, dramatic] Par ma toque !… Tes parts sont toujours PARFAITES !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-cuisine-out-1</code><pre>[exhales, gracious defeat] Le service est fini… C’est toi le chef. [quietly] Moi, je retourne à la plonge.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-cuisine-rev-1</code><pre>[dramatic, wounded pride] Je reviendrai… avec un menu encore plus corsé ! Gare à la revanche du chef !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Maître des Heures — Île de l’Horloge (heures et durées)</h3><div class="vx">Voix : précise, mécanique, rythmée comme un tic-tac. EN: precise clockwork voice, measured ticking rhythm, formal.</div>
+<div class="vo"><code>vo-b-horloge-in-1</code><pre>[Measured, ticking rhythm] Tic… tac… Chaque seconde compte, moussaillon. Sauras-tu lire l’heure de ta défaite ?</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-horloge-mid-1</code><pre>[startled, precise] Déjà ?! Tu lis l’heure plus vite que mon aiguille !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-horloge-out-1</code><pre>[measured, gracious] Il est l’heure… de m’incliner. Ta victoire est à l’heure pile.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-horloge-rev-1</code><pre>[measured, ticking, ominous-playful] Tic… tac… l’heure de ma revanche approche déjà, moussaillon.</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>La Sirène des Contes — Grotte aux Histoires (lecture)</h3><div class="vx">Voix : féminine, chantante, mélodieuse, un rien taquine. EN: melodic feminine siren voice, singsong, teasing.</div>
+<div class="vo"><code>vo-b-lecture-in-1</code><pre>[Melodic, teasing, slow] Approche, lecteur… Mes histoires cachent des pièges… entre les lignes…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-lecture-mid-1</code><pre>[melodic, surprised] Tu lis entre les lignes… même mes sirènes n’y arrivent pas !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-lecture-out-1</code><pre>[soft, admiring, melodic] Quelle belle histoire… celle de ta victoire. [gentle] Je la chanterai ce soir.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-lecture-rev-1</code><pre>[melodic, teasing, soft] Reviens vite, lecteur… la suite de mon histoire n’est pas encore écrite…</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Forgeron des Temps — Forge des Verbes (conjugaison)</h3><div class="vx">Voix : bourrue, puissante, chaleur de forge. EN: gruff hearty blacksmith voice, loud, good-natured.</div>
+<div class="vo"><code>vo-b-conjug-in-1</code><pre>[Gruff, hearty, loud] Présent, futur, imparfait ! Je forge les verbes… et je vais te marteler de questions !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-conjug-mid-1</code><pre>[gruff, impressed] Par mon enclume… tu conjugues sans UNE étincelle de travers !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-conjug-out-1</code><pre>[gruff, warm, slower] Ma forge s’éteint… Tu manies les temps mieux que mon marteau.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-conjug-rev-1</code><pre>[gruff, hearty, determined] Je retourne à la forge… marteler ma revanche ! À bientôt, matelot !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Capitaine Ara — Île des Perroquets (anglais)</h3><div class="vx">Voix : perroquet distingué à fort accent anglais. EN: posh parrot voice with a strong British accent on French words.</div>
+<div class="vo"><code>vo-b-anglais-in-1</code><pre>[Posh, strong British accent] Well, well, well… Bienvenue, sailor ! Voyons si tu parles la langue des mers !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-anglais-mid-1</code><pre>[posh, astonished] Good heavens !… Tu réponds juste à EVERY question !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-anglais-out-1</code><pre>[posh, gracious] You win, moussaillon… Mon chapeau est à toi. [cheerful] Goodbye !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-anglais-rev-1</code><pre>[posh, mischievous] See you soon, moussaillon… la revanche sera TRÈS british !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Sphinx des Énigmes — Île des Curiosités (culture générale)</h3><div class="vx">Voix : posée, énigmatique, ancienne et douce. EN: calm enigmatic ancient voice, soft, mysterious.</div>
+<div class="vo"><code>vo-b-culture-in-1</code><pre>[Calm, ancient, mysterious] Halte… Nul ne passe sans répondre à mes énigmes. [short pause] Pas même toi.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-culture-mid-1</code><pre>[quietly intrigued] Étrange… aucune énigme ne te résiste…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-culture-out-1</code><pre>[calm, warm, solemn] Tu as percé tous mes secrets… Passe, sage moussaillon.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-culture-rev-1</code><pre>[calm, enigmatic, knowing] Toute énigme a une suite… Nous nous reverrons, sage moussaillon.</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>La Murène des Phrases — Récif des Phrases (grammaire)</h3><div class="vx">Voix : féminine, sifflante, mondaine et piquée. EN: sibilant haughty feminine eel voice, refined, snippy.</div>
+<div class="vo"><code>vo-b-gram-in-1</code><pre>[Haughty, refined, snippy] Sujet, verbe, complément… Une phrase de travers… et je mords !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-gram-mid-1</code><pre>[scandalized, refined] Scandale… tes phrases sont PARFAITEMENT construites !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-gram-out-1</code><pre>[refined, conceding] Je rends les armes… et le complément. Ta grammaire est sans défaut.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-gram-rev-1</code><pre>[refined, vexed, sharp] Je reviendrai… avec des phrases PLUS retorses encore !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>Le Troll du Pont — Pont des Accords (accords et homophones)</h3><div class="vx">Voix : énorme, lente, gros bêta attachant qui parle petit-nègre de troll. EN: huge slow dim-witted troll voice, lovable, clumsy grammar.</div>
+<div class="vo"><code>vo-b-accords-in-1</code><pre>[Huge, slow, dim but proud] MOI, Troll du Pont ! Toi pas passer… sans accorder tes mots !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-accords-mid-1</code><pre>[confused, slow] Gné ?!… Toi JAMAIS te tromper sur les accords ?!</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-accords-out-1</code><pre>[slow, humble, warm] Troll battu… Toi passer. [small sniff] Toi très fort avec les mots.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-accords-rev-1</code><pre>[huge, slow, stubborn] Toi pas perdre rien pour attendre ! Troll revenir ! Troll TOUJOURS revenir !</pre><button class="copy">Copier</button></div></div>
+
+<div class="boss"><h3>La Baleine Dictionnaire — Baie des Mots (vocabulaire)</h3><div class="vx">Voix : très profonde, placide, savante et bienveillante. EN: very deep placid scholarly whale voice, kind, unhurried.</div>
+<div class="vo"><code>vo-b-vocab-in-1</code><pre>[Very deep, placid, scholarly] Hmmm… Un nouveau mot entre dans mon dictionnaire : « moussaillon téméraire ».</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-vocab-mid-1</code><pre>[deep, genuinely fascinated] Fascinant… tu connais des mots que j’avais oubliés.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-vocab-out-1</code><pre>[deep, warm, slow] Je t’offre la dernière page de mon dictionnaire : « victoire »… C’est la tienne.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-b-vocab-rev-1</code><pre>[deep, placid, amused] Note bien ce mot, moussaillon : « revanche »… Nous le relirons ensemble.</pre><button class="copy">Copier</button></div></div>
+
+<h2>B · Pi : nouvelles variantes (même voix que les vo-* existants)</h2>
+<section class="pi">
+<h3>Nouveaux événements</h3>
+<div class="vo"><code>vo-jour-1</code><pre>[Warm, playful] Bien dormi, moussaillon ? La marée du jour t’attend !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-jour-2</code><pre>[cheerful, energetic] Un nouveau jour, une nouvelle marée ! En route !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-jour-3</code><pre>[playful, conspiratorial] Salut capitaine ! Les îles ont bougé cette nuit… [chuckles] enfin, presque.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-retour-1</code><pre>[Warm, delighted] Te revoilà ! L’archipel t’a attendu, moussaillon.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-retour-2</code><pre>[excited, hearty] Ohé, capitaine ! Ça fait une paye ! Hisse les voiles, tout le monde t’attend !</pre><button class="copy">Copier</button></div>
+<h3>Variantes d’événements existants</h3>
+<div class="vo"><code>vo-carte-2</code><pre>[cheerful] Toutes voiles dehors, moussaillon ! Quelle île t’appelle aujourd’hui ?</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-carte-3</code><pre>[warm, inviting] La carte est à toi, capitaine ! Choisis ton cap.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-libre-2</code><pre>[relaxed, friendly] Escale libre ! Entraîne-toi tranquille, matelot.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-libre-3</code><pre>[playful] À toi de jouer : cette escale-là, c’est pour le plaisir !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-equipage-2</code><pre>[proud, warm] Voici ton équipage ! Chaque créature a son pouvoir.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-equipage-3</code><pre>[mysterious, playful] Les légendes de l’archipel t’attendent, capitaine…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-pirate-2</code><pre>[admiring, playful] Quelle allure, capitaine ! Les requins vont rougir.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-pirate-3</code><pre>[cheerful] Un chapeau, un sabre… te voilà paré pour la légende !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-journal-2</code><pre>[warm] Ton journal de bord, capitaine : tes quêtes, l’histoire… et tous tes exploits !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-journal-3</code><pre>[impressed] Tout ce que tu sais faire est écrit là-dedans. Impressionnant !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-ile-3</code><pre>[excited] Terre en vue ! Prépare-toi à accoster, moussaillon !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-ile-4</code><pre>[warm, encouraging] Cette île n’attend que toi. À l’abordage !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-navire-3</code><pre>[admiring] Beau travail au chantier ! Ton navire a fière allure.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-navire-4</code><pre>[happy gasp] Par mes plumes… quel navire magnifique !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-coffre-3</code><pre>[excited, hushed] Un coffre ! Croisons les plumes pour le trésor…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-equipier-3</code><pre>[delighted] Un nouvel équipier monte à bord ! Bienvenue, matelot !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-indice-3</code><pre>[quietly, conspiratorial] Psst… regarde bien, je te souffle un indice.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-revanche-3</code><pre>[determined, playful] Revanche ! Cette question ne t’aura pas deux fois.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-melange-3</code><pre>[cheerful] Escale mélangée : un peu de tout, pour ne rien oublier !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-quete-3</code><pre>[proud] Quête accomplie ! Tu avances comme un vrai loup de mer.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-chapitre-3</code><pre>[excited, inviting] Un nouveau chapitre de l’histoire ! Ouvre vite le journal.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-parfait-3</code><pre>[amazed] SANS faute ! Même le capitaine n’en revient pas !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-lettres-3</code><pre>[cheerful] Cap sur la Mer des Lettres : à nous les mots !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-parents-2</code><pre>[Calm, adult, reassuring] Bienvenue dans l’espace parents : tout le suivi de votre enfant est ici.</pre><button class="copy">Copier</button></div>
+</section>
+
+<h2>C · Consignes d’îles (jouées à l’arrivée, même voix que Pi)</h2>
+<section class="cap">
+<div class="vo"><code>vo-cap-canons-1</code><pre>[energetic, rallying] À l’abordage de l’Île des Canons ! Charge tes multiplications… et vise juste !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-stade-1</code><pre>[quick, sporty] Bienvenue au Stade des Vagues ! Calcule vite, le tempo est lancé !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-mine-1</code><pre>[hushed, adventurous] Descends dans la Mine aux Blocs : dizaines, centaines, milliers… tout se compte !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-formes-1</code><pre>[curious, inviting] Cap sur l’Île des Formes : ouvre l’œil, les figures se cachent partout !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-jungle-1</code><pre>[adventurous] Entre dans la Jungle des Créatures… et trouve ta place sur la droite graduée !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-marche-1</code><pre>[lively, market energy] Au Marché du Port, chaque pièce compte : prépare ta monnaie !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-cuisine-1</code><pre>[warm, appetizing] En cuisine, moussaillon ! Les fractions se partagent… comme les tartes.</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-horloge-1</code><pre>[measured, playful] Sur l’Île de l’Horloge, chaque minute compte : lis bien les aiguilles !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-lecture-1</code><pre>[soft, storytelling] Bienvenue dans la Grotte aux Histoires : lis bien, la réponse est dans le texte !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-conjug-1</code><pre>[hearty] À la Forge des Verbes, on martèle le présent, le futur… et le passé !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-anglais-1</code><pre>[playful, bilingual flair] Welcome sur l’Île des Perroquets ! Ouvre grand les oreilles…</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-culture-1</code><pre>[wondering, inviting] L’Île des Curiosités t’ouvre ses secrets : histoire, sciences et merveilles !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-gram-1</code><pre>[playful warning] Prudence sur le Récif des Phrases : sujet, verbe… et pas de naufrage !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-accords-1</code><pre>[encouraging] Pour traverser le Pont des Accords, accorde chaque mot comme il faut !</pre><button class="copy">Copier</button></div>
+<div class="vo"><code>vo-cap-vocab-1</code><pre>[warm, treasure-hunt tone] Jette l’ancre dans la Baie des Mots : ton vocabulaire, c’est ton trésor !</pre><button class="copy">Copier</button></div>
+</section>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.parentElement.querySelector('pre');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier'; b.classList.remove('done'); }, 1600);
+}));
+</script>
+</main>
+</body>
+</html>

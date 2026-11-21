@@ -398,6 +398,9 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .result .head{position:relative;text-align:center;margin-top:calc(var(--st) + 36px);padding:0 20px;flex:none}
 .result .head .disp{font-size:30px;line-height:1.05;color:#fffaf0;text-shadow:0 4px 18px rgba(0,0,0,.4)}
+.result .head .bq{margin:8px auto 0;max-width:340px;font-style:italic;font-size:14px;color:#cfe0df} /* dernière réplique du boss vaincu */
+.result .head .bq2{color:#ffd9a0;animation:bqin .7s ease-out} /* …puis sa menace de revanche */
+@keyframes bqin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .stars{display:flex;justify-content:center;align-items:flex-end;gap:2px;margin-top:8px}
 .stars svg{filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
 .stars .off{opacity:.25}
@@ -1372,6 +1375,37 @@ function sagaVoice(id, fallback) {
     .then(buf => { BUF[n] = buf; if (open()) say(n) || fallback(); }).catch(() => { if (open()) fallback(); });
 }
 function freeSaga() { sagaReq++; if (voSrc && /^vo-saga-/.test(voSrc.n || '')) stopVoice(); Object.keys(BUF).filter(k => k.startsWith('vo-saga-')).forEach(k => delete BUF[k]); }
+// Répliques des boss (lot B) : le texte s'affiche toujours (enfants sourds et son coupé), la voix joue si le fichier est là.
+// Fichiers vo-b-<île>-<in|mid|out>-1.mp3, hors chargement initial et hors cache initial : récupérés à l'entrée du combat,
+// gardés ensuite par le service worker comme la saga. in = entrée du boss, mid = 3 bonnes réponses, out = boss vaincu.
+const BOSSVO = {
+  canons: { in: 'Qui ose réciter ses tables dans MES eaux ? Approche, moussaillon…', mid: 'Grrr… tu calcules plus vite que mes huit bras !', out: 'Vaincu… par une table de multiplication. Je retourne me coucher au fond de l’eau.', rev: 'Profite de ta victoire, moussaillon… Les tentacules reviennent TOUJOURS !' },
+  stade: { in: 'Pas si vite ! Ici, c’est MOI qui donne le tempo, petit mousse !', mid: 'Pince alors… tu comptes plus vite que mes pinces !', out: 'D’accord, d’accord, tu as gagné… Je file me cacher sous mon rocher.', rev: 'Tu ne perds rien pour attendre ! Je reviendrai… et je pincerai deux fois plus vite !' },
+  mine: { in: 'Mille… dix mille… cent mille… Personne ne compte plus loin que moi.', mid: 'Hein ?!… Tu empiles les nombres… plus vite que mes blocs…', out: 'Je retourne à la sieste… Réveille-moi dans… cent mille ans.', rev: 'Je reviendrai… dans très… très… longtemps. Mais je reviendrai.' },
+  formes: { in: 'Carré, triangle, losange… Montre-moi si ton œil est aussi droit que mes angles !', mid: 'Par tous les polygones… rien ne t’échappe !', out: 'Mes angles s’effondrent… Tu es le vrai maître des formes.', rev: 'Les statues ne tombent jamais longtemps… Je me redresserai, et mes angles aussi !' },
+  jungle: { in: 'Sssalut, moussaillon… Sauras-tu te repérer sssur ma longue droite graduée ?', mid: 'Ssssapristi… tu vises juste à CHAQUE graduation !', out: 'Je m’enroule et je m’en vais… Tu mesures mieux que moi, sssans rancune.', rev: 'Ce n’est qu’un au revoir, moussssaillon… je ramperai jusqu’à toi !' },
+  marche: { in: 'Hé hé… tes doublons contre ma camelote ! Sauras-tu compter ta monnaie ?', mid: 'Petit malin… impossible de te rouler sur les prix !', out: 'Ruiné ! Me voilà ruiné… Garde ta monnaie, tu comptes trop bien.', rev: 'Hé hé… on se retrouvera au prochain marché, petit malin !' },
+  cuisine: { in: 'Dans MA cuisine ?! Voyons si tu sais partager une tarte… sans te faire pincer !', mid: 'Par ma toque !… Tes parts sont toujours PARFAITES !', out: 'Le service est fini… C’est toi le chef. Moi, je retourne à la plonge.', rev: 'Je reviendrai… avec un menu encore plus corsé ! Gare à la revanche du chef !' },
+  horloge: { in: 'Tic… tac… Chaque seconde compte, moussaillon. Sauras-tu lire l’heure de ta défaite ?', mid: 'Déjà ?! Tu lis l’heure plus vite que mon aiguille !', out: 'Il est l’heure… de m’incliner. Ta victoire est à l’heure pile.', rev: 'Tic… tac… l’heure de ma revanche approche déjà, moussaillon.' },
+  lecture: { in: 'Approche, lecteur… Mes histoires cachent des pièges… entre les lignes…', mid: 'Tu lis entre les lignes… même mes sirènes n’y arrivent pas !', out: 'Quelle belle histoire… celle de ta victoire. Je la chanterai ce soir.', rev: 'Reviens vite, lecteur… la suite de mon histoire n’est pas encore écrite…' },
+  conjug: { in: 'Présent, futur, imparfait ! Je forge les verbes… et je vais te marteler de questions !', mid: 'Par mon enclume… tu conjugues sans UNE étincelle de travers !', out: 'Ma forge s’éteint… Tu manies les temps mieux que mon marteau.', rev: 'Je retourne à la forge… marteler ma revanche ! À bientôt, matelot !' },
+  anglais: { in: 'Well, well, well… Bienvenue, sailor ! Voyons si tu parles la langue des mers !', mid: 'Good heavens !… Tu réponds juste à EVERY question !', out: 'You win, moussaillon… Mon chapeau est à toi. Goodbye !', rev: 'See you soon, moussaillon… la revanche sera TRÈS british !' },
+  culture: { in: 'Halte… Nul ne passe sans répondre à mes énigmes. Pas même toi.', mid: 'Étrange… aucune énigme ne te résiste…', out: 'Tu as percé tous mes secrets… Passe, sage moussaillon.', rev: 'Toute énigme a une suite… Nous nous reverrons, sage moussaillon.' },
+  gram: { in: 'Sujet, verbe, complément… Une phrase de travers… et je mords !', mid: 'Scandale… tes phrases sont PARFAITEMENT construites !', out: 'Je rends les armes… et le complément. Ta grammaire est sans défaut.', rev: 'Je reviendrai… avec des phrases PLUS retorses encore !' },
+  accords: { in: 'MOI, Troll du Pont ! Toi pas passer… sans accorder tes mots !', mid: 'Gné ?!… Toi JAMAIS te tromper sur les accords ?!', out: 'Troll battu… Toi passer. Toi très fort avec les mots.', rev: 'Toi pas perdre rien pour attendre ! Troll revenir ! Troll TOUJOURS revenir !' },
+  vocab: { in: 'Hmmm… Un nouveau mot entre dans mon dictionnaire : « moussaillon téméraire ».', mid: 'Fascinant… tu connais des mots que j’avais oubliés.', out: 'Je t’offre la dernière page de mon dictionnaire : « victoire »… C’est la tienne.', rev: 'Note bien ce mot, moussaillon : « revanche »… Nous le relirons ensemble.' },
+};
+const bossVoLoad = {};
+function loadBossVo(id) { if (!BOSSVO[id] || !AC || location.protocol === 'file:') return;
+  ['in', 'mid', 'out', 'rev'].forEach(k => { const n = `vo-b-${id}-${k}-1`; if (BUF[n] || bossVoLoad[n]) return; bossVoLoad[n] = 1;
+    decode(n).then(b => { BUF[n] = b; }).catch(() => { delete bossVoLoad[n]; }); }); }
+// Montre la réplique (bulle du boss) et joue la voix dès qu'elle est prête ; rend false si ce boss n'a pas de réplique
+function bossSay(k) {
+  const i = R && R.i, t = i && BOSSVO[i.id] && BOSSVO[i.id][k]; if (!t) return false;
+  pop(i.boss.img, t); const n = `vo-b-${i.id}-${k}-1`; let tries = 10;
+  const go = () => { if (!R || R.i !== i) return; if (!say(n) && --tries > 0 && !BUF[n]) setTimeout(go, 300); }; go();
+  return true;
+}
 const voiceLeft = () => voSrc && voSrc.buffer ? Math.max(0, voSrc.buffer.duration * 1000 - (performance.now() - lastVo)) : 0;
 function say(name) {
   if (!S.sound || !S.voice || !BUF[name]) return false; if (voSrc) { try { voSrc.stop(); } catch (e) {} }
@@ -5350,7 +5384,7 @@ function startEscale(id, node, fromTide) {
     ac(); music('escale'); if (id === 'mix') setTimeout(() => voice('melange', true), voiceLeft() + 500); return nextQ(); }
   const s = IS(id), boss = node === BOSS, rank = Math.min(2, rk(s));
   R = Object.assign(base, { i, node, rank, d: boss ? 5 : nodeDiff(node, s.fails), boss, n: boss ? (rank ? 10 : 8) : 6 });
-  if (boss) R.plan = bossPlan(i, s);
+  if (boss) { R.plan = bossPlan(i, s); loadBossVo(id); }
   ac(); music(boss ? 'boss' : 'escale'); nextQ();
 }
 // Le boss vise les points faibles : deux questions déjà ratées sur l'île (revanches), puis les niveaux les moins réussis
@@ -5584,7 +5618,7 @@ function renderGame() {
   } else {
     app.innerHTML = `<div class="screen game${['read', 'words'].includes(q.kind) || q.promptClass === 'sent' || /geo/.test(q.promptClass || '') ? ' tall' : ''}">${sceneHTML()}${top}<div class="g-bottom" id="gb">${qcardHTML(q)}${inputHTML(q)}</div></div>`;
     { const bgi = $('#scene img.bg'); if (bgi) app.firstElementChild.style.setProperty('--gbg', `url("${bgi.getAttribute('src')}")`); }
-    R.sceneKept = true; if (R.boss && R.k === 0) setTimeout(() => voice('boss-debut', true), 400);
+    R.sceneKept = true; if (R.boss && R.k === 0) setTimeout(() => { if (!bossSay('in')) voice('boss-debut', true); }, 400);
   }
   maybeTuto();
 }
@@ -5703,6 +5737,7 @@ function answer(ok, givenText, btn) {
     else if (fast && has('requin') && !R.popped.requin) pop('crew-requin', 'Éclair doublé par le Requin', 'requin');
     if (has('phoque') && R.combo === 6) pop('crew-phoque', 'Le Phoque booste ton combo', 'phoque');
     save();
+    if (R.boss && R.ok === 3) setTimeout(() => R && R.boss && !R.done && bossSay('mid'), 1400); // le boss s'inquiète à 3 bonnes réponses
     announce(`Bonne réponse ! Plus ${gain} doublons.`);
     celebrate(fast, gain);
     { const el = btn || $('[data-k="ok"]') || $('[data-a="validate"]') || $('.qcard'); if (el) { const [x, y] = ctr(el); FX.ring(x, y); FX.sparkles(x, y, 18); }
@@ -5844,7 +5879,13 @@ function endEscale() {
 }
 function renderResult(win, stars, rewards, tideNext) {
   stopMusic(); R.rewardTags = rewards.map(r => r.tag);
-  if (win) { playBuf('mus-victoire', 'mus') || SND.fanfare(); setTimeout(() => voice(R.test ? 'test-fin' : R.boss ? 'boss' : R.ok === R.n ? 'parfait' : 'victoire', true), 900); }
+  if (win) { playBuf('mus-victoire', 'mus') || SND.fanfare(); setTimeout(() => {
+    const bossOut = R.boss && !R.i.v && BOSSVO[R.i.id];
+    const played = bossOut && say(`vo-b-${R.i.id}-out-1`);
+    if (!played) voice(R.test ? 'test-fin' : R.boss ? 'boss' : R.ok === R.n ? 'parfait' : 'victoire', true);
+    // Puis la menace de revanche, à la personnalité du boss : le texte apparaît, la voix suit la réplique de défaite
+    if (bossOut && BOSSVO[R.i.id].rev) setTimeout(() => { const b2 = $('.bq2'); if (!b2) return; b2.hidden = false; say(`vo-b-${R.i.id}-rev-1`); }, played && voSrc && voSrc.buffer ? voSrc.buffer.duration * 1000 + 700 : 3600);
+  }, 900); }
   else setTimeout(() => voice('presque', true), 500);
   const title = R.test ? 'Test terminé !' : R.i.v ? (win ? (R.ok === R.n ? 'Escale mélangée parfaite !' : 'Escale mélangée réussie !') : 'Presque ! On réessaie ?') : win ? (R.boss ? (R.i.id === 'canons' ? 'Le Kraken plonge au fond des mers !' : `${R.i.boss.n} est vaincu !`) : R.i.id === 'canons' ? `${foe().n} a coulé !` : R.ok === R.n ? 'Escale parfaite !' : 'Escale réussie !') : 'Presque ! On réessaie ?';
   const over = sessionOver(), tideDone = R.fromTide && P().tide && P().tide.done;
@@ -5853,7 +5894,7 @@ function renderResult(win, stars, rewards, tideNext) {
     : R.test ? `<button class="brass-btn" data-a="home">Voir la carte</button>` : R.i.v ? `<button class="brass-btn" data-a="play" data-i="mix" data-n="1">${win ? 'Encore une escale mélangée' : 'Réessayer'}</button>`
     : win ? `<button class="brass-btn" data-a="play" data-i="${R.i.id}" data-n="${Math.min(IS(R.i.id).node, NODES)}">Niveau suivant</button>` : `<button class="brass-btn" data-a="play" data-i="${R.i.id}" data-n="${R.node}">Réessayer</button>`;
   app.innerHTML = `<div class="screen result${win ? ' closed' : ''}"><div class="rays"></div>
-    <div class="head"><div class="smallcaps" style="color:#ffd9a0">${R.i.n} · ${R.test ? 'placement' : R.i.v ? 'révisions' : 'niveau ' + R.node} · ${GRADES[GR()].n}</div><div class="disp" style="margin-top:6px">${title}</div>
+    <div class="head"><div class="smallcaps" style="color:#ffd9a0">${R.i.n} · ${R.test ? 'placement' : R.i.v ? 'révisions' : 'niveau ' + R.node} · ${GRADES[GR()].n}</div><div class="disp" style="margin-top:6px">${title}</div>${win && R.boss && !R.i.v && BOSSVO[R.i.id] ? `<p class="bq">«&nbsp;${BOSSVO[R.i.id].out}&nbsp;»</p><p class="bq bq2" hidden>«&nbsp;${BOSSVO[R.i.id].rev}&nbsp;»</p>` : ''}
       <div class="stars"${R.test ? ' hidden' : ''}>${starSvg(42, stars >= 1)}${starSvg(56, stars >= 2)}${starSvg(42, stars >= 3)}${win ? [[-8, 10, 0], [92, 0, .5], [30, -30, .9], [70, 70, 1.3]].map(([x, y, d]) => `<img class="spk" src="${IMG('fx-sparkle')}" alt="" style="left:${x}%;top:${y}%;animation-delay:${d}s">`).join('') : ''}</div></div>
     <div class="chest ${win ? 'shake' : ''}" id="chest" ${win ? 'data-a="openchest" role="button" tabindex="0" aria-label="Ouvrir le coffre"' : ''}><div class="glow"></div>${win ? `<img class="bravo" src="${IMG('guide-perroquet-bravo')}" alt="">${capt() === 'capt-a' ? `<img class="victor" src="${IMG('capt-victory')}" alt="">` : ''}` : ''}<img class="closed" src="${IMG('chest-closed')}" alt=""><img class="opened" src="${IMG('chest-open')}" alt="" style="opacity:0">${win ? '<span class="tap">Touche le coffre</span>' : ''}</div>
     <div class="rewards paper" id="rewards" ${win ? 'hidden' : ''}>${rewards.map((r, k) => `<div class="rw" style="animation-delay:${k * .12}s"><div class="ic"><img src="${IMG(r.img)}" alt=""></div><div><b>${r.b}</b><span>${r.s}</span></div>${r.saga ? `<button class="mini-btn" data-a="saga" data-c="${r.saga}">Lire</button>` : `<span class="tagr">${r.tag}</span>`}</div>`).join('')}</div>
