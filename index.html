@@ -1307,9 +1307,11 @@ function boom(vol = .5, dur = .55) {
 }
 /* Fichiers audio (musique, bruitages, voix) : listés dans assets/audio/manifest.json ; sinon les sons synthétiques ci-dessous servent de repli. */
 const AUDIO = 'assets/audio/';
-const VO = { parents: 1, titre: 3, intro: 1, carte: 1, accueil: 3, depart: 3, combo: 3, rire: 3, victoire: 3, parfait: 2, 'boss-debut': 2, boss: 3, coffre: 2, equipier: 2, ile: 2, navire: 2, presque: 3, indice: 2, revanche: 2, libre: 1, equipage: 1, pirate: 1, port: 3,
-  'tuto-keypad': 3, 'tuto-choices': 2, 'tuto-mine': 4, 'tuto-line': 2, 'tuto-money': 4, 'tuto-pizza': 2, 'tuto-words': 3, 'tuto-read': 3, lettres: 2,
-  test: 2, 'test-fin': 2, melange: 2, 'boss-cible': 2, quete: 2, chapitre: 2, journal: 1, 'tuto-type': 3 };
+const VO = { parents: 2, titre: 3, intro: 1, carte: 3, accueil: 3, depart: 3, combo: 3, rire: 3, victoire: 3, parfait: 3, 'boss-debut': 2, boss: 3, coffre: 3, equipier: 3, ile: 4, navire: 4, presque: 3, indice: 3, revanche: 3, libre: 3, equipage: 3, pirate: 3, port: 3,
+  'tuto-keypad': 3, 'tuto-choices': 2, 'tuto-mine': 4, 'tuto-line': 2, 'tuto-money': 4, 'tuto-pizza': 2, 'tuto-words': 3, 'tuto-read': 3, lettres: 3,
+  test: 2, 'test-fin': 2, melange: 3, 'boss-cible': 2, quete: 3, chapitre: 3, journal: 3, 'tuto-type': 3,
+  // Lot B (voix de Pi) : premier lancement du jour, retour après 3 jours ou plus, et une consigne par île (cap-<île>)
+  jour: 3, retour: 2, ...Object.fromEntries(['canons', 'stade', 'mine', 'formes', 'jungle', 'marche', 'cuisine', 'horloge', 'lecture', 'conjug', 'anglais', 'culture', 'gram', 'accords', 'vocab'].map(i => ['cap-' + i, 1])) };
 const BUF = {}; let audioAsked = false, BUS = null, musSrc = null, musName = null, musWant = null, lastVo = 0;
 function bus() { const a = ac(); if (!a) return null; if (!BUS) { BUS = { sfx: a.createGain(), mus: a.createGain(), vo: a.createGain() }; BUS.mus.gain.value = .3; BUS.sfx.gain.value = .8; Object.values(BUS).forEach(g => g.connect(a.destination)); } return BUS; }
 // Les longues boucles de musique (2 à 4 min, 60 à 90 Mo une fois décodées) sont chargées quand elles doivent jouer,
@@ -1348,12 +1350,17 @@ function voice(ev, force) {
 }
 // Écran titre : le nom de l'appli d'abord (si la réplique existe), puis la présentation ou l'accueil
 function welcome(first) {
+  // Pi adapte son bonjour : première ouverture du jour (« Bien dormi ? »), retour après 3 jours ou plus, sinon accueil classique
+  let greet = 'accueil';
+  try { const today = new Date().toISOString().slice(0, 10), prev = S.lastDay;
+    if (!first && prev && prev !== today) greet = (Date.parse(today) - Date.parse(prev)) / 864e5 >= 3 ? 'retour' : 'jour';
+    if (S.lastDay !== today) { S.lastDay = today; save(); } } catch (e) {}
   let tries = 20; const go = () => {
     const titre = range(1, VO.titre).map(j => `vo-titre-${j}`).filter(x => BUF[x]);
-    const next = first ? 'intro' : 'accueil', nextReady = range(1, VO[next]).some(j => BUF[`vo-${next}-${j}`]);
+    const next = first ? 'intro' : greet, nextReady = range(1, VO[next]).some(j => BUF[`vo-${next}-${j}`]) || (greet !== 'accueil' && range(1, VO.accueil).some(j => BUF[`vo-accueil-${j}`]));
     if (!titre.length && !nextReady) { if (tries-- > 0) setTimeout(go, 250); return; }
     if (titre.length && (first || Math.random() < .5)) { say(pick(titre)); const d = (voSrc && voSrc.buffer ? voSrc.buffer.duration : 3) * 1000 + 400; if (first) setTimeout(() => voice('intro', true), d); }
-    else voice(next, true);
+    else voice(next, true) || (next !== 'accueil' && !first && voice('accueil', true));
   }; go();
 }
 function voiceSoon(ev, tries = 20) { if (voice(ev, true) || tries <= 0) return; setTimeout(() => voiceSoon(ev, tries - 1), 250); }
@@ -1395,7 +1402,7 @@ const BOSSVO = {
   accords: { in: 'MOI, Troll du Pont ! Toi pas passer… sans accorder tes mots !', mid: 'Gné ?!… Toi JAMAIS te tromper sur les accords ?!', out: 'Troll battu… Toi passer. Toi très fort avec les mots.', rev: 'Toi pas perdre rien pour attendre ! Troll revenir ! Troll TOUJOURS revenir !' },
   vocab: { in: 'Hmmm… Un nouveau mot entre dans mon dictionnaire : « moussaillon téméraire ».', mid: 'Fascinant… tu connais des mots que j’avais oubliés.', out: 'Je t’offre la dernière page de mon dictionnaire : « victoire »… C’est la tienne.', rev: 'Note bien ce mot, moussaillon : « revanche »… Nous le relirons ensemble.' },
 };
-const bossVoLoad = {};
+const bossVoLoad = {}, capSaid = new Set(); // consignes d'îles déjà dites cette session
 function loadBossVo(id) { if (!BOSSVO[id] || !AC || location.protocol === 'file:') return;
   ['in', 'mid', 'out', 'rev'].forEach(k => { const n = `vo-b-${id}-${k}-1`; if (BUF[n] || bossVoLoad[n]) return; bossVoLoad[n] = 1;
     decode(n).then(b => { BUF[n] = b; }).catch(() => { delete bossVoLoad[n]; }); }); }
@@ -5619,6 +5626,8 @@ function renderGame() {
     app.innerHTML = `<div class="screen game${['read', 'words'].includes(q.kind) || q.promptClass === 'sent' || /geo/.test(q.promptClass || '') ? ' tall' : ''}">${sceneHTML()}${top}<div class="g-bottom" id="gb">${qcardHTML(q)}${inputHTML(q)}</div></div>`;
     { const bgi = $('#scene img.bg'); if (bgi) app.firstElementChild.style.setProperty('--gbg', `url("${bgi.getAttribute('src')}")`); }
     R.sceneKept = true; if (R.boss && R.k === 0) setTimeout(() => { if (!bossSay('in')) voice('boss-debut', true); }, 400);
+    // Consigne de l'île par Pi, une fois par île et par session, après la voix en cours (départ de la marée…)
+    if (!R.boss && !R.i.v && R.k === 0 && !capSaid.has(R.i.id)) { const id = R.i.id; setTimeout(() => { if (R && R.i && R.i.id === id && voice('cap-' + id, true)) capSaid.add(id); }, voiceLeft() + 500); }
   }
   maybeTuto();
 }
