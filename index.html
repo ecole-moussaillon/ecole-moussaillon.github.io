@@ -84,7 +84,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ocean::after{content:"";position:absolute;inset:0;background:url(assets/tex-sea.webp) 0 0/560px;opacity:.38;mix-blend-mode:overlay;animation:drift2 88s linear infinite}
 @keyframes drift2{to{background-position:-560px 280px}}
 @keyframes drift{to{background-position:375px 750px}}
-.glints{position:absolute;inset:0;background:radial-gradient(60px 18px at 20% 30%,rgba(255,240,200,.3),transparent),radial-gradient(80px 20px at 70% 55%,rgba(255,240,200,.24),transparent),radial-gradient(70px 16px at 35% 80%,rgba(255,240,200,.24),transparent);background-size:390px 600px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
+.glints{position:absolute;inset:0;background:radial-gradient(60px 18px at 20% 30%,rgba(255,240,200,.5),transparent),radial-gradient(80px 20px at 70% 55%,rgba(255,240,200,.4),transparent),radial-gradient(70px 16px at 35% 80%,rgba(255,240,200,.4),transparent);background-size:390px 600px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
 @keyframes glint{to{background-position:60px 40px;opacity:.5}}
 .route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .isle{position:absolute;width:210px;height:230px;transform:translate(-50%,-50%);display:block}
@@ -159,7 +159,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 /* Oscillation 3D des cartouches sur l'axe Y, avec un reflet qui balaie le verre en cadence (coupée en animations réduites) */
 .isle .lbl,.coastport .lbl{perspective:320px}
 .isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate;position:relative;overflow:hidden}
-.isle .lbl b::after,.coastport .lbl b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 32%,rgba(255,250,228,.12) 46%,rgba(255,250,228,.03) 54%,transparent 66%);opacity:0;transform:translateX(-62%);animation:lblshine 5.5s ease-in-out infinite alternate}
+.isle .lbl b::after,.coastport .lbl b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 32%,rgba(255,250,228,.34) 46%,rgba(255,250,228,.09) 54%,transparent 66%);opacity:0;transform:translateX(-62%);animation:lblshine 5.5s ease-in-out infinite alternate}
 .isle:nth-child(odd) .lbl b,.isle:nth-child(odd) .lbl b::after{animation-delay:-2.7s;animation-duration:6.5s}
 @keyframes lblsway{from{transform:rotateY(-8deg)}to{transform:rotateY(8deg)}}
 /* Le reflet n'apparaît qu'aux extrémités de la bascule : un éclat à chaque climax, invisible entre les deux */
@@ -875,8 +875,10 @@ button.medal{display:block;padding:0;cursor:pointer}
 .tide .brass-btn::before{display:none}/* le liseré intérieur du laiton traçait un cadre sur la plaque */
 /* Balayage lumineux : bien plus discret et plus lent sur le parchemin */
 .tide .brass-btn::after{background:linear-gradient(105deg,transparent 41%,rgba(255,255,255,.2) 50%,transparent 59%);animation-duration:12s}
-.tide .brass-btn .play{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:32px;height:32px}
-.tide .brass-btn .play svg{width:22px;height:22px}
+/* Deux roses des vents (extraites de la plaque, même parchemin) encadrent JOUER et tournicotent chacune à sa façon */
+.tide .brass-btn .rose{width:36px;height:36px;animation:rosewob 11s ease-in-out infinite}
+.tide .brass-btn .rose.r2{animation-duration:14s;animation-delay:-6s;animation-direction:reverse}
+@keyframes rosewob{0%,100%{transform:rotate(0)}17%{transform:rotate(42deg)}39%{transform:rotate(-28deg)}61%{transform:rotate(15deg)}83%{transform:rotate(-47deg)}}
 .tide .brass-btn .lbl{align-items:center;text-align:center}
 .tide .brass-btn .lbl b{text-transform:uppercase}
 
@@ -1135,16 +1137,7 @@ button.medal{display:block;padding:0;cursor:pointer}
 .game::before{content:"";position:absolute;inset:-60px;z-index:-1;background:var(--gbg,none) 50% 100%/cover no-repeat;filter:blur(24px) brightness(.5) saturate(1.25)}
 .g-bottom{background:radial-gradient(130% 70% at 50% 100%,rgba(3,12,18,.55),transparent 70%),linear-gradient(180deg,rgba(5,18,26,0),rgba(5,18,26,.28) 46px,rgba(5,18,26,.45))}
 .game .g-scene img.bg,.game .g-scene .waves{-webkit-mask-image:linear-gradient(#000 calc(100% - 64px),transparent);mask-image:linear-gradient(#000 calc(100% - 64px),transparent)}
-.mgull{position:absolute;left:0;top:var(--y);width:var(--s,46px);animation:mgfly var(--d,30s) linear infinite;animation-delay:var(--del,0s);filter:drop-shadow(0 26px 3px rgba(3,22,32,.28))}
-.mgull.rl{animation-direction:reverse}
-@keyframes mgfly{from{transform:translate(-90px,0)}to{transform:translate(calc(var(--mw,400px) + 90px),var(--dy,0px))}}
-.mgull .mb{display:block;animation:mgbob var(--b,7s) ease-in-out infinite}
-@keyframes mgbob{50%{transform:translateY(-18px)}}
-.mgull .mr{display:block}.mgull.rl .mr{transform:scaleX(-1)}
-.mgull svg{display:block;width:100%;overflow:visible;animation:mgbank var(--b,7s) ease-in-out infinite}
-@keyframes mgbank{25%{transform:rotate(-9deg)}75%{transform:rotate(8deg)}}
-.mgull .wu,.mgull .wd{transform-box:view-box;transform-origin:0 0;animation:mgflap var(--f,3.6s) ease-in-out infinite;animation-delay:var(--fd,0s)}
-@keyframes mgflap{0%,8%,16%,24%,32%,100%{transform:scaleY(1)}4%,12%,20%,28%{transform:scaleY(.42) translateX(1.5px)}}
+/* (l'ancienne nuée .mgull dessinée en code est retirée : ses règles écrasaient les sprites de mouettes) */
 @media (prefers-reduced-motion:reduce){.mstorm .bolt,.mstorm .flash,.key.fire.ready,.brass-btn .play svg{animation:none}.mstorm .bolt,.mstorm .flash{display:none}}
 
 /* Carte : une marge en haut, pour que les îles du haut puissent descendre sous le bandeau et le choix de la mer.
@@ -5865,7 +5858,7 @@ function renderMap() {
   app.innerHTML = `<div class="screen">
     <div class="map-scroll" id="mapScroll"><div class="map sea-${S.sea}${dayPhase() ? ' h-' + dayPhase() : ''}" style="height:${MH}px">
       <div class="ocean"></div><div class="glints"></div>
-      ${[['a2', 56, 540, 56, 0, 1, 0], ['b2', 48, 980, 64, -22, 1, 1], ['c', 42, 1380, 48, -9, 1, 0], ['b2', 46, 1720, 72, -40, .94, 0], ['a2', 52, 240, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv]) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 140}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
+      ${[['a2', 84, 320, 56, 0, 1, 0], ['b2', 72, 800, 64, -22, 1, 1], ['c', 64, 1260, 48, -9, 1, 0], ['b2', 70, 1620, 72, -40, .94, 0], ['a2', 78, 1880, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv]) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 180}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
       <svg class="route" viewBox="0 0 ${W} ${MH}" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f4e8cc" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
       <div class="coast" style="top:${CT}px;height:${CHF}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
       <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
@@ -5898,10 +5891,10 @@ function renderMap() {
 function tideHTML(t) {
   const mini = t.stops.map((id, k) => { const i = isleById(id); return `<span class="${t.done || k < t.i ? 'done' : k === t.i ? 'cur' : ''}" title="${esc(i.notion)}"><img src="${IMG(i.img)}" alt="${esc(i.notion)}"></span>`; }).join('');
   const nxt = isleById(t.stops[Math.min(t.i, 2)]);
-  const play = `<span class="play">${ico('iHelm')}</span>`;
+  const rose = cl => `<img class="rose${cl}" src="${IMG('deco-rose')}" alt="">`;
   const btn = sessionOver() ? `<button class="brass-btn" disabled>Le navire se repose · à demain</button>`
     : t.done ? `<button class="brass-btn" data-a="free">Choisis une île sur la carte</button>`
-    : `<button class="brass-btn" data-a="tide">${play}<span class="lbl">${t.i ? `<b>Continuer</b><small>escale ${t.i + 1} sur 3</small>` : `<b>Jouer</b>`}</span></button>`;
+    : `<button class="brass-btn" data-a="tide">${rose('')}<span class="lbl">${t.i ? `<b>Continuer</b><small>escale ${t.i + 1} sur 3</small>` : `<b>Jouer</b>`}</span>${rose(' r2')}</button>`;
   return `<section class="tide paper" aria-label="Marée du jour"><div class="th">
     <div class="tt2"><h2>${t.done ? 'Bravo, capitaine !' : `Cap sur ${nxt.art}`}</h2></div><div class="mini">${mini}</div></div>${btn}</section>`;
 }
