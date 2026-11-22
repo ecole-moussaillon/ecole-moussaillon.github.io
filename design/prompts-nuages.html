@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prompts — traînées de brume de la carte</title>
+<title>Prompts — nuages, orage et éclairs de la carte</title>
 <style>
 body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
 main{max-width:860px;margin:0 auto}
 h1{font-size:26px;margin:0 0 4px}
+h2{font-size:19px;margin:26px 0 6px;color:#f3d58c}
 .sub{color:#9fb9bb;margin:0 0 18px}
 .card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -18,34 +19,58 @@ button.copy.done{background:#2f8f5a}
 .note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
 .note b{color:#f3d58c}
 ul{margin:6px 0;padding-left:20px}
+img.ref{max-width:100%;border-radius:12px;margin:6px 0}
 </style>
 </head>
 <body>
 <main>
-<h1>Traînées de brume de la carte</h1>
-<p class="sub">Remplacent <code>fx-fog-a/b/c.webp</code>. Objectif : de la <b>profondeur</b> — des nappes de brume qui FILENT au-dessus de la mer, pas des nuages posés. Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image.</p>
+<h1>Nuages, orage et éclairs de la carte</h1>
+<p class="sub">Troisième et dernière passe. Deux sujets distincts : des <b>cumulus décoratifs</b> qui défilent lentement au-dessus de la mer (référence ci-dessous), et la <b>brume d'orage sombre</b> qui cache les îles à découvrir, avec des <b>éclairs générés</b>. Le prompt s'affiche en français ; « Copier EN » copie l'anglais à coller dans GPT Image.</p>
 
-<div class="note"><b>Ce qui n’allait pas et ce qu’on vise</b>
+<div class="note"><b>Réglages communs</b>
 <ul>
-<li>Les cumulus dodus lisaient comme des objets POSÉS sur les îles, vus de côté. On vise l’inverse : des <b>voiles plats, très étirés</b>, comme un banc de brume survolé en avion.</li>
-<li>Le mot-clé : des <b>stries internes parallèles au sens du vent</b> — c’est elles qui donnent l’impression que la nappe file, même immobile.</li>
-<li>Très transparent partout : même au cœur, on doit deviner la mer (ou l’île) au travers. Aucune zone opaque.</li>
-<li>Bords entièrement fondus, vérifier l’alpha sur fond sombre ET clair. Vue strictement zénithale.</li>
-<li>Générer clair : le jeu assombrit lui-même pour les orages (filtre brightness/saturate).</li>
-<li>Conversion : <code>cwebp -q 82 entree.png -o assets/fx-fog-a.webp</code> (et -b, -c). À la pose : dérive nettement plus rapide, et 2–3 nappes superposées à des vitesses différentes sur les îles verrouillées pour créer la parallaxe.</li>
-</ul></div>
+<li><b>Pour les cumulus : joindre la référence</b> <code>ref-nuages.webp</code> (ci-dessous) — c'est elle qui donne la forme, la densité et le regroupement en archipels.</li>
+<li><b>Sans ombre portée ni mer</b> : le jeu pose l'ombre sur l'eau en CSS (drop-shadow décalée qui épouse la silhouette exacte du nuage) — c'est elle qui donnera la profondeur. Un nuage avec ombre cuite serait faux dès qu'il bouge.</li>
+<li>Fond entièrement transparent, bords doux mais formes de chou-fleur conservées (pas de voile vaporeux cette fois), sans texte ni filigrane.</li>
+<li>L'orage se génère SOMBRE directement : le jeu ne l'assombrira plus au filtre.</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/fx-cloud-a.webp</code> (idem pour les autres noms). Je branche tout à la pose : défilement lent des cumulus + ombre portée, orage + éclairs images sur les îles verrouillées.</li>
+</ul>
+<img class="ref" src="ref-nuages.webp" alt="Référence : cumulus vus d'avion au-dessus de la mer">
+</div>
 
-<div class="card"><h3><code>fx-fog-a.webp</code> — grande nappe étirée par le vent <button class="copy">Copier EN</button></h3>
-<p>Élément de jeu pour enfants, style livre d’images peint à la main. UNE NAPPE DE BRUME vue STRICTEMENT DU DESSUS (vue zénithale, comme une photo aérienne de brouillard au-dessus de la mer), TRÈS ÉTIRÉE HORIZONTALEMENT comme tirée par le vent : une bande plate et fine, traversée de longues stries et de filaments parallèles au sens de l’étirement, qui donnent une impression de mouvement et de vitesse. SURTOUT PAS un cumulus dodu ni un nuage en volume : un voile plat, vaporeux, presque un trait de fumée étalé. TRÈS TRANSPARENT : même au centre, la nappe reste translucide, on devine le fond au travers ; les bords se dissolvent en filaments de plus en plus ténus. BORDS ENTIÈREMENT FONDUS : la transparence augmente progressivement jusqu’à disparaître, sans contour net, sans frange, sans halo. Blanc cassé légèrement ivoire, lumière diffuse, aucune ombre. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1536 × 512, la nappe traverse le cadre en largeur avec de larges marges transparentes en haut et en bas.</p>
-<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A SHEET OF MIST seen STRICTLY FROM ABOVE (zenithal view, like an aerial photo of fog over the sea), STRONGLY STRETCHED HORIZONTALLY as if pulled by the wind: a flat thin band crossed by long streaks and filaments parallel to the direction of stretch, giving an impression of motion and speed. ABSOLUTELY NOT a puffy cumulus or a volumetric cloud: a flat vaporous veil, almost a smeared trail of smoke. VERY TRANSPARENT: even at its core the sheet stays translucent, the background shows through; the edges dissolve into ever-thinner filaments. FULLY FEATHERED EDGES: transparency increases gradually until it vanishes, with no hard outline, no fringe, no halo. Off-white slightly ivory, diffuse light, no shadow. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1536x512, the sheet crossing the frame widthwise with wide transparent margins top and bottom.</pre></div>
+<h2>1 · Cumulus décoratifs (défilement lent)</h2>
 
-<div class="card"><h3><code>fx-fog-b.webp</code> — voile large et diffus <button class="copy">Copier EN</button></h3>
-<p>Même style et mêmes contraintes (vue strictement zénithale, voile plat SANS volume, très transparent, bords entièrement fondus, fond transparent), mais UN VOILE PLUS LARGE ET PLUS DIFFUS, comme un banc de brume qui s’effiloche en dérivant : plusieurs langues de brume parallèles, de longueurs inégales, séparées par des trouées où le fond apparaît, toutes orientées dans le même sens du vent. Toujours strié, toujours translucide, jamais compact. Toile 1280 × 768.</p>
-<pre class="prompt-en" hidden>Same style and constraints (strictly zenithal view, flat veil with NO volume, very transparent, fully feathered edges, transparent background), but A WIDER, MORE DIFFUSE VEIL, like a fog bank fraying as it drifts: several parallel tongues of mist of unequal lengths, separated by gaps where the background shows through, all aligned with the same wind direction. Still streaked, still translucent, never compact. Canvas 1280x768.</pre></div>
+<div class="card"><h3><code>fx-cloud-a.webp</code> — grand archipel de cumulus <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d'images peint à la main, d'après la photo de référence jointe (cumulus au-dessus de la mer vus d'avion). UN ARCHIPEL DE CUMULUS vu du dessus : un groupe irrégulier de six à huit masses rondes et dodues en chou-fleur, de tailles différentes, certaines qui se touchent, d'autres détachées, disposées comme des îlots. Blanc éclatant sur le dessus, creux légèrement ombrés d'ivoire et de gris bleuté très doux. Les bords sont doux mais les formes bombées restent nettes et dessinées — PAS un voile ni une brume. SANS ombre portée, SANS mer, SANS sol : le nuage seul. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1280 × 896, l'archipel au centre avec de larges marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style, based on the attached reference photo (cumulus clouds over the sea seen from a plane). AN ARCHIPELAGO OF CUMULUS CLOUDS seen from above: an irregular group of six to eight round puffy cauliflower masses of different sizes, some touching, some detached, arranged like islets. Bright white on top, crevices softly shaded with ivory and a very gentle blue-grey. Edges are soft but the billowing shapes stay crisp and well-drawn — NOT a veil, NOT a mist. NO cast shadow, NO sea, NO ground: the cloud alone. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1280x896, the archipelago centered with wide transparent margins.</pre></div>
 
-<div class="card"><h3><code>fx-fog-c.webp</code> — filament rapide <button class="copy">Copier EN</button></h3>
-<p>Même style et mêmes contraintes (vue strictement zénithale, voile plat SANS volume, bords entièrement fondus, fond transparent), mais UN FILAMENT UNIQUE, FIN ET RAPIDE : une seule traînée très effilée, légèrement sinueuse, qui s’amincit aux deux bouts comme une mèche de fumée étirée à grande vitesse. La plus légère et la plus transparente des trois. Toile 1536 × 384.</p>
-<pre class="prompt-en" hidden>Same style and constraints (strictly zenithal view, flat veil with NO volume, fully feathered edges, transparent background), but A SINGLE THIN FAST FILAMENT: one very tapered, slightly sinuous streak that thins out at both ends like a wisp of smoke stretched at high speed. The lightest and most transparent of the three. Canvas 1536x384.</pre></div>
+<div class="card"><h3><code>fx-cloud-b.webp</code> — rangée de petits cumulus <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (d'après la référence jointe, vu du dessus, formes de chou-fleur nettes, sans ombre portée, fond transparent), mais UNE RANGÉE LÂCHE DE PETITS CUMULUS : cinq ou six petites masses dodues espacées, étirées en bande horizontale comme un chapelet, de tailles inégales avec deux ou trois miettes entre elles. Toile 1536 × 512.</p>
+<pre class="prompt-en" hidden>Same style and constraints (based on the attached reference, seen from above, crisp cauliflower shapes, no cast shadow, transparent background), but A LOOSE ROW OF SMALL CUMULUS: five or six small puffy masses spaced out, stretched into a horizontal band like a string of beads, of unequal sizes with two or three crumbs between them. Canvas 1536x512.</pre></div>
+
+<div class="card"><h3><code>fx-cloud-c.webp</code> — cumulus isolé <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (d'après la référence jointe, vu du dessus, formes de chou-fleur nettes, sans ombre portée, fond transparent), mais UN SEUL CUMULUS DODU accompagné de deux petites miettes détachées. Toile 768 × 640.</p>
+<pre class="prompt-en" hidden>Same style and constraints (based on the attached reference, seen from above, crisp cauliflower shapes, no cast shadow, transparent background), but A SINGLE PUFFY CUMULUS with two small detached crumbs beside it. Canvas 768x640.</pre></div>
+
+<h2>2 · Brume d'orage des îles à découvrir</h2>
+
+<div class="card"><h3><code>fx-storm-a.webp</code> — nappe d'orage sombre <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d'images peint à la main. UNE NAPPE DE NUAGE D'ORAGE vue du dessus : une masse ovale et menaçante de nuage gris ardoise foncé teinté de bleu nuit, dense et sombre au cœur avec de faibles volutes plus claires qui tournent lentement, les bords qui se dissolvent en brume vaporeuse de plus en plus transparente. Elle doit pouvoir CACHER une île en dessous : cœur presque opaque, pourtour fondu. Générée SOMBRE (pas de blanc éclatant). BORDS ENTIÈREMENT FONDUS, sans contour net, sans frange, sans halo. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1024 × 768, la nappe au centre avec de larges marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A STORM CLOUD BANK seen from above: an oval, brooding mass of dark slate-grey cloud tinted with night blue, dense and dark at the core with faint lighter swirls slowly turning, edges dissolving into increasingly transparent vaporous mist. It must be able to HIDE an island beneath it: nearly opaque core, fully feathered rim. Generated DARK (no bright white). FULLY FEATHERED EDGES, no hard outline, no fringe, no halo. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1024x768, the bank centered with wide transparent margins.</pre></div>
+
+<div class="card"><h3><code>fx-storm-b.webp</code> — variante de la nappe d'orage <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes que la nappe d'orage (vue du dessus, sombre, cœur presque opaque, bords entièrement fondus, fond transparent), mais UNE FORME DIFFÉRENTE : plus irrégulière, légèrement spiralée comme un début de tourbillon, avec une ou deux déchirures où la brume s'amincit. Toile 1024 × 768.</p>
+<pre class="prompt-en" hidden>Same style and constraints as the storm bank (seen from above, dark, nearly opaque core, fully feathered edges, transparent background), but A DIFFERENT SHAPE: more irregular, slightly spiraled like the beginning of a vortex, with one or two tears where the mist thins out. Canvas 1024x768.</pre></div>
+
+<h2>3 · Éclairs (remplacent les éclairs dessinés en code)</h2>
+
+<div class="card"><h3><code>fx-bolt-a.webp</code> — éclair ramifié <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d'images peint à la main. UN ÉCLAIR vertical : un trait de foudre en zigzag d'un blanc bleuté éclatant, avec deux ou trois ramifications fines, entouré d'un halo lumineux doux bleu-violet qui se fond progressivement dans la transparence. Net et lumineux au cœur, lueur vaporeuse autour. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane, sans nuage, sans pluie. Toile 512 × 1024, l'éclair centré avec des marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A vertical LIGHTNING BOLT: a zigzag stroke of brilliant blue-white lightning with two or three thin branches, surrounded by a soft blue-violet glow that fades gradually into transparency. Sharp and bright at the core, vaporous glow around it. Isolated subject on a fully transparent background, no text, no watermark, no cloud, no rain. Canvas 512x1024, the bolt centered with transparent margins.</pre></div>
+
+<div class="card"><h3><code>fx-bolt-b.webp</code> — éclair simple <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes que l'éclair ramifié (vertical, blanc bleuté, halo doux, fond transparent, sans nuage ni pluie), mais UN TRACÉ DIFFÉRENT : un zigzag simple sans ramification, plus fin et plus anguleux. Toile 512 × 1024.</p>
+<pre class="prompt-en" hidden>Same style and constraints as the branched bolt (vertical, blue-white, soft glow, transparent background, no cloud, no rain), but A DIFFERENT STROKE: a simple zigzag with no branches, thinner and more angular. Canvas 512x1024.</pre></div>
 
 <script>
 document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
