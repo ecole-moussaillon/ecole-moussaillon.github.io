@@ -1,0 +1,80 @@
+<!doctype html><meta charset="utf-8"><title>Extraction du corpus de voix fixes</title>
+<style>body{font:15px system-ui;max-width:860px;margin:2em auto;padding:0 1em}
+table{border-collapse:collapse;margin:1em 0}td,th{border:1px solid #ccc;padding:4px 10px;text-align:right}th:first-child,td:first-child{text-align:left}
+#log{white-space:pre-wrap;background:#f6f6f6;border-radius:8px;padding:1em}iframe{width:1px;height:1px;opacity:0;position:absolute}</style>
+<h1>Extraction du corpus de voix fixes</h1>
+<p>Rejoue tous les générateurs de questions (5 classes × îles × 5 niveaux × 300 tirages) et garde les textes
+récurrents : consignes (ask), indices (hint), choix de QCM (chx) et explications fixes sans chiffres (exp).
+Les textes à nombres calculés restent à la synthèse vocale. Résultat : <code>tools/vo-corpus.json</code>
+(enregistré par <code>node tools/serve-corpus.mjs</code>).</p>
+<div id="log">Chargement du jeu…</div>
+<iframe id="jeu" src="/index.html#direct"></iframe>
+<script>
+const log = m => { document.getElementById('log').textContent += '\n' + m; };
+// Même empreinte que vfHash dans le jeu (FNV-1a 32 bits → base 36)
+const fnv = t => { let h = 0x811c9dc5; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); };
+const gab = t => t.replace(/\d+([.,]\d+)?/g, '#').replace(/#(?:\s*(?:,|et|ou|:)\s*#)+/g, '#…');
+const GRADES = ['cp', 'ce1', 'ce2', 'cm1', 'cm2'], LEVELS = 5, DRAWS = 300;
+
+async function go() {
+  const w = document.getElementById('jeu').contentWindow;
+  for (let i = 0; i < 100 && !w.__arch; i++) await new Promise(r => setTimeout(r, 200));
+  const A = w.__arch;
+  if (!A) { log('ÉCHEC : __arch introuvable (le jeu n’a pas chargé).'); return; }
+  const C = {}; // texte → { n, f:{}, cls:{}, iles:{} }
+  let errs = 0;
+  for (const grade of GRADES) {
+    A.setGrade(grade);
+    const tpl = {}, local = {};
+    const addT = (t, f, ile) => { t = (t || '').trim(); if (t.length < 3 || t.length > 400 || !/[a-zà-ÿ]/i.test(t)) return;
+      const k = f + '\u0000' + t; (local[k] = local[k] || { n: 0, iles: {} }).n++; local[k].iles[ile] = 1;
+      const g = f + '\u0000' + gab(t); (tpl[g] = tpl[g] || new Set()).add(t); };
+    for (const isle of A.ISLES) {
+      if (isle.v || !isle.gen || (isle.only && !isle.only.includes(grade))) continue;
+      for (let l = 1; l <= LEVELS; l++) for (let k = 0; k < DRAWS; k++) {
+        try {
+          const q = isle.gen(l);
+          if (!q) continue;
+          if (!q.en) {
+            if (q.ask) addT(A.speakable(q.ask), 'ask', isle.id);
+            if (q.sayChoices && q.choices) q.choices.forEach(c => addT(A.speakable(c.html), 'chx', isle.id));
+            if (q.explain) addT(A.speakable(q.explain), 'exp', isle.id);
+          }
+          if (q.hint) addT(A.speakable(q.hint), 'hint', isle.id);
+        } catch (e) { errs++; }
+      }
+    }
+    let kept = 0;
+    for (const [k, { n, iles }] of Object.entries(local)) {
+      if (n < 5) continue;
+      const f = k.slice(0, k.indexOf('\u0000')), t = k.slice(k.indexOf('\u0000') + 1);
+      if (tpl[f + '\u0000' + gab(t)].size > 3) continue;       // gabarit à variantes : nombres calculés → synthèse
+      if (f === 'exp' && /\d/.test(t)) continue;                // explication chiffrée → synthèse
+      const e = C[t] = C[t] || { n: 0, f: {}, cls: {}, iles: {} };
+      e.n += n; e.f[f] = 1; e.cls[grade] = 1; Object.assign(e.iles, iles); kept++;
+    }
+    log(`${grade} : ${kept} textes gardés`);
+    await new Promise(r => setTimeout(r, 30));
+  }
+  const textes = Object.entries(C).map(([t, e]) => ({ t, h: fnv(t), n: e.n, f: Object.keys(e.f).sort(), cls: Object.keys(e.cls), iles: Object.keys(e.iles).sort() }))
+    .sort((a, b) => b.n - a.n);
+  const hs = new Set(textes.map(x => x.h));
+  if (hs.size !== textes.length) { log(`ATTENTION : ${textes.length - hs.size} collision(s) d’empreinte !`); }
+  const corpus = { date: new Date().toISOString().slice(0, 10), tirages: `${GRADES.length} classes × îles × ${LEVELS} niveaux × ${DRAWS}`, textes };
+  // Tableau récapitulatif par champ
+  const byF = {};
+  for (const x of textes) for (const f of x.f) { byF[f] = byF[f] || { n: 0, chars: 0 }; byF[f].n++; byF[f].chars += x.t.length; }
+  const tot = textes.reduce((s, x) => s + x.t.length, 0);
+  const T = document.createElement('table');
+  T.innerHTML = '<tr><th>Champ</th><th>Textes</th><th>Caractères</th></tr>' +
+    Object.entries(byF).map(([f, v]) => `<tr><td>${f}</td><td>${v.n}</td><td>${v.chars.toLocaleString('fr')}</td></tr>`).join('') +
+    `<tr><th>Total (dédupliqué)</th><th>${textes.length}</th><th>${tot.toLocaleString('fr')}</th></tr>`;
+  document.body.appendChild(T);
+  log(`${errs} erreur(s) de tirage. Total : ${textes.length} textes, ${tot.toLocaleString('fr')} caractères.`);
+  try {
+    const r = await fetch('/tools/vo-corpus.json', { method: 'PUT', body: JSON.stringify(corpus, null, 1) });
+    log(r.ok ? 'tools/vo-corpus.json enregistré. Coûts : node tools/vo-fixe.mjs --etat' : 'ÉCHEC de l’enregistrement : lance ce fichier via node tools/serve-corpus.mjs');
+  } catch (e) { log('ÉCHEC de l’enregistrement : lance cette page via node tools/serve-corpus.mjs'); }
+}
+go();
+</script>
