@@ -14,38 +14,13 @@ const SETTINGS = { stability: 0.4, similarity_boost: 0.85 };
 const DESC = 'A friendly, cheerful parrot companion for a children game. Bright, light, warm voice with a subtle playful bird-like quality, slightly quick and bouncy, encouraging and kind, never annoying, French speaker.';
 const DESIGN_TEXT = 'Ohé, moussaillon ! Bienvenue à bord ! Par mes plumes… quelle belle journée pour hisser les voiles ! Choisis ton île, je te suis — et si tu te trompes, pas de panique : on apprend, et on recommence. En avant, capitaine !';
 
-const SAMPLE = ['vo-jour-1', 'vo-carte-2', 'vo-retour-2', 'vo-parfait-3', 'vo-cap-canons-1', 'vo-cap-lecture-1'];
+const SAMPLE = ['vo-parents-2', 'vo-cap-canons-1', 'vo-cap-lecture-1'];
+// Répartition arrêtée le 22/11/2026 : Pi n'intervient qu'en pédagogie (consignes d'îles,
+// espace parents, leçons). Les variantes de carte/journal/navire/etc. et les bonjours
+// jour/retour, un temps dits par Pi, ont été retirés : le capitaine reprend ces écrans.
+// Leurs textes restent dans design/vo-lot-b.html et l'historique git, régénérables avec
+// la voix du capitaine (xFHsB7ym6VZKZNoONpeq) si on veut un jour rendre la voix aux bonjours.
 const LINES = [
-  // Nouveaux événements
-  ['vo-jour-1', '[Warm, playful] Bien dormi, moussaillon ? La marée du jour t’attend !'],
-  ['vo-jour-2', '[cheerful, energetic] Un nouveau jour, une nouvelle marée ! En route !'],
-  ['vo-jour-3', '[playful, conspiratorial] Salut capitaine ! Les îles ont bougé cette nuit… [chuckles] enfin, presque.'],
-  ['vo-retour-1', '[Warm, delighted] Te revoilà ! L’archipel t’a attendu, moussaillon.'],
-  ['vo-retour-2', '[excited, hearty] Ohé, capitaine ! Ça fait une paye ! Hisse les voiles, tout le monde t’attend !'],
-  // Variantes d'événements existants
-  ['vo-carte-2', '[cheerful] Toutes voiles dehors, moussaillon ! Quelle île t’appelle aujourd’hui ?'],
-  ['vo-carte-3', '[warm, inviting] La carte est à toi, capitaine ! Choisis ton cap.'],
-  ['vo-libre-2', '[relaxed, friendly] Escale libre ! Entraîne-toi tranquille, matelot.'],
-  ['vo-libre-3', '[playful] À toi de jouer : cette escale-là, c’est pour le plaisir !'],
-  ['vo-equipage-2', '[proud, warm] Voici ton équipage ! Chaque créature a son pouvoir.'],
-  ['vo-equipage-3', '[mysterious, playful] Les légendes de l’archipel t’attendent, capitaine…'],
-  ['vo-pirate-2', '[admiring, playful] Quelle allure, capitaine ! Les requins vont rougir.'],
-  ['vo-pirate-3', '[cheerful] Un chapeau, un sabre… te voilà paré pour la légende !'],
-  ['vo-journal-2', '[warm] Ton journal de bord, capitaine : tes quêtes, l’histoire… et tous tes exploits !'],
-  ['vo-journal-3', '[impressed] Tout ce que tu sais faire est écrit là-dedans. Impressionnant !'],
-  ['vo-ile-3', '[excited] Terre en vue ! Prépare-toi à accoster, moussaillon !'],
-  ['vo-ile-4', '[warm, encouraging] Cette île n’attend que toi. À l’abordage !'],
-  ['vo-navire-3', '[admiring] Beau travail au chantier ! Ton navire a fière allure.'],
-  ['vo-navire-4', '[happy gasp] Par mes plumes… quel navire magnifique !'],
-  ['vo-coffre-3', '[excited, hushed] Un coffre ! Croisons les plumes pour le trésor…'],
-  ['vo-equipier-3', '[delighted] Un nouvel équipier monte à bord ! Bienvenue, matelot !'],
-  ['vo-indice-3', '[quietly, conspiratorial] Psst… regarde bien, je te souffle un indice.'],
-  ['vo-revanche-3', '[determined, playful] Revanche ! Cette question ne t’aura pas deux fois.'],
-  ['vo-melange-3', '[cheerful] Escale mélangée : un peu de tout, pour ne rien oublier !'],
-  ['vo-quete-3', '[proud] Quête accomplie ! Tu avances comme un vrai loup de mer.'],
-  ['vo-chapitre-3', '[excited, inviting] Un nouveau chapitre de l’histoire ! Ouvre vite le journal.'],
-  ['vo-parfait-3', '[amazed] SANS faute ! Même le capitaine n’en revient pas !'],
-  ['vo-lettres-3', '[cheerful] Cap sur la Mer des Lettres : à nous les mots !'],
   ['vo-parents-2', '[Calm, adult, reassuring] Bienvenue dans l’espace parents : tout le suivi de votre enfant est ici.'],
   // Consignes d'îles (à l'arrivée)
   ['vo-cap-canons-1', '[energetic, rallying] À l’abordage de l’Île des Canons ! Charge tes multiplications… et vise juste !'],

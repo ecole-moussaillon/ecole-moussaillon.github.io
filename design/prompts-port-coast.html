@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt — nouvelle côte du port</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Nouvelle côte du port — image pleine hauteur</h1>
+<p class="sub">Remplace <code>port-coast.webp</code> (bas de la carte). Aujourd’hui l’image s’arrête au village et le bas est comblé par un reflet : la nouvelle descend en jungle de pirate. Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image.</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre comme référence de style et de continuité : <code>assets/port-coast.webp</code> (l’image actuelle — le haut de la nouvelle doit garder la même composition : jetée, village à droite, plage et palmiers à gauche).</li>
+<li>Format <b>portrait 1024 × 1536</b>, plein cadre (pas de transparence).</li>
+<li>Le <b>tiers bas</b> sert de marge : selon l’écran il peut être rogné, donc rien d’important en dessous de 70 % de la hauteur, et le bord bas presque uniforme (ombre de jungle profonde).</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/port-coast.webp</code>. Dès que le fichier est posé, je branche la carte sur l’image pleine hauteur (suppression du miroir).</li>
+</ul></div>
+
+<div class="card"><h3><code>port-coast.webp</code> — la côte du Port d’attache <button class="copy">Copier EN</button></h3>
+<p>Décor de jeu pour enfants, style livre d’images peint à la main, même style, même palette et même angle de vue (trois quarts de dessus) que l’image de référence jointe, dont il reprend la composition en haut de cadre. Bande côtière vue du dessus, format portrait. EN HAUT (15 % du cadre) : la mer turquoise, avec une jetée de bois qui entre dans l’eau légèrement à droite du centre, lanternes allumées. AU MILIEU HAUT : le village portuaire chaleureux sur la droite — maisons aux toits de tuiles, auvents rayés, tonneaux, cheminées fumantes, petite tour ronde au toit bleu-vert avec un fanion rouge près du bord droit — et à gauche la plage de sable clair, rochers ronds, palmiers et fleurs rouges. EN DESCENDANT : la côte s’enfonce dans une jungle de pirate dense et dorée : canopée luxuriante, ruisseau qui serpente, VIEILLE ÉPAVE de navire échouée et moussue penchée dans la végétation, COFFRE AU TRÉSOR entrouvert qui scintille entre les racines, pierres gravées, perroquets colorés, lianes et fougères. VERS LE BAS : la jungle s’assombrit doucement en ombre profonde ; le dernier dixième du cadre est une pénombre de sous-bois presque uniforme, sans détail marquant. Chaleureux et aventureux, jamais inquiétant (public 6-10 ans). Lumière dorée de fin d’après-midi, touches picturales riches. Sans personnage, sans texte lisible, sans filigrane. Toile portrait 1024 × 1536.</p>
+<pre class="prompt-en" hidden>Children's game backdrop, hand-painted storybook style, same style, palette and three-quarter top-down angle as the attached reference image, whose composition it reproduces at the top of the frame. Coastal strip seen from above, portrait format. AT THE TOP (15% of the frame): turquoise sea, with a wooden jetty entering the water slightly right of center, lit lanterns. UPPER MIDDLE: the warm harbor village on the right — tiled-roof houses, striped awnings, barrels, smoking chimneys, a small round tower with a teal roof and a red pennant near the right edge — and on the left the pale sandy beach, round boulders, palm trees and red flowers. GOING DOWN: the coast sinks into a dense golden pirate jungle: lush canopy, a winding stream, an OLD SHIPWRECK beached and mossy, tilted in the vegetation, a half-open TREASURE CHEST glinting between the roots, carved stones, colorful parrots, vines and ferns. TOWARD THE BOTTOM: the jungle softly darkens into deep shade; the last tenth of the frame is near-uniform undergrowth dusk with no salient detail. Warm and adventurous, never unsettling (audience 6-10). Golden late-afternoon light, rich painterly strokes. No characters, no readable text, no watermark. Portrait canvas 1024x1536.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>

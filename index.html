@@ -89,7 +89,9 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 @keyframes lagpulse{50%{opacity:.75;transform:translate(-50%,-50%) scale(1.03)}}
 .isle .land{position:absolute;left:50%;top:44%;width:190px;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 8px rgba(4,18,26,.45))}
 .isle .lbl{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);text-align:center;white-space:nowrap}
-.isle .lbl b{display:block;font-family:var(--f-d);font-variation-settings:'SOFT' 100;font-weight:800;font-size:16px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.55)}
+.isle .lbl b{display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--f-d);font-variation-settings:'SOFT' 100;font-weight:800;font-size:17px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 16px rgba(0,0,0,.7)}
+/* Le fanion du rang, bien lisible à côté du titre (il déborde vers le haut, posé comme planté) */
+.isle .lbl .pen{width:34px;height:41px;margin:-18px 0 -6px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.75)) drop-shadow(0 0 8px rgba(0,0,0,.45))}
 .pen{display:inline-block;width:23px;height:27px;vertical-align:-3px;margin-right:4px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .chip .pen{margin-right:6px}.trophy .ti .pen{width:34px;height:42px;margin:0}
 .lvl-pill.r0{background:linear-gradient(#f6cfa4,#c98a4a)}.lvl-pill.r1{background:linear-gradient(#f3f6f8,#b9c4cc)}.lvl-pill.r2{background:linear-gradient(#ffe9a8,#e0a92e)}
@@ -1333,11 +1335,12 @@ function boom(vol = .5, dur = .55) {
 }
 /* Fichiers audio (musique, bruitages, voix) : listés dans assets/audio/manifest.json ; sinon les sons synthétiques ci-dessous servent de repli. */
 const AUDIO = 'assets/audio/';
-const VO = { parents: 2, titre: 3, intro: 1, carte: 3, accueil: 3, depart: 3, combo: 3, rire: 3, victoire: 3, parfait: 3, 'boss-debut': 2, boss: 3, coffre: 3, equipier: 3, ile: 4, navire: 4, presque: 3, indice: 3, revanche: 3, libre: 3, equipage: 3, pirate: 3, port: 3,
-  'tuto-keypad': 3, 'tuto-choices': 2, 'tuto-mine': 4, 'tuto-line': 2, 'tuto-money': 4, 'tuto-pizza': 2, 'tuto-words': 3, 'tuto-read': 3, lettres: 3,
-  test: 2, 'test-fin': 2, melange: 3, 'boss-cible': 2, quete: 3, chapitre: 3, journal: 3, 'tuto-type': 3,
-  // Lot B (voix de Pi) : premier lancement du jour, retour après 3 jours ou plus, et une consigne par île (cap-<île>)
-  jour: 3, retour: 2, ...Object.fromEntries(['canons', 'stade', 'mine', 'formes', 'jungle', 'marche', 'cuisine', 'horloge', 'lecture', 'conjug', 'anglais', 'culture', 'gram', 'accords', 'vocab', 'enigmes'].map(i => ['cap-' + i, 1])) };
+// Répartition des voix : le capitaine pirate parle sur la carte et les écrans (comme avant le lot B) ;
+// Pi n'intervient qu'en pédagogie : consignes d'îles (cap-<île>), espace parents, leçons (vo-l-*).
+const VO = { parents: 2, titre: 3, intro: 1, carte: 1, accueil: 3, depart: 3, combo: 3, rire: 3, victoire: 3, parfait: 2, 'boss-debut': 2, boss: 3, coffre: 2, equipier: 2, ile: 2, navire: 2, presque: 3, indice: 2, revanche: 2, libre: 1, equipage: 1, pirate: 1, port: 3,
+  'tuto-keypad': 3, 'tuto-choices': 2, 'tuto-mine': 4, 'tuto-line': 2, 'tuto-money': 4, 'tuto-pizza': 2, 'tuto-words': 3, 'tuto-read': 3, lettres: 2,
+  test: 2, 'test-fin': 2, melange: 2, 'boss-cible': 2, quete: 2, chapitre: 2, journal: 1, 'tuto-type': 3,
+  ...Object.fromEntries(['canons', 'stade', 'mine', 'formes', 'jungle', 'marche', 'cuisine', 'horloge', 'lecture', 'conjug', 'anglais', 'culture', 'gram', 'accords', 'vocab', 'enigmes'].map(i => ['cap-' + i, 1])) };
 const BUF = {}; let audioAsked = false, BUS = null, musSrc = null, musName = null, musWant = null, lastVo = 0;
 function bus() { const a = ac(); if (!a) return null; if (!BUS) { BUS = { sfx: a.createGain(), mus: a.createGain(), vo: a.createGain() }; BUS.mus.gain.value = .3; BUS.sfx.gain.value = .8; Object.values(BUS).forEach(g => g.connect(a.destination)); } return BUS; }
 // Les longues boucles de musique (2 à 4 min, 60 à 90 Mo une fois décodées) sont chargées quand elles doivent jouer,
@@ -1384,7 +1387,7 @@ function welcome(first) {
     if (S.lastDay !== today) { S.lastDay = today; save(); } } catch (e) {}
   let tries = 20; const go = () => {
     const titre = range(1, VO.titre).map(j => `vo-titre-${j}`).filter(x => BUF[x]);
-    const next = first ? 'intro' : greet, nextReady = range(1, VO[next]).some(j => BUF[`vo-${next}-${j}`]) || (greet !== 'accueil' && range(1, VO.accueil).some(j => BUF[`vo-accueil-${j}`]));
+    const next = first ? 'intro' : greet, nextReady = range(1, VO[next] || 0).some(j => BUF[`vo-${next}-${j}`]) || (greet !== 'accueil' && range(1, VO.accueil).some(j => BUF[`vo-accueil-${j}`]));
     if (!titre.length && !nextReady) { if (tries-- > 0) setTimeout(go, 250); return; }
     if (titre.length && (first || Math.random() < .5)) { say(pick(titre)); const d = (voSrc && voSrc.buffer ? voSrc.buffer.duration : 3) * 1000 + 400; if (first) setTimeout(() => voice('intro', true), d); }
     else voice(next, true) || (next !== 'accueil' && !first && voice('accueil', true));
@@ -1647,8 +1650,7 @@ const ISLES = [
   { id: 'marche', sea: 'm', cm1: 'Monnaie et prix', hero: 'hero-marche', boss: { img: 'boss-marchand', n: 'Le Marchand Fantôme' }, chestCrew: 'calmar', art: 'le Marché du Port', n: 'Marché du Port', notion: 'Monnaie et euros', img: 'isle-marche', lag: 'lagoon-round', x: 28, y: 570, gen: genMarche, ep: 'Main-d’Or', unlock: 6, sfx: ['VENDU !', 'PILE LE COMPTE !'] },
   { id: 'cuisine', sea: 'm', cm1: 'Fractions et fractions décimales', hero: 'hero-cuisine', boss: { img: 'boss-chef', n: 'Le Chef Pieuvre' }, chestCrew: 'poisson', art: 'la Cuisine du Navire', n: 'Cuisine du Navire', notion: 'Fractions', img: 'isle-cuisine', lag: 'lagoon-rocks', x: 72, y: 350, gen: genCuisine, ep: 'Fine Lame', unlock: 9, sfx: ['MIAM !', 'PARFAIT, CHEF !'] },
   { id: 'horloge', sea: 'm', cm1: 'Heures et durées', hero: 'hero-horloge', boss: { img: 'boss-horloge', n: 'Le Maître des Heures' }, chestCrew: null, art: 'l’Île de l’Horloge', n: 'Île de l’Horloge', notion: 'Heures et durées', img: 'isle-horloge', lag: 'lagoon-oval', x: 28, y: 150, gen: genHorloge, ep: 'Maître du Temps', unlock: 12, sfx: ['TIC-TAC !', 'PILE À L’HEURE !'] },
-  // Baie des Défis (lot E) : wip tant que isle-enigmes, hero-enigmes et boss-enigmes ne sont pas dans assets/ — l'île paraît en « Bientôt »
-  { id: 'enigmes', wip: true, sea: 'm', cm1: 'Problèmes à étapes', hero: 'hero-enigmes', boss: { img: 'boss-enigmes', n: 'Le Morse Savant' }, chestCrew: null, art: 'la Baie des Défis', n: 'Baie des Défis', notion: 'Problèmes à résoudre', img: 'isle-enigmes', lag: 'lagoon-oval', x: 72, y: 470, gen: genEnigmes, ep: 'Maître des Défis', unlock: 10, sfx: ['TROUVÉ !', 'BIEN RAISONNÉ !', 'QUEL FLAIR !'] },
+  { id: 'enigmes', sea: 'm', cm1: 'Problèmes à étapes', hero: 'hero-enigmes', boss: { img: 'boss-enigmes', n: 'Le Morse Savant' }, chestCrew: null, art: 'la Baie des Défis', n: 'Baie des Défis', notion: 'Problèmes à résoudre', img: 'isle-enigmes', lag: 'lagoon-oval', x: 72, y: 470, gen: genEnigmes, ep: 'Maître des Défis', unlock: 10, sfx: ['TROUVÉ !', 'BIEN RAISONNÉ !', 'QUEL FLAIR !'] },
   // Mer des Lettres (lot 5 d'illustrations reçu le 18 octobre 2026)
   { id: 'lecture', sea: 'f', hero: 'hero-lecture', boss: { img: 'boss-lecture', n: 'La Sirène des Contes' }, chestCrew: null, art: 'la Grotte aux Histoires', n: 'Grotte aux Histoires', notion: 'Lecture et compréhension', img: 'isle-lecture', lag: 'lagoon-round', x: 28, y: 1450, gen: genLecture, ep: 'Grand Liseur', unlock: 0, sfx: ['BIEN LU !', 'QUEL LECTEUR !'] },
   { id: 'conjug', sea: 'f', hero: 'hero-conjug', boss: { img: 'boss-conjug', n: 'Le Forgeron des Temps' }, chestCrew: null, art: 'la Forge des Verbes', n: 'Forge des Verbes', notion: 'Conjugaison', img: 'isle-conjug', lag: 'lagoon-oval', x: 72, y: 1230, gen: genConjug, ep: 'Maître des Verbes', unlock: 0, sfx: ['BIEN FORGÉ !', 'VERBE PARFAIT !'] },
@@ -5784,7 +5786,7 @@ function renderMap() {
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
       <div class="ripple" aria-hidden="true" style="left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 28}px"><i></i><i></i></div>
-      <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG(paintDef()[4] ? paintDef()[4] + '-top' : 'ship-player-top')}" alt="Ton navire" style="${shipFx()}left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px">
+      <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG(shipImg() + '-top')}" onerror="this.onerror=null;this.src='${IMG('ship-player-top')}'" alt="Ton navire" style="${shipFx()}left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px">
     </div></div><div class="mapveil t" aria-hidden="true"></div><div class="mapveil b" aria-hidden="true"></div>
     ${hudHTML()}
     <div class="seas glass" role="group" aria-label="Choisir la mer">${Object.entries(SEAS).map(([k, v]) => `<button data-a="sea" data-s="${k}" aria-pressed="${S.sea === k}"><b>${v.ic}</b>${v.n}</button>`).join('')}</div>
@@ -7076,7 +7078,7 @@ function titleScreen() {
   app.innerHTML = `<div class="screen title${many ? ' who' : ''}" ${many ? '' : 'data-a="start" role="button" tabindex="0" aria-label="Toucher pour embarquer"'}><img class="bg" src="${IMG('bg-title')}" alt="">
     <div class="tlogo"><div class="smallcaps">L’école pirate</div><div class="disp">Moussaillon</div></div>
     <div class="tgo">${many ? `<div class="whob glass"><b>Qui joue ?</b>${kidList()}</div>` : '<span>Touche pour embarquer</span>'}<div class="trow" aria-hidden="true"><img class="tcomp" id="tcomp" src="${IMG('deco-compass')}" alt=""><div class="tload"><i id="tload"></i></div></div></div><div class="vers2">v${VERSION.split(' ')[0]}${ADMIN ? ' · admin' : ''}</div></div>`;
-  const list = ['tex-sea', 'lagoon-round', 'lagoon-oval', 'lagoon-rocks', 'fx-fog-a', 'fx-fog-b', 'port-coast', 'isle-kraken', 'deco-compass', paintDef()[4] ? paintDef()[4] + '-top' : 'ship-player-top', 'pennant-0', 'pennant-1', 'pennant-2', capt(), 'coin-doublon', 'tex-parchment', 'guide-capitaine', ...ISLES.filter(i => !i.soon).map(i => i.img), 'crew-perroquet'];
+  const list = ['tex-sea', 'lagoon-round', 'lagoon-oval', 'lagoon-rocks', 'fx-fog-a', 'fx-fog-b', 'port-coast', 'isle-kraken', 'deco-compass', shipImg() + '-top', 'ship-player-top', 'pennant-0', 'pennant-1', 'pennant-2', capt(), 'coin-doublon', 'tex-parchment', 'guide-capitaine', ...ISLES.filter(i => !i.soon).map(i => i.img), 'crew-perroquet'];
   let done = 0; list.forEach(n => { const im = new Image(); im.onload = im.onerror = () => { done++; const b = $('#tload'); if (b) b.style.width = Math.round(done / list.length * 100) + '%'; if (done === list.length) { const c = $('#tcomp'); c && c.classList.add('done'); } }; im.src = IMG(n); });
   ac();
 }

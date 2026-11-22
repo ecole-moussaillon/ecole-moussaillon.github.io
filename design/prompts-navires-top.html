@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — vues de dessus des navires gratuits</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Vues de dessus — les trois navires gratuits</h1>
+<p class="sub">Le pion du navire sur la carte doit montrer le navire actuel du joueur vu de dessus. Les sept navires achetés ont leur vue (<code>ship-skin-*-top</code>) ; il manque celles de la ligne gratuite : le Rafiot, le brigantin et le galion. Le code est déjà branché : dès qu’un fichier est posé, il sert ; sinon la vue générique reste en secours.</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre pour CHAQUE prompt : la vue de profil du navire concerné (<code>assets/ship-player-1.webp</code>, <code>-2</code> ou <code>-3</code>) <b>et</b> une vue de dessus existante pour l’angle et l’échelle (<code>assets/ship-skin-royal-top.webp</code>).</li>
+<li>Fond transparent, même cadrage et même taille apparente que la vue de dessus de référence (le pion doit garder la même emprise sur la carte).</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/ship-player-&lt;n&gt;-top.webp</code> (1 = Rafiot, 2 = brigantin, 3 = galion).</li>
+</ul></div>
+
+<div class="card"><h3><code>ship-player-1-top.webp</code> — le Rafiot <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main. Vue de dessus (à la verticale, proue vers le haut) du PETIT NAVIRE joint en référence de profil : LE RAFIOT, modeste barque de départ — coque de bois simple et un peu usée, un seul petit mât à la voile carrée rapiécée, pont étroit avec quelques planches, un tonneau et un rouleau de corde. Même angle, même échelle et même style que la vue de dessus jointe en seconde référence, mais clairement plus petit et plus humble qu’elle. Sillage absent. Lumière dorée, touches picturales douces. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. Top-down view (straight from above, bow pointing up) of the SMALL SHIP attached as profile reference: THE DINGHY, a modest starter boat — simple, slightly worn wooden hull, a single small mast with a patched square sail, a narrow deck with a few planks, one barrel and a coil of rope. Same angle, scale and style as the top-down view attached as second reference, but clearly smaller and humbler than it. No wake. Golden light, soft painterly strokes. Isolated subject on a fully transparent background, no text, no watermark.</pre></div>
+
+<div class="card"><h3><code>ship-player-2-top.webp</code> — le brigantin <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main. Vue de dessus (à la verticale, proue vers le haut) du NAVIRE joint en référence de profil : LE BRIGANTIN, navire intermédiaire — coque de bois soignée, deux mâts aux voiles carrées gonflées, pont ordonné avec écoutille, tonneaux et cordages. Même angle, même échelle et même style que la vue de dessus jointe en seconde référence. Sillage absent. Lumière dorée, touches picturales douces. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. Top-down view (straight from above, bow pointing up) of the SHIP attached as profile reference: THE BRIGANTINE, a mid-tier ship — well-kept wooden hull, two masts with full square sails, a tidy deck with a hatch, barrels and rigging. Same angle, scale and style as the top-down view attached as second reference. No wake. Golden light, soft painterly strokes. Isolated subject on a fully transparent background, no text, no watermark.</pre></div>
+
+<div class="card"><h3><code>ship-player-3-top.webp</code> — le galion <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main. Vue de dessus (à la verticale, proue vers le haut) du GRAND NAVIRE joint en référence de profil : LE GALION, fier navire de haut rang — large coque de bois aux rambardes ouvragées, trois mâts aux grandes voiles carrées, pont riche en détails : écoutilles, canons le long des bords, tonneaux, cordages, lanternes de poupe. Même angle, même échelle et même style que la vue de dessus jointe en seconde référence, en un peu plus imposant. Sillage absent. Lumière dorée, touches picturales riches. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. Top-down view (straight from above, bow pointing up) of the LARGE SHIP attached as profile reference: THE GALLEON, a proud high-rank ship — wide wooden hull with ornate railings, three masts with large square sails, a richly detailed deck: hatches, cannons along the sides, barrels, rigging, stern lanterns. Same angle, scale and style as the top-down view attached as second reference, slightly more imposing. No wake. Golden light, rich painterly strokes. Isolated subject on a fully transparent background, no text, no watermark.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
