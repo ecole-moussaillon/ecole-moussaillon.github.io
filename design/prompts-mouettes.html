@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — mouettes de la carte</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Mouettes de la carte</h1>
+<p class="sub">Remplacent les mouettes dessinées en code (deux arcs, trop faux). Trois oiseaux de tailles différentes, vus du dessus ; les deux premiers en DEUX POSES d'ailes pour un vrai battement image par image. Le prompt s'affiche en français ; « Copier EN » copie l'anglais à coller dans GPT Image.</p>
+
+<div class="note"><b>Réglages communs</b>
+<ul>
+<li>Vue STRICTEMENT du dessus : l'oiseau vole au-dessus de la mer, on voit son dos et ses ailes étendues — comme depuis un nuage.</li>
+<li><b>Les deux poses d'un même oiseau doivent se superposer exactement</b> : même oiseau, même taille, même position du corps au centre de la toile, même direction (tête vers le HAUT de l'image) — seules les ailes changent. C'est ce qui permet le battement en alternant les deux images.</li>
+<li>SANS ombre portée (le jeu pose l'ombre sur la mer), SANS mer, fond entièrement transparent, sans texte ni filigrane.</li>
+<li>Conversion : <code>cwebp -q 85 entree.png -o assets/deco-gull-a1.webp</code> (idem a2, b1, b2, c). Je les anime ensuite : battement (alternance des poses), trajectoire au-dessus de la carte et ombre portée décalée sur l'eau.</li>
+</ul></div>
+
+<div class="card"><h3><code>deco-gull-a1.webp</code> — grande mouette, ailes hautes <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d'images peint à la main. UNE MOUETTE vue STRICTEMENT DU DESSUS, en plein vol, tête vers le HAUT de l'image : dos blanc, dessus des ailes gris pâle aux pointes noires, bec jaune visible devant la tête, queue blanche en éventail. POSE : LES AILES RELEVÉES EN V, à mi-battement vers le haut. Corps exactement au centre de la toile, à la verticale. SANS ombre portée, SANS mer : l'oiseau seul. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 512 × 512, larges marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A SEAGULL seen STRICTLY FROM ABOVE, in full flight, head toward the TOP of the image: white back, pale grey upper wings with black tips, yellow beak visible ahead of the head, white fanned tail. POSE: WINGS RAISED IN A V, mid-upstroke. Body exactly centered on the canvas, vertical. NO cast shadow, NO sea: the bird alone. Isolated subject on a fully transparent background, no text, no watermark. Canvas 512x512, wide transparent margins.</pre></div>
+
+<div class="card"><h3><code>deco-gull-a2.webp</code> — grande mouette, ailes basses <button class="copy">Copier EN</button></h3>
+<p>EXACTEMENT LE MÊME OISEAU que l'image précédente (jointe en référence) : même mouette, même taille, même position du corps au centre, même tête vers le haut — SEULES LES AILES CHANGENT : AILES ÉTENDUES À PLAT, grandes ouvertes à l'horizontale, en fin de battement vers le bas. Mêmes contraintes (vue du dessus, sans ombre, fond transparent). Toile 512 × 512.</p>
+<pre class="prompt-en" hidden>EXACTLY THE SAME BIRD as the previous image (attached as reference): same seagull, same size, same body position centered, same head toward the top — ONLY THE WINGS CHANGE: WINGS FULLY SPREAD FLAT, wide open horizontally, at the end of the downstroke. Same constraints (view from above, no shadow, transparent background). Canvas 512x512.</pre></div>
+
+<div class="card"><h3><code>deco-gull-b1.webp</code> / <code>deco-gull-b2.webp</code> — mouette moyenne, deux poses <button class="copy">Copier EN</button></h3>
+<p>Mêmes contraintes que la grande mouette (vue strictement du dessus, tête vers le haut, corps centré, sans ombre, fond transparent), mais UN GOÉLAND PLUS JEUNE ET PLUS PETIT dans la toile, au plumage légèrement beige moucheté sur le dessus des ailes. À générer en DEUX POSES superposables : b1 ailes relevées en V, b2 ailes étendues à plat (joindre b1 en référence pour b2). Toile 512 × 512 chacune.</p>
+<pre class="prompt-en" hidden>Same constraints as the large seagull (strictly top-down view, head toward the top, body centered, no shadow, transparent background), but A YOUNGER, SMALLER GULL within the canvas, with slightly beige speckled upper wings. Generate TWO SUPERIMPOSABLE POSES: b1 wings raised in a V, b2 wings fully spread flat (attach b1 as reference for b2). Canvas 512x512 each.</pre></div>
+
+<div class="card"><h3><code>deco-gull-c.webp</code> — petite sterne qui plane <button class="copy">Copier EN</button></h3>
+<p>Mêmes contraintes (vue strictement du dessus, tête vers le haut, sans ombre, fond transparent), mais UNE PETITE STERNE QUI PLANE : silhouette fine et élégante, ailes étroites et pointues étendues à plat, queue fourchue, nettement plus petite dans la toile que les mouettes. Une seule pose (elle plane, sans battre des ailes). Toile 512 × 512.</p>
+<pre class="prompt-en" hidden>Same constraints (strictly top-down view, head toward the top, no shadow, transparent background), but A SMALL GLIDING TERN: slim elegant silhouette, narrow pointed wings fully spread, forked tail, noticeably smaller within the canvas than the gulls. A single pose (it glides, no flapping). Canvas 512x512.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
