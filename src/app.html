@@ -60,12 +60,15 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 @keyframes lagpulse{50%{opacity:.75;transform:translate(-50%,-50%) scale(1.03)}}
 .isle .land{position:absolute;left:50%;top:44%;width:190px;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 8px rgba(4,18,26,.45))}
 .isle .lbl{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;white-space:nowrap}
-/* Titres d'îles : petites capitales d'or (typo du port) sur bandeau de verre sombre liseré d'or.
-   Le dégradé doré est découpé dans le texte seul (span .ti). width:max-content : le bandeau ne rogne jamais le titre. */
-.isle .lbl b{display:inline-flex;align-items:center;width:max-content;font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;font-size:18px;letter-spacing:.02em;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:12px;padding:3px 14px 4px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
-.lbl .ti{background:linear-gradient(180deg,#ffeebf 15%,#eecb6c 55%,#c99345 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(20,10,2,.55))}
-/* Le fanion du rang, en grand, planté au sommet de l'île */
-.isle .pentop{position:absolute;left:54%;top:-14px;width:48px;height:58px;transform:rotate(7deg);filter:drop-shadow(0 3px 4px rgba(0,0,0,.55));pointer-events:none}
+/* Cartouche d'île : un seul bandeau de verre sombre liseré d'or — fanion de rang accroché au bord,
+   titre en petites capitales d'or (typo du port), niveau en petite ligne condensée dessous. */
+.isle .lbl b{display:inline-flex;align-items:center;gap:8px;width:max-content;font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;font-size:18px;letter-spacing:.02em;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:13px;padding:5px 15px 6px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+.lbl .ti{display:block;line-height:1.08;background:linear-gradient(180deg,#ffeebf 15%,#eecb6c 55%,#c99345 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(20,10,2,.55))}
+.lbl .col{display:flex;flex-direction:column;align-items:center}
+.lbl .lv{display:flex;align-items:center;gap:4px;margin-top:2px;font:600 10px var(--f-u);letter-spacing:.03em;line-height:1.25;color:#d8c9a3}
+.lbl .lv svg{width:11px;height:11px;flex:none}
+/* Le fanion du rang, planté sur le bord du cartouche */
+.isle .lbl .pen{width:32px;height:38px;margin:-17px -2px -10px 0;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
 .pen{display:inline-block;width:23px;height:27px;vertical-align:-3px;margin-right:4px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .chip .pen{margin-right:6px}.trophy .ti .pen{width:34px;height:42px;margin:0}
 /* Le rang teinte légèrement le bois (argent : délavé, or : chaud et doré) */
@@ -5745,11 +5748,10 @@ function renderMap() {
   const krak = bossDone(IS('canons'));
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
-    if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="ti">${i.n}</span></b><span class="lvl-pill lock">Bientôt</span></span></button>`;
+    if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="col"><span class="ti">${i.n}</span><span class="lv">Bientôt</span></span></b></span></button>`;
     return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : rk(s) === 2 ? ', île maîtrisée' : `, rang ${IRANK[rk(s)].n}, niveau ${Math.min(s.node, NODES)} sur ${NODES}`}">
       <img class="lag" src="${IMG(i.lag)}" alt=""><img class="land" src="${IMG(i.img)}" alt="">
-      ${!lk ? `<img class="pentop" src="${IMG('pennant-' + rk(s))}" alt="">` : ''}
-      <span class="lbl"><b><span class="ti">${i.n}</span></b>${lk ? `<span class="lvl-pill lock">${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner</span>` : `<span class="lvl-pill r${rk(s)}">${rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span>`}</span></button>`;
+      <span class="lbl"><b>${!lk ? penArt(rk(s)) : ''}<span class="col"><span class="ti">${i.n}</span><span class="lv">${lk ? `${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner` : rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span></span></b></span></button>`;
   }).join('');
   // Île pas encore ouverte : on la devine, floue, sous un nuage d'orage traversé d'éclairs
   const fog = sea.filter(i => !unlocked(i)).map((i, k) => `<div class="mstorm${k % 2 ? ' fb' : ''}" style="left:${px(i)}px;top:${i.y - 18}px;--bd:${(6.5 + (k * 2.3) % 4).toFixed(1)}s;--bdel:-${(k * 2.9 % 7).toFixed(1)}s;--bx:${k % 2 ? 8 : -34}px" aria-hidden="true"><img class="fogpatch${k % 2 ? ' fb' : ''}" src="${IMG(k % 2 ? 'fx-fog-b' : 'fx-fog-a')}" alt="">${BOLT}<i class="flash"></i></div>`).join('');
