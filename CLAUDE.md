@@ -31,6 +31,7 @@ Jeu éducatif pirate, du CP au CM2. 15 îles : 8 de maths (canons, stade, mine, 
 - **État au 22/11/2026** :
   - iOS 2.6 (build 24) soumise à l'examen d'Apple le 22/11 (fiche 2.6 : Baie des Défis, « Pi t'explique », boss parlants, flotte, carte vivante, et les nouvelles URLs ecole-moussaillon.github.io). Publication manuelle après accord.
   - iOS 2.5 (build 23) en ligne, disponible dans 175 pays, statut de commerçant UE validé.
+  - Avertissement Apple informatif (build 24) : à partir d'avril 2027, compiler avec le SDK iOS 27 (passer le workflow ios-app-store.yml sur l'image macOS à Xcode 27 le moment venu). Vision Pro non pris en charge pour la catégorie Enfants : normal, aucune action.
   - **0 note et 0 avis publiés**, alors que des amis disent avoir noté : probablement retenus par la modération ou le filtre anti-fraude d'Apple (avis groupés le même jour, au même endroit).
   - Google Play : test fermé obligatoire de 12 testeurs pendant 14 jours (compte personnel), pas encore lancé.
 
