@@ -1266,7 +1266,7 @@ function kidsSheet() {
   m.innerHTML = `<div class="box kbox glass" role="dialog" aria-label="Qui joue ?"><b>Qui joue ?</b>${kidList(true)}<button class="kclose" data-a="kidsclose">Fermer</button></div>`;
   app.appendChild(m);
 }
-const VERSION = '2.5 · novembre 2026';
+const VERSION = '2.6 · novembre 2026';
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist().catch(() => {}); } catch (e) {}
 // Appli des stores : sur iPhone, le jeu est embarqué dans une appli native (Capacitor) ; sur Android, il s'ouvre en plein écran (TWA, display-mode standalone)
 const nativeApp = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());

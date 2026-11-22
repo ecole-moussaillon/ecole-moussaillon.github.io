@@ -1,6 +1,7 @@
-Nouveautés de la version 2.5
+Nouveautés de la version 2.6
 
-• Rangs d’île plus clairs : chaque île commence au rang bronze et passe au rang argent dès que le boss est battu, sans avoir besoin de 3 étoiles partout. Battre le boss de la route argent donne le rang or.
-• De nouveaux fanions bronze, argent et or, plus beaux, sur la carte et dans les îles.
-• Une vraie pluie animée pendant les combats de boss.
-• Dans l’espace parents, un bouton pour noter Moussaillon sur l’App Store : votre avis aide d’autres parents à le trouver.
+• Une seizième île : la Baie des Défis ! Résolution de problèmes du CP au CM2, avec des schémas qui expliquent le raisonnement, et un nouveau boss, le Morse Savant.
+• « Pi t'explique » : dix mini-leçons animées, racontées par Pi, accessibles depuis chaque île et après une erreur.
+• Les seize boss parlent désormais, chacun avec sa propre voix — et Pi la mascotte a trouvé la sienne.
+• Une flotte de sept navires, chacun avec son caractère, du petit Rafiot à l'Étoile des Mers.
+• La carte prend vie : vagues et écume autour des îles, sillage du navire, mouettes, cinématiques (fanion hissé, carte au trésor assemblée) et une côte qui s'enfonce dans la jungle au trésor.
