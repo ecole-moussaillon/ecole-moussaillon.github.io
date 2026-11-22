@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Prompts — nuages de la carte</title>
+<title>Prompts — traînées de brume de la carte</title>
 <style>
 body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
 main{max-width:860px;margin:0 auto}
@@ -22,29 +22,30 @@ ul{margin:6px 0;padding-left:20px}
 </head>
 <body>
 <main>
-<h1>Nuages de la carte — brume et orages</h1>
-<p class="sub">Remplacent <code>fx-fog-a.webp</code> / <code>fx-fog-b.webp</code>, utilisés pour la brume des mers inexplorées ET (assombris par le jeu) comme nuages d’orage des îles verrouillées. Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image.</p>
+<h1>Traînées de brume de la carte</h1>
+<p class="sub">Remplacent <code>fx-fog-a/b/c.webp</code>. Objectif : de la <b>profondeur</b> — des nappes de brume qui FILENT au-dessus de la mer, pas des nuages posés. Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image.</p>
 
-<div class="note"><b>Réglages</b>
+<div class="note"><b>Ce qui n’allait pas et ce qu’on vise</b>
 <ul>
-<li>Joindre la capture de la carte comme référence de palette et d’échelle.</li>
-<li><b>La transparence est tout l’enjeu</b> : bords très progressifs, aucune frange dure, aucun halo — le nuage doit se fondre dans n’importe quelle mer. Vérifier l’alpha sur fond sombre ET clair avant de poser.</li>
-<li>Vue du DESSUS (zénithale), comme la carte — pas un nuage vu de profil.</li>
-<li>Trois variantes pour casser la répétition ; le jeu les assombrit lui-même pour les orages (filtre brightness/saturate), donc les générer claires.</li>
-<li>Conversion : <code>cwebp -q 82 entree.png -o assets/fx-fog-a.webp</code> (et -b, -c). Si on garde trois fichiers, je brancherai fx-fog-c dans la rotation.</li>
+<li>Les cumulus dodus lisaient comme des objets POSÉS sur les îles, vus de côté. On vise l’inverse : des <b>voiles plats, très étirés</b>, comme un banc de brume survolé en avion.</li>
+<li>Le mot-clé : des <b>stries internes parallèles au sens du vent</b> — c’est elles qui donnent l’impression que la nappe file, même immobile.</li>
+<li>Très transparent partout : même au cœur, on doit deviner la mer (ou l’île) au travers. Aucune zone opaque.</li>
+<li>Bords entièrement fondus, vérifier l’alpha sur fond sombre ET clair. Vue strictement zénithale.</li>
+<li>Générer clair : le jeu assombrit lui-même pour les orages (filtre brightness/saturate).</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/fx-fog-a.webp</code> (et -b, -c). À la pose : dérive nettement plus rapide, et 2–3 nappes superposées à des vitesses différentes sur les îles verrouillées pour créer la parallaxe.</li>
 </ul></div>
 
-<div class="card"><h3><code>fx-fog-a.webp</code> — grand banc de brume <button class="copy">Copier EN</button></h3>
-<p>Élément de jeu pour enfants, style livre d’images peint à la main. UN BANC DE NUAGES vu du DESSUS (vue zénithale, comme une carte), étiré horizontalement : volutes douces et cotonneuses, blanc cassé légèrement teinté d’ivoire, plus dense au cœur et de plus en plus vaporeux vers les bords. BORDS ENTIÈREMENT FONDUS : la transparence augmente progressivement jusqu’à disparaître, sans aucun contour net, sans frange, sans halo. Touches picturales douces, lumière diffuse sans ombre marquée. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1024 × 640, le nuage occupe le centre avec de larges marges transparentes.</p>
-<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A CLOUD BANK seen from DIRECTLY ABOVE (zenithal view, like on a map), stretched horizontally: soft cottony swirls, off-white slightly tinted ivory, denser at the core and increasingly vaporous toward the edges. FULLY FEATHERED EDGES: transparency increases gradually until it vanishes, with no hard outline, no fringe, no halo. Soft painterly strokes, diffuse light with no harsh shadow. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1024x640, the cloud centered with wide transparent margins.</pre></div>
+<div class="card"><h3><code>fx-fog-a.webp</code> — grande nappe étirée par le vent <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main. UNE NAPPE DE BRUME vue STRICTEMENT DU DESSUS (vue zénithale, comme une photo aérienne de brouillard au-dessus de la mer), TRÈS ÉTIRÉE HORIZONTALEMENT comme tirée par le vent : une bande plate et fine, traversée de longues stries et de filaments parallèles au sens de l’étirement, qui donnent une impression de mouvement et de vitesse. SURTOUT PAS un cumulus dodu ni un nuage en volume : un voile plat, vaporeux, presque un trait de fumée étalé. TRÈS TRANSPARENT : même au centre, la nappe reste translucide, on devine le fond au travers ; les bords se dissolvent en filaments de plus en plus ténus. BORDS ENTIÈREMENT FONDUS : la transparence augmente progressivement jusqu’à disparaître, sans contour net, sans frange, sans halo. Blanc cassé légèrement ivoire, lumière diffuse, aucune ombre. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1536 × 512, la nappe traverse le cadre en largeur avec de larges marges transparentes en haut et en bas.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A SHEET OF MIST seen STRICTLY FROM ABOVE (zenithal view, like an aerial photo of fog over the sea), STRONGLY STRETCHED HORIZONTALLY as if pulled by the wind: a flat thin band crossed by long streaks and filaments parallel to the direction of stretch, giving an impression of motion and speed. ABSOLUTELY NOT a puffy cumulus or a volumetric cloud: a flat vaporous veil, almost a smeared trail of smoke. VERY TRANSPARENT: even at its core the sheet stays translucent, the background shows through; the edges dissolve into ever-thinner filaments. FULLY FEATHERED EDGES: transparency increases gradually until it vanishes, with no hard outline, no fringe, no halo. Off-white slightly ivory, diffuse light, no shadow. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1536x512, the sheet crossing the frame widthwise with wide transparent margins top and bottom.</pre></div>
 
-<div class="card"><h3><code>fx-fog-b.webp</code> — nuage rond et dodu <button class="copy">Copier EN</button></h3>
-<p>Même style et mêmes contraintes que le banc de brume (vue zénithale, bords entièrement fondus, fond transparent), mais UN NUAGE PLUS ROND ET DODU, aux volutes bombées comme un cumulus vu d’avion, avec deux ou trois petites volutes détachées autour. Blanc cassé ivoire, cœur dense, pourtour vaporeux. Toile 1024 × 768.</p>
-<pre class="prompt-en" hidden>Same style and constraints as the cloud bank (zenithal view, fully feathered edges, transparent background), but A ROUNDER, PUFFIER CLOUD, with billowing swirls like a cumulus seen from a plane, and two or three small detached wisps around it. Ivory off-white, dense core, vaporous rim. Canvas 1024x768.</pre></div>
+<div class="card"><h3><code>fx-fog-b.webp</code> — voile large et diffus <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (vue strictement zénithale, voile plat SANS volume, très transparent, bords entièrement fondus, fond transparent), mais UN VOILE PLUS LARGE ET PLUS DIFFUS, comme un banc de brume qui s’effiloche en dérivant : plusieurs langues de brume parallèles, de longueurs inégales, séparées par des trouées où le fond apparaît, toutes orientées dans le même sens du vent. Toujours strié, toujours translucide, jamais compact. Toile 1280 × 768.</p>
+<pre class="prompt-en" hidden>Same style and constraints (strictly zenithal view, flat veil with NO volume, very transparent, fully feathered edges, transparent background), but A WIDER, MORE DIFFUSE VEIL, like a fog bank fraying as it drifts: several parallel tongues of mist of unequal lengths, separated by gaps where the background shows through, all aligned with the same wind direction. Still streaked, still translucent, never compact. Canvas 1280x768.</pre></div>
 
-<div class="card"><h3><code>fx-fog-c.webp</code> — traînée effilochée <button class="copy">Copier EN</button></h3>
-<p>Même style et mêmes contraintes (vue zénithale, bords entièrement fondus, fond transparent), mais UNE LONGUE TRAÎNÉE DE BRUME EFFILOCHÉE, fine et étirée en diagonale, comme un voile qui se déchire en trois ou quatre filaments vaporeux. Très légère, plus transparente que les deux autres. Toile 1280 × 512.</p>
-<pre class="prompt-en" hidden>Same style and constraints (zenithal view, fully feathered edges, transparent background), but A LONG FRAYED MIST STREAK, thin and stretched diagonally, like a veil tearing into three or four vaporous filaments. Very light, more transparent than the other two. Canvas 1280x512.</pre></div>
+<div class="card"><h3><code>fx-fog-c.webp</code> — filament rapide <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (vue strictement zénithale, voile plat SANS volume, bords entièrement fondus, fond transparent), mais UN FILAMENT UNIQUE, FIN ET RAPIDE : une seule traînée très effilée, légèrement sinueuse, qui s’amincit aux deux bouts comme une mèche de fumée étirée à grande vitesse. La plus légère et la plus transparente des trois. Toile 1536 × 384.</p>
+<pre class="prompt-en" hidden>Same style and constraints (strictly zenithal view, flat veil with NO volume, fully feathered edges, transparent background), but A SINGLE THIN FAST FILAMENT: one very tapered, slightly sinuous streak that thins out at both ends like a wisp of smoke stretched at high speed. The lightest and most transparent of the three. Canvas 1536x384.</pre></div>
 
 <script>
 document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
