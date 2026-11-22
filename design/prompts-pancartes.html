@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — pancartes de bois</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Pancartes de bois — fonds des titres de la carte</h1>
+<p class="sub">Deux planches de bois peintes, posées derrière les titres d’îles et la pastille de niveau (le texte reste du vrai texte par-dessus). En attendant, un effet bois en CSS tient le rôle.</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre comme référence de style : <code>assets/isle-canons.webp</code> (bois et palette du jeu) et la capture de la carte pour l’échelle.</li>
+<li><b>Contrainte capitale</b> : les titres ont des longueurs très différentes (« Mine aux Blocs » → « Jungle des Créatures »). La planche doit donc avoir des <b>extrémités décoratives</b> (bords irréguliers, clous) et un <b>centre parfaitement régulier et étirable</b> : je la découperai en trois (gauche / centre répété / droite, border-image CSS). Pas de nœud ni d’ombre marquée dans le tiers central.</li>
+<li>Fond entièrement transparent, conversion <code>cwebp -q 82 entree.png -o assets/&lt;nom&gt;.webp</code>.</li>
+</ul></div>
+
+<div class="card"><h3><code>pancarte-titre.webp</code> — la grande planche des titres <button class="copy">Copier EN</button></h3>
+<p>Élément d’interface de jeu pour enfants, style livre d’images peint à la main, même palette chaude que la référence jointe. Une PLANCHE DE BOIS horizontale de pirate, vue bien de face : bois brun chaud patiné par le sel, veines discrètes, un clou forgé à chaque extrémité, bords latéraux légèrement irréguliers et fendillés, fine tranche visible en bas donnant un peu d’épaisseur. Le TIERS CENTRAL est parfaitement régulier et uniforme (pas de nœud, pas de tache, pas de variation de lumière) pour pouvoir être étiré en largeur. Aucune corde, aucun poteau, aucun texte, aucune gravure. Lumière dorée douce et uniforme. Sujet isolé sur fond entièrement transparent, sans filigrane. Toile 1024 × 256, la planche occupe presque toute la largeur.</p>
+<pre class="prompt-en" hidden>Children's game UI asset, hand-painted storybook style, same warm palette as the attached reference. A horizontal pirate WOODEN PLANK SIGN, seen flat and straight on: warm brown salt-weathered wood, subtle grain, one forged nail at each end, slightly irregular cracked side edges, a thin bottom edge giving a little thickness. The CENTRAL THIRD is perfectly regular and uniform (no knot, no stain, no lighting variation) so it can be stretched horizontally. No rope, no post, no text, no engraving. Soft, even golden light. Isolated subject on a fully transparent background, no watermark. Canvas 1024x256, the plank filling almost the full width.</pre></div>
+
+<div class="card"><h3><code>pancarte-niveau.webp</code> — la petite planche du niveau <button class="copy">Copier EN</button></h3>
+<p>Élément d’interface de jeu pour enfants, style livre d’images peint à la main, même palette chaude que la référence jointe. Une PETITE PLANCHE DE BOIS horizontale assortie à la grande pancarte : plus fine et plus simple, bois brun un peu plus sombre, veines discrètes, petits bords irréguliers, un clou à chaque bout. Le TIERS CENTRAL parfaitement régulier et uniforme (étirable en largeur). Aucune corde, aucun poteau, aucun texte. Lumière dorée douce et uniforme. Sujet isolé sur fond entièrement transparent, sans filigrane. Toile 1024 × 192, la planche occupe presque toute la largeur.</p>
+<pre class="prompt-en" hidden>Children's game UI asset, hand-painted storybook style, same warm palette as the attached reference. A SMALL horizontal WOODEN PLANK matching the larger sign: thinner and simpler, slightly darker brown wood, subtle grain, small irregular edges, one nail at each end. The CENTRAL THIRD perfectly regular and uniform (stretchable horizontally). No rope, no post, no text. Soft, even golden light. Isolated subject on a fully transparent background, no watermark. Canvas 1024x192, the plank filling almost the full width.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
