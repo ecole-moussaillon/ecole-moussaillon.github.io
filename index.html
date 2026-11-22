@@ -137,10 +137,12 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ripple .tr{position:absolute;left:50%;bottom:4px;width:15px;height:62px;border-radius:50%;background:linear-gradient(180deg,rgba(245,252,249,.5),rgba(245,252,249,0) 85%);filter:blur(1.2px);animation:trailf 2.6s linear infinite}
 .ripple .tr.t2{animation-delay:-1.3s}
 @keyframes trailf{0%{transform:translate(-50%,0) scaleY(.6);opacity:.55}100%{transform:translate(-50%,26px) scaleY(1.15);opacity:0}}
-/* Écume de rivage : deux anneaux doux qui naissent au bord de l'île et s'évanouissent vers le large */
-.isle::before,.isle::after{content:"";position:absolute;left:50%;top:55%;width:100%;height:62%;transform:translate(-50%,-50%) scale(.92);border-radius:50%;border:2px solid rgba(240,250,246,.55);filter:blur(1.1px);opacity:0;animation:shore 8s ease-out infinite;pointer-events:none}
-.isle::after{animation-delay:-4s}
-@keyframes shore{0%{transform:translate(-50%,-50%) scale(.88);opacity:0}20%{opacity:.5}100%{transform:translate(-50%,-50%) scale(1.12);opacity:0}}
+/* Écume de rivage : la silhouette de l'île (son image sert de masque, --limg) un peu plus large que la terre —
+   seule la collerette dépasse, une vague épaisse qui ARRIVE vers la côte et s'y dissout. Deux vagues décalées. */
+.isle::before,.isle::after{content:"";position:absolute;left:50%;top:44%;width:190px;height:190px;z-index:1;transform:translate(-50%,-50%) scale(1.16);background:rgba(242,251,247,.85);-webkit-mask:var(--limg) center/contain no-repeat;mask:var(--limg) center/contain no-repeat;filter:blur(1.4px);opacity:0;animation:shore 7s ease-in infinite;pointer-events:none}
+.isle::after{animation-delay:-3.5s}
+@keyframes shore{0%{transform:translate(-50%,-50%) scale(1.17);opacity:0}30%{opacity:.55}85%{opacity:.25}100%{transform:translate(-50%,-50%) scale(1.03);opacity:0}}
+.isle .land{z-index:2}.isle .lbl{z-index:3}
 .isle.locked::before,.isle.soon::before,.isle.locked::after,.isle.soon::after{content:none}
 .coastport::before,.coastport::after{content:"";position:absolute;left:26%;top:12%;width:10px;height:10px;border-radius:50%;background:rgba(235,230,215,.5);animation:smoke 5s linear infinite;pointer-events:none}
 .coastport::after{left:28.5%;animation-delay:-2.5s}
@@ -5785,7 +5787,7 @@ function renderMap() {
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
     if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="col"><span class="ti">${i.n}</span><span class="lv">Bientôt</span></span></b></span></button>`;
-    return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : rk(s) === 2 ? ', île maîtrisée' : `, rang ${IRANK[rk(s)].n}, niveau ${Math.min(s.node, NODES)} sur ${NODES}`}">
+    return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px;--limg:url(${IMG(i.img)})" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : rk(s) === 2 ? ', île maîtrisée' : `, rang ${IRANK[rk(s)].n}, niveau ${Math.min(s.node, NODES)} sur ${NODES}`}">
       <img class="lag" src="${IMG(i.lag)}" alt=""><img class="land" src="${IMG(i.img)}" alt="">
       <span class="lbl"><b>${!lk ? penArt(rk(s)) : ''}<span class="col"><span class="ti">${i.n}</span><span class="lv">${lk ? `${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner` : rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span></span></b></span></button>`;
   }).join('');
@@ -6978,6 +6980,8 @@ function seaInit() {
     cv.className = 'sea-gl'; cv.setAttribute('aria-hidden', 'true'); Object.assign(SEA, { cv, gl, t0: performance.now(), ready: false });
     cv.addEventListener('webglcontextlost', e => { e.preventDefault(); seaOff(); });
     document.addEventListener('visibilitychange', () => { if (!document.hidden) seaKick(); });
+    // Si l'enfant (ré)active les animations du système pendant que le jeu tourne, la mer repart sans recharger
+    try { const mq = matchMedia('(prefers-reduced-motion: reduce)'); const re = () => { SEA.drawn = false; seaKick(); }; mq.addEventListener ? mq.addEventListener('change', re) : mq.addListener && mq.addListener(re); } catch (e) {}
     const img = new Image(); img.crossOrigin = 'anonymous';
     img.onload = () => { try { gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
       [[gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE], [gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR]].forEach(([k, v]) => gl.texParameteri(gl.TEXTURE_2D, k, v));
