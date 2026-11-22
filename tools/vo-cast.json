@@ -73,5 +73,10 @@
     "voice_id": "fgDJOgmENIR82PueQrVs",
     "name": "Minerva Nightshade",
     "fam": "melodieuse"
+  },
+  "enigmes": {
+    "voice_id": "GFj5Qf6cNQ3Lgp8VKBwc",
+    "name": "Morse Savant (choisie par Pierre)",
+    "fam": "savant"
   }
 }

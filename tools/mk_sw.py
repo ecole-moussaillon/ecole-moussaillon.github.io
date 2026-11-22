@@ -4,8 +4,9 @@ files=['./', './index.html', './aide.html', './confidentialite.html', './support
 files += ['./assets/' + f for f in sorted(os.listdir(root + '/assets')) if f.endswith('.webp')]
 files += ['./assets/fonts/' + f for f in sorted(os.listdir(root + '/assets/fonts')) if f.endswith('.woff2')]
 aud = sorted(os.listdir(root + '/assets/audio'))
-# L'histoire racontée (vo-saga-*) est chargée à la demande, puis gardée après la première écoute, comme les musiques
-files += ['./assets/audio/' + f for f in aud if (f.startswith(('vo-', 'sfx-')) and not f.startswith(('vo-saga-', 'vo-b-'))) or f == 'manifest.json']
+# L'histoire racontée (vo-saga-*), les boss (vo-b-*) et les leçons (vo-l-*) sont chargés à la demande,
+# puis gardés après la première écoute, comme les musiques
+files += ['./assets/audio/' + f for f in aud if (f.startswith(('vo-', 'sfx-')) and not f.startswith(('vo-saga-', 'vo-b-', 'vo-l-'))) or f == 'manifest.json']
 sw = f"""// Mode hors connexion : met en cache le jeu, les images et les voix ; les musiques et l’histoire racontée sont gardées après leur première écoute.
 const V = 'archipel-{ver}';
 const FILES = {json.dumps(files)};
