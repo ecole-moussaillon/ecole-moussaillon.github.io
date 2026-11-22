@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — récifs de la carte</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Récifs de la carte</h1>
+<p class="sub">Des rochers qui dépassent de la surface, posés çà et là sur la carte, surtout sur les côtés. Le prompt s'affiche en français ; « Copier EN » copie l'anglais à coller dans GPT Image.</p>
+
+<div class="note"><b>Réglages communs</b>
+<ul>
+<li>Joindre une capture de la carte (une île visible) comme référence de style, de palette et d'angle de vue.</li>
+<li>Même angle que les îles : vue de dessus légèrement inclinée (trois quarts plongée), PAS une vue de profil au ras de l'eau.</li>
+<li><b>Collerette d'écume blanche</b> peinte à la ligne de flottaison : c'est elle qui « pose » le rocher sur la mer.</li>
+<li>Aucune mer autour : l'écume s'arrête net et le fond est entièrement transparent, sans frange ni halo.</li>
+<li>Roche volcanique sombre mouillée, reflets chauds côté soleil, quelques touches de végétation ou de coquillages au sommet pour la couleur.</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/deco-reef-a.webp</code> (et -b, -c). Je les pose ensuite sur les bords de la carte, sous les cartouches.</li>
+</ul></div>
+
+<div class="card"><h3><code>deco-reef-a.webp</code> — groupe de trois rochers <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d'images peint à la main, même palette et même angle que l'île de référence jointe (vue de dessus légèrement inclinée). UN PETIT GROUPE DE TROIS ROCHERS déchiquetés qui dépassent de la surface de l'océan : roche volcanique sombre et mouillée, luisante, un grand rocher pointu et deux plus petits serrés autour, avec une collerette d'écume blanche peinte à leur ligne de flottaison et deux ou trois éclaboussures. Une touffe d'herbe marine et deux coquillages accrochés au grand rocher. AUCUNE mer autour : l'écume s'arrête net, le reste est entièrement transparent. Sujet isolé sur fond transparent, sans texte, sans filigrane. Toile 640 × 512, le groupe au centre avec des marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style, same palette and same angle as the attached reference island (slightly tilted top-down view). A SMALL GROUP OF THREE JAGGED ROCKS breaking the ocean surface: dark wet volcanic rock, glistening, one tall pointed rock and two smaller ones huddled around it, with a collar of white painted foam at their waterline and two or three splashes. A tuft of sea grass and two shells clinging to the tall rock. NO sea around them: the foam stops cleanly, everything else is fully transparent. Isolated subject on a transparent background, no text, no watermark. Canvas 640x512, the group centered with transparent margins.</pre></div>
+
+<div class="card"><h3><code>deco-reef-b.webp</code> — rocher isolé à la mouette <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (vue de dessus légèrement inclinée, roche sombre mouillée, collerette d'écume à la flottaison, fond transparent, pas de mer autour), mais UN SEUL ROCHER plus massif, au sommet aplati, avec UNE MOUETTE blanche posée dessus et une trace de guano. Toile 512 × 512.</p>
+<pre class="prompt-en" hidden>Same style and constraints (slightly tilted top-down view, dark wet rock, foam collar at the waterline, transparent background, no sea around), but A SINGLE more massive ROCK with a flattened top, with ONE white SEAGULL perched on it and a streak of guano. Canvas 512x512.</pre></div>
+
+<div class="card"><h3><code>deco-reef-c.webp</code> — récif affleurant <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (vue de dessus légèrement inclinée, fond transparent, pas de mer autour), mais UN RÉCIF PLAT QUI AFFLEURE : une arête rocheuse basse et allongée à peine sortie de l'eau, sombre et luisante, presque entièrement cernée d'écume, avec une petite vague qui se brise dessus en éclaboussures blanches. Toile 768 × 384.</p>
+<pre class="prompt-en" hidden>Same style and constraints (slightly tilted top-down view, transparent background, no sea around), but A FLAT AWASH REEF: a low elongated rocky ridge barely breaking the surface, dark and glistening, almost entirely ringed with foam, with a small wave breaking over it in white splashes. Canvas 768x384.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
