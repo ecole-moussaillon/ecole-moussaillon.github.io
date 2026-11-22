@@ -659,6 +659,8 @@ textarea.fld{min-height:76px}
 .coast{position:absolute;left:0;width:100%;pointer-events:none;background:linear-gradient(transparent calc(var(--ch) * 1.3),#7a6338 calc(var(--ch) * 1.3))}
 .coast img{position:absolute;left:0;top:0;width:100%;height:var(--ch);display:block}
 .coast img.flip{top:var(--ch);transform:scaleY(-1)}
+/* La copie miroir ne sert que de matière : un voile de terre la couvre dès la lisière, sinon le port apparaît tête en bas */
+.coast::after{content:"";position:absolute;left:0;right:0;top:var(--ch);bottom:0;background:linear-gradient(180deg,rgba(122,99,56,.55),#7a6338 calc(var(--ch) * .22))}
 .coastport{position:absolute;display:block;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .coastport .lbl{position:absolute;left:-60%;top:38%;transform:translate(-50%,-50%);white-space:nowrap} /* sur l'eau, à gauche de la jetée : loin de l'étiquette de la première île */
 .coastport .lbl b{display:block;font-size:16px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.55)}
