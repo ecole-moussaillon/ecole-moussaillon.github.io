@@ -1025,11 +1025,12 @@ button.medal{display:block;padding:0;cursor:pointer}
 .brass-btn .lbl{position:relative;z-index:1}
 .brass-btn .lbl b{font:400 27px/1 var(--f-p);letter-spacing:.02em;text-shadow:0 1px 0 rgba(255,244,210,.75)}
 .brass-btn .lbl small{font:600 12.5px var(--f-u);opacity:.78;margin-top:3px}
-/* Bouton Feu ! : verre sombre liseré d'or, « Feu ! » en lettres d'or — l'habillage des titres d'îles */
-.key.fire{position:relative;isolation:isolate;background:rgba(8,26,36,.78);box-shadow:0 4px 0 #041016,inset 0 0 0 1.5px rgba(243,213,140,.5);font:400 27px/1 var(--f-p);letter-spacing:.02em}
-.key.fire .ti{background:linear-gradient(180deg,#ffeebf 15%,#eecb6c 55%,#c99345 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
+/* Bouton Feu ! : le rouge d'origine, sans picto, texte centré */
+.key.fire{position:relative;overflow:hidden;isolation:isolate;background:radial-gradient(130% 110% at 50% 0%,#f4895e 0%,#cf4a2c 44%,#972a17 100%);color:#fff5e4;font:400 24px/1 var(--f-p);letter-spacing:.02em;text-shadow:0 2px 0 rgba(90,16,6,.55);
+  box-shadow:0 4px 0 #561307,0 8px 16px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,222,192,.75),inset 0 0 0 1.5px rgba(255,205,140,.45)}
+.key.fire::before{content:"";position:absolute;inset:4px;border-radius:12px;border:1px solid rgba(255,214,160,.32);pointer-events:none}
 .key.fire.ready{animation:fready 1.1s ease-in-out infinite}
-@keyframes fready{50%{box-shadow:0 4px 0 #041016,inset 0 0 0 1.5px rgba(255,205,140,.85),0 0 18px 3px rgba(255,180,80,.55)}}
+@keyframes fready{50%{box-shadow:0 4px 0 #561307,0 8px 16px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,222,192,.75),inset 0 0 0 1.5px rgba(255,205,140,.6),0 0 20px 3px rgba(255,140,60,.7)}}
 .game{isolation:isolate}
 .game::before{content:"";position:absolute;inset:-60px;z-index:-1;background:var(--gbg,none) 50% 100%/cover no-repeat;filter:blur(24px) brightness(.5) saturate(1.25)}
 .g-bottom{background:radial-gradient(130% 70% at 50% 100%,rgba(3,12,18,.55),transparent 70%),linear-gradient(180deg,rgba(5,18,26,0),rgba(5,18,26,.28) 46px,rgba(5,18,26,.45))}
