@@ -141,9 +141,9 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
    seule la collerette dépasse. Un second masque en dégradé la limite à la moitié basse (le rivage, jamais les
    palmiers). La vague part de loin, s'éclaircit en approchant, puis se dissout sur la côte. Deux vagues décalées. */
 .isle::before,.isle::after{content:"";position:absolute;left:50%;top:44%;width:190px;height:190px;z-index:1;transform:translate(-50%,-50%) scale(1.2);background:rgba(244,252,248,.9);
-  -webkit-mask:var(--limg) center/contain no-repeat,linear-gradient(180deg,transparent 34%,#000 58%);-webkit-mask-composite:source-in;
-  mask:var(--limg) center/contain no-repeat,linear-gradient(180deg,transparent 34%,#000 58%);mask-composite:intersect;
-  filter:blur(2.4px);opacity:0;animation:shore 7s linear infinite;pointer-events:none}
+  -webkit-mask:var(--limg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 74%);-webkit-mask-composite:source-in;
+  mask:var(--limg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 74%);mask-composite:intersect;
+  filter:blur(3.6px);opacity:0;animation:shore 7s linear infinite;pointer-events:none}
 .isle::after{animation-delay:-3.5s}
 @keyframes shore{0%{transform:translate(-50%,-50%) scale(1.26);opacity:0}25%{opacity:.16}72%{opacity:.55}100%{transform:translate(-50%,-50%) scale(1.01);opacity:0}}
 .isle .land{z-index:2}.isle .lbl{z-index:3}
