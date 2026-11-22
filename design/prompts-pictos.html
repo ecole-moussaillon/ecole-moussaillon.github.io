@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — pictos du tutoriel</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Pictos à repeindre — main du tutoriel et canon du « Feu ! »</h1>
+<p class="sub">Deux SVG plats à remplacer par des images peintes : la main qui tapote les boutons pendant « Comment jouer » (~46 px à l’écran) et le canon du bouton « Feu ! » des boss (~30 px). Le code garde les SVG en secours tant que les fichiers manquent.</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre comme référence de style : <code>assets/guide-capitaine.webp</code> (le personnage qui parle dans la même bulle) pour la peau et la touche peinte.</li>
+<li>Fond entièrement transparent. La main doit rester lisible en tout petit (46 px) : formes simples, contour net, peu de détails.</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/main-tuto.webp</code>. Dès que le fichier est posé, je remplace le SVG (avec repli sur l’ancien dessin si l’image manque).</li>
+</ul></div>
+
+<div class="card"><h3><code>main-tuto.webp</code> — la main qui montre où toucher <button class="copy">Copier EN</button></h3>
+<p>Élément d’interface de jeu pour enfants, style livre d’images peint à la main, même peau et même touche picturale que le personnage de référence joint. UNE PETITE MAIN D’ENFANT vue de dos, index tendu vers le haut-gauche comme pour toucher un bouton, les autres doigts repliés, avec une manchette de chemise de mousse (toile écrue, un liseré bleu marine). Formes rondes et simples, SILHOUETTE très lisible même en tout petit : contour brun foncé net, peu de plis, pas de texture fine. Légère ombre douce sous la main. Lumière dorée chaude. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile carrée 512 × 512, la main occupe presque tout le cadre, index pointant vers le coin haut-gauche.</p>
+<pre class="prompt-en" hidden>Children's game UI asset, hand-painted storybook style, same skin tone and painterly touch as the attached reference character. A SMALL CHILD'S HAND seen from the back, index finger extended toward the upper left as if about to tap a button, other fingers folded, with a little sailor shirt cuff (ecru canvas, one navy-blue trim). Round, simple shapes, VERY readable silhouette even at tiny size: clean dark-brown outline, few creases, no fine texture. Soft subtle shadow under the hand. Warm golden light. Isolated subject on a fully transparent background, no text, no watermark. Square canvas 512x512, the hand filling most of the frame, index finger pointing to the upper-left corner.</pre></div>
+
+<div class="card"><h3><code>canon-feu.webp</code> — le canon du bouton « Feu ! » <button class="copy">Copier EN</button></h3>
+<p>Élément d’interface de jeu pour enfants, style livre d’images peint à la main, même palette chaude que la référence jointe. UN PETIT CANON DE PIRATE vu de profil, gueule tournée VERS LA GAUCHE, sur son affût de bois à une roue ronde, avec une mèche qui dépasse à l’arrière, SANS flamme ni étincelle (l’étincelle est animée par le jeu, par-dessus). Bronze chaud aux reflets dorés, bois brun. Formes rondes et simples, SILHOUETTE très lisible en tout petit (30 px) : contour brun foncé net, peu de détails. Lumière dorée. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 512 × 384, le canon occupe presque tout le cadre.</p>
+<pre class="prompt-en" hidden>Children's game UI asset, hand-painted storybook style, same warm palette as the attached reference. A SMALL PIRATE CANNON seen in profile, muzzle pointing LEFT, on its wooden carriage with one round wheel, a fuse sticking out at the back, with NO flame or spark (the game animates the spark on top). Warm bronze with golden highlights, brown wood. Round simple shapes, VERY readable silhouette at tiny size (30 px): clean dark-brown outline, few details. Golden light. Isolated subject on a fully transparent background, no text, no watermark. Canvas 512x384, the cannon filling most of the frame.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
