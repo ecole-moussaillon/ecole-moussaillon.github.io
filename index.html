@@ -121,7 +121,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .fogpatch{position:absolute;width:360px;transform:translate(-50%,-50%);pointer-events:none;opacity:.8;animation:fogdrift 52s ease-in-out infinite alternate}
 @keyframes fogdrift{to{transform:translate(calc(-50% + 46px),calc(-50% + 6px)) scale(1.05)}}
 /* Le navire passe DEVANT les brumes et les nuages d'orage (z-index 2) : il reste net en toutes eaux */
-.ship-token{position:absolute;width:86px;z-index:3;transform:translate(-50%,-50%) rotate(-30deg);pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
+.ship-token{position:absolute;width:86px;z-index:3;transform:translate(-50%,-50%) rotate(var(--srot,-30deg));pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
 /* Carte vivante : mouettes, ronds d'eau du navire, écume des lagons, fumée du port — transform et opacity seulement,
    coupé d'office par la règle globale prefers-reduced-motion */
 .gull{position:absolute;width:30px;height:18px;pointer-events:none;z-index:4;opacity:0;animation:gullfly var(--gd,46s) linear infinite;animation-delay:var(--gdel,0s);will-change:transform}
@@ -133,8 +133,8 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ripple{position:absolute;width:104px;height:104px;margin:-52px 0 0 -52px;pointer-events:none;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
 .ripple i{position:absolute;left:50%;top:50%;width:52px;height:112px;margin:-56px 0 0 -26px;border:2px solid rgba(240,248,245,.4);border-radius:50%;animation:ripl 4.5s linear infinite;opacity:0}
 .ripple i+i{animation-delay:-2.25s}
-@keyframes ripl{0%{transform:rotate(-30deg) scale(.4);opacity:0}18%{opacity:.5}100%{transform:rotate(-30deg) scale(1.15);opacity:0}}
-.ripple .wk{position:absolute;left:50%;top:50%;width:54px;height:150px;margin:-75px 0 0 -27px;transform:rotate(-30deg)}
+@keyframes ripl{0%{transform:rotate(var(--srot,-30deg)) scale(.4);opacity:0}18%{opacity:.5}100%{transform:rotate(var(--srot,-30deg)) scale(1.15);opacity:0}}
+.ripple .wk{position:absolute;left:50%;top:50%;width:54px;height:150px;margin:-75px 0 0 -27px;transform:rotate(var(--srot,-30deg))}
 .ripple .bow{position:absolute;left:50%;top:18px;width:30px;height:12px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(248,253,251,.7),rgba(248,253,251,0) 72%);filter:blur(.6px);animation:bowf 1.7s ease-in-out infinite}
 @keyframes bowf{50%{opacity:.4;transform:translateX(-50%) scaleX(.82)}}
 .ripple .tr{position:absolute;left:50%;bottom:4px;width:15px;height:62px;border-radius:50%;background:linear-gradient(180deg,rgba(245,252,249,.5),rgba(245,252,249,0) 85%);filter:blur(1.2px);animation:trailf 2.6s linear infinite}
@@ -164,7 +164,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .coastport::before,.coastport::after{content:"";position:absolute;left:26%;top:12%;width:10px;height:10px;border-radius:50%;background:rgba(235,230,215,.5);animation:smoke 5s linear infinite;pointer-events:none}
 .coastport::after{left:28.5%;animation-delay:-2.5s}
 @keyframes smoke{0%{transform:translateY(0) scale(.5);opacity:0}12%{opacity:.55}100%{transform:translateY(-46px) scale(1.7);opacity:0}}
-@keyframes shipbob{50%{transform:translate(-50%,calc(-50% - 4px)) rotate(-26deg)}}
+@keyframes shipbob{50%{transform:translate(-50%,calc(-50% - 4px)) rotate(calc(var(--srot,-30deg) + 4deg))}}
 .seas{position:absolute;left:50%;top:calc(var(--st) + 82px);transform:translateX(-50%);z-index:19;display:flex;gap:4px;padding:4px;border-radius:22px;white-space:nowrap}
 .seas button{height:38px;padding:0 13px 0 6px;border-radius:18px;display:flex;align-items:center;gap:7px;font:600 14px var(--f-u);color:#cfe0df}
 .seas button b{display:grid;place-items:center;min-width:30px;height:26px;padding:0 5px;border-radius:13px;font:800 12px var(--f-u);letter-spacing:.02em;background:rgba(255,255,255,.1);color:#cfe0df}
@@ -1074,7 +1074,7 @@ button.medal{display:block;padding:0;cursor:pointer}
    Même écume animée que les îles, masquée par la silhouette du rocher, sur sa partie basse uniquement. */
 .reef{position:absolute;transform:translate(-50%,-50%);pointer-events:none}
 .reef img{display:block;width:100%;height:100%}
-.reef::after{content:"";position:absolute;inset:0;background:#fbfffd;-webkit-mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);-webkit-mask-composite:source-in;mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);mask-composite:intersect;filter:blur(3px);opacity:0;animation:shore 7s linear infinite;animation-delay:var(--rd,0s)}
+.reef::after{content:"";position:absolute;left:50%;top:50%;width:100%;height:100%;transform:translate(-50%,-50%);background:#fbfffd;-webkit-mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);-webkit-mask-composite:source-in;mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);mask-composite:intersect;filter:blur(3px);opacity:0;animation:shore 7s linear infinite;animation-delay:var(--rd,0s)}
 .reef.m{transform:translate(-50%,-50%) scaleX(-1)}
 .mstorm{position:absolute;width:0;height:0;pointer-events:none;z-index:2}
 .mstorm .fogpatch,.mstorm .bolt{max-width:none}
@@ -1737,7 +1737,7 @@ function applyGrade() {
   const m = ISLES.filter(i => i.sea === 'm' && !i.hide);
   // La première île (en bas) part tout à gauche et plus haut, loin du bourg du port ; la suite zigzague droite/gauche.
   // MAPX agrandit la carte vers le haut pour espacer les îles (pas de 224 px) sans toucher à la côte, décalée d'autant.
-  m.forEach((i, k) => { if (m.length > 7) { i.x = k ? (k % 2 ? 72 : 28) : 22; i.y = k ? (1470 + MAPX) - k * 224 : 1372 + MAPX; } else { i.x = i.x0; i.y = i.y0 + MAPX; } });
+  m.forEach((i, k) => { if (m.length > 7) { i.x = k ? (k % 2 ? 72 : 28) : 25; i.y = k ? (1470 + MAPX) - k * 224 : 1372 + MAPX; } else { i.x = i.x0; i.y = i.y0 + MAPX; } });
   const f = ISLES.filter(i => i.sea === 'f' && !i.hide);
   f.forEach((i, k) => { i.x = k % 2 ? 72 : 28; i.y = f.length > 6 ? (1470 + MAPX) - k * 230 : (1450 + MAPX) - k * 240; });
 }
@@ -5827,6 +5827,11 @@ function renderMap() {
   const CHF = Math.round(CW * 1536 / 1024), MH = CT + CHF;
   const PORT = { x: 62, y: Math.round(CT + CH * .34) }, path = `M${px(PORT).toFixed(0)},${PORT.y} ` + sea.map(i => `L${px(i).toFixed(0)},${i.y}`).join(' ');
   const krak = bossDone(IS('canons'));
+  // Le navire navigue SUR le tracé : au milieu du segment qui mène à l'île courante (depuis le port pour la
+  // première), orienté dans le sens de la marche (le sprite vu de dessus pointe vers le haut).
+  const ci = sea.indexOf(cur), pvp = ci > 0 ? { x: px(sea[ci - 1]), y: sea[ci - 1].y } : { x: px(PORT), y: PORT.y };
+  const shx = Math.round((pvp.x + px(cur)) / 2), shy = Math.round((pvp.y + cur.y) / 2);
+  const srot = Math.round(Math.atan2(px(cur) - pvp.x, pvp.y - cur.y) * 180 / Math.PI);
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
     if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="col"><span class="ti">${i.n}</span><span class="lv">Bientôt</span></span></b></span></button>`;
@@ -5847,8 +5852,8 @@ function renderMap() {
       ${[[93, 300, 'a', 86, 0], [6.5, 710, 'b', 66, 1], [93, 1160, 'c', 118, 0], [6, 1520, 'a', 74, 1], [94, 1830, 'b', 58, 0]].map(([x, y, f, w, m], k) => `<span class="reef${m ? ' m' : ''}" style="left:${W * x / 100}px;top:${y}px;width:${w}px;height:${Math.round(w * { a: .8, b: 1, c: .5 }[f])}px;--rimg:url(${IMG('deco-reef-' + f)});--rd:-${(k * 2.3 % 7).toFixed(1)}s" aria-hidden="true"><img src="${IMG('deco-reef-' + f)}" alt=""></span>`).join('')}
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
-      <div class="ripple" aria-hidden="true" style="left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px;--simg:url(${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')})"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
-      <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')}" alt="Ton navire" style="${shipFx()}left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px">
+      <div class="ripple" aria-hidden="true" style="left:${shx}px;top:${shy}px;--srot:${srot}deg;--simg:url(${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')})"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
+      <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')}" alt="Ton navire" style="${shipFx()}left:${shx}px;top:${shy}px;--srot:${srot}deg">
     </div></div><div class="mapveil t" aria-hidden="true"></div><div class="mapveil b" aria-hidden="true"></div>
     ${hudHTML()}
     <div class="seas glass" role="group" aria-label="Choisir la mer">${Object.entries(SEAS).map(([k, v]) => `<button data-a="sea" data-s="${k}" aria-pressed="${S.sea === k}"><b>${v.ic}</b>${v.n}</button>`).join('')}</div>
