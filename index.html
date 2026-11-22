@@ -854,6 +854,8 @@ button.medal{display:block;padding:0;cursor:pointer}
 .disp,.tlogo .disp,.coastport .lbl b,.lair .lbl,.tide h2,.rlab b,.burst .w,.sheet-err h3,.tabpage h1,.crew-card b,.poster .t1,.poster .nm,.trophy .tt b,.yh,.yard h2,.hud .nm,.shipcap .disp{font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;letter-spacing:.01em}
 .tlogo .disp{font-size:clamp(46px,calc(13 * var(--vw)),74px);line-height:.98}
 .result .head .disp{font-size:33px}.tide h2{font-size:24px}.isle .lbl b{font-size:18px}.hud .nm{font-size:19px}
+/* Titres en capitales : cap de la marée et noms des îles */
+.tide h2,.isle .lbl .ti,.coastport .lbl .ti,.lair .lbl .ti{text-transform:uppercase}
 
 /* ================= Effets visuels ================= */
 #fxc{position:fixed;pointer-events:none;z-index:95}
@@ -5849,10 +5851,7 @@ function renderMap() {
   bindCog();
   const sc = $('#mapScroll');
   const hb = $('.seas').getBoundingClientRect().bottom, tt = $('.tide').getBoundingClientRect().top;
-  // On peut descendre jusqu'au bas de l'image de côte : le défilement gagne la hauteur que couvre le panneau
-  // de la marée. Borné à la fenêtre visible : sur iPhone, la racine déborde de l'écran (zones sûres) et le bas
-  // de l'application est plus bas que l'écran — sans la borne, on défilait trop loin.
-  sc.style.paddingBottom = Math.round(Math.max(0, (Math.min(app.getBoundingClientRect().bottom, innerHeight) - tt) / UIZ) + 10) + 'px';
+  padMap(sc);
   sc.scrollTop = mapScroll != null ? mapScroll : Math.max(0, $('.map', sc).offsetTop + cur.y - (hb + tt) / 2 / UIZ + 10);
   sc.addEventListener('scroll', () => { mapScroll = sc.scrollTop; }, { passive: true });
   if (S.refund) { const r = S.refund; delete S.refund; save(); setTimeout(() => toast(`Les sillages ont quitté le chantier naval : ${fmt(r)} doublons te sont rendus.`), 900); }
@@ -5861,6 +5860,15 @@ function renderMap() {
   else if (S.intro && !S.tuto.gem1 && gems() > 0 && !(S.blds || []).length) { S.tuto.gem1 = 1; save(); setTimeout(() => toast('Une pierre précieuse ! Touche le port d’attache, tout en bas de la carte, pour construire.'), 1600); }
   else if (S.intro && !S.tuto.star1 && starTotal() >= 9 && shipLv() === 0) { S.tuto.star1 = 1; save(); setTimeout(() => toast('Tes étoiles font grandir ton navire : à 60 étoiles, il deviendra un brigantin !'), 1600); }
   setTimeout(offerPlacement, 900);
+}
+// On peut descendre jusqu'au bas de l'image de côte : le défilement gagne la hauteur que couvre le panneau
+// de la marée. Borné à la fenêtre visible : sur iPhone, la racine déborde de l'écran (zones sûres) et le bas
+// de l'application est plus bas que l'écran — sans la borne, on défilait trop loin. Recalculé à chaque
+// redimensionnement (même quand renderMap est sauté : fenêtre modale ouverte, autre onglet), sinon le
+// rembourrage devient faux et on défile sous l'image.
+function padMap(sc) {
+  const tide = $('.tide'); if (!tide) return;
+  sc.style.paddingBottom = Math.round(Math.max(0, (Math.min(app.getBoundingClientRect().bottom, innerHeight) - tide.getBoundingClientRect().top) / UIZ) + 10) + 'px';
 }
 function tideHTML(t) {
   const mini = t.stops.map((id, k) => { const i = isleById(id); return `<span class="${t.done || k < t.i ? 'done' : k === t.i ? 'cur' : ''}" title="${esc(i.notion)}"><img src="${IMG(i.img)}" alt="${esc(i.notion)}"></span>`; }).join('');
@@ -6896,7 +6904,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'Enter') { const v = $('[data-a="validate"]'); if (v && !v.disabled) { e.preventDefault(); v.click(); } }
 });
 window.addEventListener('pagehide', save);
-window.addEventListener('resize', () => { if (!R && tab === 'map' && !$('.parents') && !$('.modal')) renderMap(); });
+window.addEventListener('resize', () => { if (!R && tab === 'map' && !$('.parents') && !$('.modal')) renderMap(); else { const sc = $('#mapScroll'); if (sc) padMap(sc); } });
 
 
 /* ================= Effets visuels ================= */
