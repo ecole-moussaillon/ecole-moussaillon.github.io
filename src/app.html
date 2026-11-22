@@ -5862,7 +5862,7 @@ function renderMap() {
 function tideHTML(t) {
   const mini = t.stops.map((id, k) => { const i = isleById(id); return `<span class="${t.done || k < t.i ? 'done' : k === t.i ? 'cur' : ''}" title="${esc(i.notion)}"><img src="${IMG(i.img)}" alt="${esc(i.notion)}"></span>`; }).join('');
   const nxt = isleById(t.stops[Math.min(t.i, 2)]);
-  const rose = cl => `<img class="rose${cl}" src="${IMG('deco-rose')}" alt="">`;
+  const rose = cl => `<img class="rose${cl}" src="${IMG('deco-compass')}" alt="">`;
   const btn = sessionOver() ? `<button class="brass-btn" disabled>Le navire se repose · à demain</button>`
     : t.done ? `<button class="brass-btn" data-a="free">Choisis une île sur la carte</button>`
     : `<button class="brass-btn" data-a="tide">${rose('')}<span class="lbl">${t.i ? `<b>Continuer</b><small>escale ${t.i + 1} sur 3</small>` : `<b>Jouer</b>`}</span>${rose(' r2')}</button>`;
