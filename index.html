@@ -88,10 +88,14 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .isle .lag{position:absolute;left:50%;top:52%;width:250px;transform:translate(-50%,-50%);opacity:.92;filter:saturate(.9);-webkit-mask:radial-gradient(closest-side,#000 72%,transparent);mask:radial-gradient(closest-side,#000 72%,transparent);animation:lagpulse 6s ease-in-out infinite}
 @keyframes lagpulse{50%{opacity:.75;transform:translate(-50%,-50%) scale(1.03)}}
 .isle .land{position:absolute;left:50%;top:44%;width:190px;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 8px rgba(4,18,26,.45))}
-.isle .lbl{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);text-align:center;white-space:nowrap}
-.isle .lbl b{display:flex;align-items:center;justify-content:center;gap:5px;font-family:var(--f-d);font-variation-settings:'SOFT' 100;font-weight:800;font-size:17px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 16px rgba(0,0,0,.7)}
-/* Le fanion du rang, bien lisible à côté du titre (il déborde vers le haut, posé comme planté) */
-.isle .lbl .pen{width:34px;height:41px;margin:-18px 0 -6px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.75)) drop-shadow(0 0 8px rgba(0,0,0,.45))}
+.isle .lbl{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;white-space:nowrap}
+/* Titres d'îles : lettres d'or sur bandeau de verre sombre liseré d'or — lisible sur toutes les mers.
+   Le dégradé doré est découpé dans le texte seul (span .ti, sinon le clip du parent avale le fanion). */
+.isle .lbl b{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-d);font-variation-settings:'SOFT' 100;font-weight:900;font-size:17px;letter-spacing:.02em;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:12px;padding:4px 13px 5px 9px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+.isle .locked .lbl b{padding-left:13px}
+.lbl .ti{background:linear-gradient(180deg,#ffeebf 15%,#eecb6c 55%,#c99345 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(20,10,2,.55))}
+/* Le fanion du rang, planté sur le bord du bandeau */
+.isle .lbl .pen{width:30px;height:36px;margin:-15px 0 -9px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
 .pen{display:inline-block;width:23px;height:27px;vertical-align:-3px;margin-right:4px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
 .chip .pen{margin-right:6px}.trophy .ti .pen{width:34px;height:42px;margin:0}
 .lvl-pill.r0{background:linear-gradient(#f6cfa4,#c98a4a)}.lvl-pill.r1{background:linear-gradient(#f3f6f8,#b9c4cc)}.lvl-pill.r2{background:linear-gradient(#ffe9a8,#e0a92e)}
@@ -689,15 +693,16 @@ textarea.fld{min-height:76px}
 @keyframes flash{0%,93%,100%{opacity:0}94%{opacity:.35}95.5%{opacity:.05}97%{opacity:.25}}
 /* Côte pleine hauteur (port-coast 1024×1536) : village en haut, jungle, épave et trésor en dessous ;
    le bas, pénombre de sous-bois sans détail, peut être rogné selon l'écran (object-fit cover ancré en haut) */
-.coast{position:absolute;left:0;width:100%;pointer-events:none;background:#15321f}
-.coast img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.coast{position:absolute;left:0;width:100%;pointer-events:none}
+/* Le haut de l'image (sa propre mer turquoise) se fond dans l'océan de la carte par un masque en dégradé */
+.coast img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;-webkit-mask-image:linear-gradient(180deg,transparent,#000 120px);mask-image:linear-gradient(180deg,transparent,#000 120px)}
 .coastport{position:absolute;display:block;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .coastport .lbl{position:absolute;left:-60%;top:38%;transform:translate(-50%,-50%);white-space:nowrap} /* sur l'eau, à gauche de la jetée : loin de l'étiquette de la première île */
-.coastport .lbl b{display:block;font-size:16px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.55)}
+.coastport .lbl b{display:inline-block;font-size:16px;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:10px;padding:2px 12px 3px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
 .lair{position:absolute;z-index:1;width:190px;height:200px;transform:translate(-50%,-50%);display:block}
 .lair img{width:100%;filter:brightness(.25) saturate(.2) blur(1.5px);opacity:.7}
 .lair.won img{filter:drop-shadow(0 10px 8px rgba(4,18,26,.45));opacity:1}
-.lair .lbl{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);white-space:nowrap;font-family:var(--f-d);font-weight:800;font-size:15px;color:#fffaf0;text-shadow:0 1px 2px rgba(0,0,0,.8),0 0 14px rgba(0,0,0,.55)}
+.lair .lbl{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);white-space:nowrap;font-weight:800;font-size:15px;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:10px;padding:2px 12px 3px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
 .mapcomp{position:absolute;width:130px;transform:translate(-50%,-50%) rotate(-14deg);opacity:.8;pointer-events:none;filter:drop-shadow(0 6px 6px rgba(4,18,26,.35))}
 .fogpatch.fb{animation:fogdrift2 22s ease-in-out infinite alternate;opacity:.85}
 @keyframes fogdrift2{from{transform:translate(calc(-50% + 20px),-50%)}to{transform:translate(calc(-50% - 30px),-50%)}}
@@ -812,7 +817,7 @@ button.medal{display:block;padding:0;cursor:pointer}
 @media (forced-colors:active){button,.brass-btn,.ghost-btn,.mini-btn,.key,.choice,.round,.chip{border:1px solid ButtonText}.segs i{border:1px solid CanvasText}}
 .gradeb{flex:none;padding:1px 6px;border-radius:6px;background:var(--brass-hi);color:#2a1a07;font:800 10.5px/1.4 var(--f-u);letter-spacing:.06em}
 /* Police pirate (vieux livre de bord) pour les titres et les noms ; les chiffres des calculs, les touches et les réponses gardent Fraunces et Lexend, plus lisibles */
-.disp,.tlogo .disp,.isle .lbl b,.coastport .lbl b,.lair .lbl,.tide h2,.rlab b,.burst .w,.sheet-err h3,.tabpage h1,.crew-card b,.poster .t1,.poster .nm,.trophy .tt b,.yh,.yard h2,.hud .nm,.shipcap .disp{font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;letter-spacing:.01em}
+.disp,.tlogo .disp,.coastport .lbl b,.lair .lbl,.tide h2,.rlab b,.burst .w,.sheet-err h3,.tabpage h1,.crew-card b,.poster .t1,.poster .nm,.trophy .tt b,.yh,.yard h2,.hud .nm,.shipcap .disp{font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;letter-spacing:.01em}
 .tlogo .disp{font-size:clamp(46px,calc(13 * var(--vw)),74px);line-height:.98}
 .result .head .disp{font-size:33px}.tide h2{font-size:24px}.isle .lbl b{font-size:18px}.hud .nm{font-size:19px}
 
@@ -5766,10 +5771,10 @@ function renderMap() {
   const krak = bossDone(IS('canons'));
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
-    if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b>${i.n}</b><span class="lvl-pill lock">Bientôt</span></span></button>`;
+    if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="ti">${i.n}</span></b><span class="lvl-pill lock">Bientôt</span></span></button>`;
     return `<button class="isle${lk ? ' locked' : ''}${isCur ? ' cur' : ''}" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}${lk ? ', verrouillée' : rk(s) === 2 ? ', île maîtrisée' : `, rang ${IRANK[rk(s)].n}, niveau ${Math.min(s.node, NODES)} sur ${NODES}`}">
       <img class="lag" src="${IMG(i.lag)}" alt=""><img class="land" src="${IMG(i.img)}" alt="">
-      <span class="lbl"><b>${!lk ? penArt(rk(s)) : ''}${i.n}</b>${lk ? `<span class="lvl-pill lock">${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner</span>` : `<span class="lvl-pill r${rk(s)}">${rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span>`}</span></button>`;
+      <span class="lbl"><b>${!lk ? penArt(rk(s)) : ''}<span class="ti">${i.n}</span></b>${lk ? `<span class="lvl-pill lock">${ico('iLock')} ${left(i)} escale${left(i) > 1 ? 's' : ''} à gagner</span>` : `<span class="lvl-pill r${rk(s)}">${rk(s) === 2 ? 'Île maîtrisée' : `${capF(IRANK[rk(s)].n)} · niveau ${Math.min(s.node, NODES)}/${NODES}`}</span>`}</span></button>`;
   }).join('');
   // Île pas encore ouverte : on la devine, floue, sous un nuage d'orage traversé d'éclairs
   const fog = sea.filter(i => !unlocked(i)).map((i, k) => `<div class="mstorm${k % 2 ? ' fb' : ''}" style="left:${px(i)}px;top:${i.y - 18}px;--bd:${(6.5 + (k * 2.3) % 4).toFixed(1)}s;--bdel:-${(k * 2.9 % 7).toFixed(1)}s;--bx:${k % 2 ? 8 : -34}px" aria-hidden="true"><img class="fogpatch${k % 2 ? ' fb' : ''}" src="${IMG(k % 2 ? 'fx-fog-b' : 'fx-fog-a')}" alt="">${BOLT}<i class="flash"></i></div>`).join('');
@@ -5779,8 +5784,8 @@ function renderMap() {
       ${['top:430px;--gw:' + (W + 100) + 'px;--gd:52s;--gs:1', 'top:980px;--gw:' + (W + 100) + 'px;--gd:67s;--gdel:-31s;--gs:.72'].map(st => `<div class="gull" style="${st}" aria-hidden="true"><svg viewBox="0 0 30 18"><path d="M2 10 Q8 2 15 9 Q22 2 28 10" fill="none" stroke="#dde8e6" stroke-width="2.4" stroke-linecap="round" opacity=".85"/></svg></div>`).join('')}
       <svg class="route" viewBox="0 0 ${W} 2000" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f4e8cc" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
       <div class="coast" style="top:${CT}px;height:${2000 - CT}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
-      <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b>Port d’attache</b></span></button>
-      <button class="lair${krak ? ' won' : ''}" style="left:${W * .76}px;top:96px" data-a="lair" aria-label="${krak ? 'Repaire du Kraken' : 'Une île cachée dans le brouillard'}"><img src="${IMG('isle-kraken')}" alt="">${krak ? '<span class="lbl"><b>Repaire du Kraken</b></span>' : ''}</button>
+      <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
+      <button class="lair${krak ? ' won' : ''}" style="left:${W * .76}px;top:96px" data-a="lair" aria-label="${krak ? 'Repaire du Kraken' : 'Une île cachée dans le brouillard'}"><img src="${IMG('isle-kraken')}" alt="">${krak ? '<span class="lbl"><b><span class="ti">Repaire du Kraken</span></b></span>' : ''}</button>
       <img class="fogpatch" src="${IMG('fx-fog-a')}" alt="" style="left:${W * .3}px;top:200px;width:420px"><img class="fogpatch fb" src="${IMG('fx-fog-b')}" alt="" style="left:${W * .75}px;top:${krak ? 40 : 120}px;width:${krak ? 300 : 440}px">
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
