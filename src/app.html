@@ -1078,13 +1078,6 @@ button.medal{display:block;padding:0;cursor:pointer}
 .mstorm .flash{position:absolute;left:-160px;top:-95px;width:320px;height:190px;border-radius:50%;background:radial-gradient(closest-side,rgba(236,241,255,.9),rgba(200,215,255,.35) 48%,transparent);mix-blend-mode:screen;opacity:0;animation:cflash var(--bd,7s) linear infinite;animation-delay:var(--bdel,0s)}
 @keyframes bolt{0%,86%,100%{opacity:0}87%{opacity:1}88.5%{opacity:.1}90%{opacity:1}92.5%{opacity:0}}
 @keyframes cflash{0%,86%,100%{opacity:0}87%{opacity:.85}88.5%{opacity:.25}90%{opacity:.75}95%{opacity:0}}
-/* Éclat de soleil (lens flare) comme sur la couverture : halo chaud, rayons tournants et ronds de lentille,
-   ancré à l'écran (il ne défile pas), fondu la nuit */
-.sunflare{position:absolute;left:-84px;top:calc(var(--st) + 54px);width:360px;height:360px;z-index:16;pointer-events:none;mix-blend-mode:screen;opacity:.85;transition:opacity 3s ease}
-.sunflare::before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,236,180,.2) 0 7deg,transparent 11deg 24deg);-webkit-mask:radial-gradient(closest-side,#000 8%,rgba(0,0,0,.5) 40%,transparent 72%);mask:radial-gradient(closest-side,#000 8%,rgba(0,0,0,.5) 40%,transparent 72%);animation:sunrays 80s linear infinite}
-.sunflare::after{content:"";position:absolute;inset:0;background:radial-gradient(closest-side,rgba(255,244,205,.9),rgba(255,230,165,.32) 42%,transparent 72%),radial-gradient(26px 26px at 72% 76%,rgba(255,240,200,.4),transparent),radial-gradient(14px 14px at 60% 63%,rgba(255,240,200,.32),transparent)}
-@keyframes sunrays{to{transform:rotate(360deg)}}
-.screen:has(.map.h-nuit) .sunflare{opacity:.2}
 .mapveil{position:absolute;left:0;right:0;pointer-events:none;z-index:15;-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 .mapveil.t{top:0;height:calc(var(--st) + 200px);background:linear-gradient(rgba(5,20,30,.72),rgba(5,20,30,.35) 55%,rgba(5,20,30,0));-webkit-mask:linear-gradient(#000 40%,transparent);mask:linear-gradient(#000 40%,transparent)}
 .mapveil.b{bottom:0;height:calc(var(--sbm) + 320px);background:linear-gradient(rgba(5,20,30,0),rgba(5,20,30,.55));-webkit-mask:linear-gradient(transparent,#000 60%);mask:linear-gradient(transparent,#000 60%)}
@@ -5846,7 +5839,7 @@ function renderMap() {
       ${isleHTML}${fog}
       <div class="ripple" aria-hidden="true" style="left:${shx}px;top:${shy}px;--srot:${srot}deg;--simg:url(${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')})"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
       <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')}" alt="Ton navire" style="${shipFx()}left:${shx}px;top:${shy}px;--srot:${srot}deg">
-    </div></div><i class="sunflare" aria-hidden="true"></i><div class="mapveil t" aria-hidden="true"></div><div class="mapveil b" aria-hidden="true"></div>
+    </div></div><div class="mapveil t" aria-hidden="true"></div><div class="mapveil b" aria-hidden="true"></div>
     ${hudHTML()}
     <div class="seas glass" role="group" aria-label="Choisir la mer">${Object.entries(SEAS).map(([k, v]) => `<button data-a="sea" data-s="${k}" aria-pressed="${S.sea === k}"><b>${v.ic}</b>${v.n}</button>`).join('')}</div>
     ${tideHTML(t)}
