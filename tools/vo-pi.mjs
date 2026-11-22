@@ -22,6 +22,13 @@ const SAMPLE = ['vo-parents-2', 'vo-cap-canons-1', 'vo-cap-lecture-1'];
 // la voix du capitaine (xFHsB7ym6VZKZNoONpeq) si on veut un jour rendre la voix aux bonjours.
 const LINES = [
   ['vo-parents-2', '[Calm, adult, reassuring] Bienvenue dans l’espace parents : tout le suivi de votre enfant est ici.'],
+  // Le Code du Pirate (Journal) : « Touche une carte : Pi te la lit à voix haute. »
+  // Après génération : ajouter vo-code-1 à vo-code-5 à assets/audio/manifest.json.
+  ['vo-code-1', '[Warm, clear] Les doublons. Ils offrent de nouveaux navires à ta flotte, et habillent ton capitaine.'],
+  ['vo-code-2', '[Warm, clear] Les étoiles. Elles font grandir ton navire de départ : brigantin à 60 étoiles, galion à 200.'],
+  ['vo-code-3', '[Warm, clear] Les pierres précieuses. Elles construisent ton port d’attache, tout en bas de la carte.'],
+  ['vo-code-4', '[Encouraging] Les fanions. Bats le boss d’une île pour monter : bronze, puis argent… puis or !'],
+  ['vo-code-5', '[Warm, inviting] La marée du jour. Trois escales choisies pour toi, chaque jour : le meilleur moyen de progresser.'],
   // Consignes d'îles (à l'arrivée)
   ['vo-cap-canons-1', '[energetic, rallying] À l’abordage de l’Île des Canons ! Charge tes multiplications… et vise juste !'],
   ['vo-cap-stade-1', '[quick, sporty] Bienvenue au Stade des Vagues ! Calcule vite, le tempo est lancé !'],

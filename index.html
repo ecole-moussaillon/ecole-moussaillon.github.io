@@ -816,7 +816,7 @@ button.medal{display:block;padding:0;cursor:pointer}
 .paint span img{width:20px;height:20px;aspect-ratio:auto}
 .paints.code .paint span{font-size:13px;line-height:1.3}
 .paints.code .pens{display:flex;gap:6px;justify-content:center;align-items:center;width:100%;aspect-ratio:3/2}
-.paints.code .pens .pen{width:26px;height:31px;margin:0}
+.paints.code .pens .pen{width:44px;height:53px;margin:0}
 .paint.on{box-shadow:inset 0 0 0 2.5px var(--brass-hi);background:rgba(243,213,140,.1)}
 .paint.on span{color:var(--brass-hi)}
 .paint.cant{opacity:.6}
@@ -6556,13 +6556,13 @@ function renderJournal() {
 function codeHTML() {
   const rows = [
     ['coin-doublon', 'Les doublons', 'Ils offrent de nouveaux navires à ta flotte et habillent ton capitaine.'],
-    [SHIPS[shipLv()][1], 'Les étoiles', 'Elles font grandir ton navire : brigantin à 60 étoiles, galion à 200.'],
+    [SHIPS[shipLv()][1], 'Les étoiles', 'Elles font grandir ton navire de départ : brigantin à 60 étoiles, galion à 200.'],
     ['gem', 'Les pierres précieuses', 'Elles construisent ton port d’attache, tout en bas de la carte.'],
     ['', 'Les fanions', 'Bats le boss d’une île pour monter : bronze, puis argent, puis or !'],
     ['deco-compass', 'La marée du jour', 'Trois escales choisies pour toi, chaque jour : le meilleur moyen de progresser.'],
   ];
   return `<section class="jsec"><h2>Le Code du Pirate</h2><p class="sub" style="margin:0 0 10px">Touche une carte : Pi te la lit à voix haute.</p>
-    <div class="paints code">${rows.map(([img, t, say]) => `<button class="paint" data-a="codesay" data-say="${esc(`${t}. ${say}`)}">${img ? `<img src="${IMG(img)}" alt="">` : `<span class="pens" aria-hidden="true">${penArt(0)}${penArt(1)}${penArt(2)}</span>`}<b>${t}</b><span>${say}</span></button>`).join('')}</div></section>`;
+    <div class="paints code">${rows.map(([img, t, say], k) => `<button class="paint" data-a="codesay" data-k="${k + 1}" data-say="${esc(`${t}. ${say}`)}">${img ? `<img src="${IMG(img)}" alt="">` : `<span class="pens" aria-hidden="true">${penArt(0)}${penArt(1)}${penArt(2)}</span>`}<b>${t}</b><span>${say}</span></button>`).join('')}</div></section>`;
 }
 // Proposé une fois, au premier passage sur la carte d'une classe encore vierge
 function offerPlacement() {
@@ -6766,7 +6766,7 @@ app.addEventListener('click', e => {
       save(); const y = $('.tabpage').scrollTop; renderCrew(); $('.tabpage').scrollTop = y; break; }
     case 'start': FX.sparkles(e.clientX || innerWidth / 2, e.clientY || innerHeight / 2, 26, 240); ac(); { const st = $('.title'); st && st.remove(); } show('map'); if (!S.intro) { onboarding(); welcome(true); } else welcome(false); break;
     case 'tipclose': { const t = el.closest('.pi-tip'); t && t.remove(); break; }
-    case 'codesay': SND.tap(); speak(el.dataset.say); break;
+    case 'codesay': SND.tap(); say('vo-code-' + el.dataset.k) || speak(el.dataset.say); break; // la voix de Pi si le fichier existe, sinon la synthèse
     case 'lesson': SND.tap(); openLesson(el.dataset.l); break;
     case 'lnext': { const lm = el.closest('.modal.lesson'); SND.tap(); lm && lm.lstep(1); break; }
     case 'lprev': { const lm = el.closest('.modal.lesson'); SND.tap(); lm && lm.lstep(-1); break; }
