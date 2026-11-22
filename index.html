@@ -84,7 +84,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ocean::after{content:"";position:absolute;inset:0;background:url(assets/tex-sea.webp) 0 0/560px;opacity:.38;mix-blend-mode:overlay;animation:drift2 88s linear infinite}
 @keyframes drift2{to{background-position:-560px 280px}}
 @keyframes drift{to{background-position:375px 750px}}
-.glints{position:absolute;inset:0;background:radial-gradient(60px 18px at 20% 30%,rgba(255,240,200,.18),transparent),radial-gradient(80px 20px at 70% 55%,rgba(255,240,200,.14),transparent),radial-gradient(70px 16px at 35% 80%,rgba(255,240,200,.14),transparent);background-size:390px 600px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
+.glints{position:absolute;inset:0;background:radial-gradient(60px 18px at 20% 30%,rgba(255,240,200,.3),transparent),radial-gradient(80px 20px at 70% 55%,rgba(255,240,200,.24),transparent),radial-gradient(70px 16px at 35% 80%,rgba(255,240,200,.24),transparent);background-size:390px 600px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
 @keyframes glint{to{background-position:60px 40px;opacity:.5}}
 .route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .isle{position:absolute;width:210px;height:230px;transform:translate(-50%,-50%);display:block}
@@ -94,7 +94,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .isle .lbl{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;white-space:nowrap}
 /* Cartouche d'île : un seul bandeau de verre sombre liseré d'or — fanion de rang accroché au bord,
    titre en petites capitales d'or (typo du port), niveau en petite ligne condensée dessous. */
-.isle .lbl b{display:inline-flex;align-items:center;gap:8px;width:max-content;font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;font-size:18px;letter-spacing:.02em;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:13px;padding:5px 15px 6px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+.isle .lbl b{display:inline-flex;align-items:center;gap:8px;width:max-content;font-family:var(--f-p);font-weight:400;font-variation-settings:normal;font-synthesis:none;font-size:18px;letter-spacing:.02em;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:13px;padding:6px 15px 4px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
 .lbl .ti{display:block;line-height:1.08;background:linear-gradient(180deg,#ffeebf 15%,#eecb6c 55%,#c99345 90%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(20,10,2,.55))}
 .lbl .col{display:flex;flex-direction:column;align-items:center}
 .lbl .lv{display:flex;align-items:center;gap:4px;margin-top:2px;font:600 10px var(--f-u);letter-spacing:.03em;line-height:1.25;color:#d8c9a3}
@@ -128,8 +128,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
    (écrasement vertical doux, jamais de saut d'image), cap orienté selon la trajectoire, vols dans les deux sens,
    ombre portée décalée sur l'eau */
 .mgull{position:absolute;pointer-events:none;z-index:4;opacity:0;animation:mgullfly var(--gd,46s) linear infinite;animation-delay:var(--gdel,0s);will-change:transform}
-.mgull img{position:absolute;inset:0;width:100%;height:100%;animation:mflap .55s ease-in-out infinite alternate;animation-delay:var(--fd,0s);transform-origin:50% 42%}
-@keyframes mflap{from{transform:scaleY(1)}to{transform:scaleY(.8) scaleX(1.04)}}
+.mgull img{position:absolute;inset:0;width:100%;height:100%}
 .mgull::before{content:"";position:absolute;inset:0;background:var(--gimg) center/contain no-repeat;filter:blur(3px) brightness(0);opacity:.28;transform:translate(9px,40px) scale(.95)}
 @keyframes mgullfly{0%{transform:translate(-70px,0) rotate(96deg) scale(var(--gs,1));opacity:0}4%{opacity:1}48%{transform:translate(calc(var(--gw)/2),-42px) rotate(80deg) scale(var(--gs,1))}94%{opacity:1}100%{transform:translate(var(--gw),16px) rotate(98deg) scale(var(--gs,1));opacity:0}}
 .mgull.rev{animation-name:mgullflyR}
@@ -160,10 +159,11 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 /* Oscillation 3D des cartouches sur l'axe Y, avec un reflet qui balaie le verre en cadence (coupée en animations réduites) */
 .isle .lbl,.coastport .lbl{perspective:320px}
 .isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate;position:relative;overflow:hidden}
-.isle .lbl b::after,.coastport .lbl b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,250,228,.26) 46%,rgba(255,250,228,.06) 54%,transparent 68%);transform:translateX(-70%);animation:lblshine 5.5s ease-in-out infinite alternate}
+.isle .lbl b::after,.coastport .lbl b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 32%,rgba(255,250,228,.12) 46%,rgba(255,250,228,.03) 54%,transparent 66%);opacity:0;transform:translateX(-62%);animation:lblshine 5.5s ease-in-out infinite alternate}
 .isle:nth-child(odd) .lbl b,.isle:nth-child(odd) .lbl b::after{animation-delay:-2.7s;animation-duration:6.5s}
 @keyframes lblsway{from{transform:rotateY(-8deg)}to{transform:rotateY(8deg)}}
-@keyframes lblshine{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
+/* Le reflet n'apparaît qu'aux extrémités de la bascule : un éclat à chaque climax, invisible entre les deux */
+@keyframes lblshine{0%{opacity:1;transform:translateX(-62%)}14%{opacity:0}86%{opacity:0}100%{opacity:1;transform:translateX(62%)}}
 /* La vague qui s'écrase : un voile d'écume PAR-DESSUS la frange basse de l'île, qui monte sur la plage
    quand l'onde touche la côte, puis s'estompe vite */
 .isle .wash{position:absolute;left:50%;top:44%;width:190px;height:190px;z-index:3;background:#fbfffd;
@@ -744,7 +744,7 @@ textarea.fld{min-height:76px}
 .coast img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;-webkit-mask:url(assets/coast-mask.webp) 50% 0/100% 100% no-repeat;mask:url(assets/coast-mask.webp) 50% 0/100% 100% no-repeat}
 .coastport{position:absolute;display:block;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .coastport .lbl{position:absolute;left:-60%;top:38%;transform:translate(-50%,-50%);white-space:nowrap} /* sur l'eau, à gauche de la jetée : loin de l'étiquette de la première île */
-.coastport .lbl b{display:inline-block;font-size:20px;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:12px;padding:4px 18px 5px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+.coastport .lbl b{display:inline-block;font-size:20px;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:12px;padding:6px 18px 3px;box-shadow:0 3px 10px rgba(0,0,0,.4)}/* capitales sans descendantes : rembourrage rééquilibré pour centrer optiquement */
 .lair{position:absolute;z-index:1;width:190px;height:200px;transform:translate(-50%,-50%);display:block}
 /* Repaire du Kraken caché : une ombre diffuse SOUS la surface (très floue, fondue dans l'eau), pas une tache */
 .lair img{width:100%;filter:brightness(.35) saturate(.4) blur(7px);opacity:.45;mix-blend-mode:multiply}
@@ -5865,7 +5865,7 @@ function renderMap() {
   app.innerHTML = `<div class="screen">
     <div class="map-scroll" id="mapScroll"><div class="map sea-${S.sea}${dayPhase() ? ' h-' + dayPhase() : ''}" style="height:${MH}px">
       <div class="ocean"></div><div class="glints"></div>
-      ${[['a2', 46, 540, 56, 0, 1, 0], ['b2', 40, 980, 64, -22, 1, 1], ['c', 36, 1380, 48, -9, 1, 0], ['b2', 38, 1720, 72, -40, .94, 0], ['a2', 44, 240, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv], k) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 140}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--fd:-${(k * .17).toFixed(2)}s;--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
+      ${[['a2', 56, 540, 56, 0, 1, 0], ['b2', 48, 980, 64, -22, 1, 1], ['c', 42, 1380, 48, -9, 1, 0], ['b2', 46, 1720, 72, -40, .94, 0], ['a2', 52, 240, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv]) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 140}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
       <svg class="route" viewBox="0 0 ${W} ${MH}" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f4e8cc" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
       <div class="coast" style="top:${CT}px;height:${CHF}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
       <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
