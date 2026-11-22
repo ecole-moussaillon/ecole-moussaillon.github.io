@@ -50,7 +50,10 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .map-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .map-scroll::-webkit-scrollbar{display:none}
 .map{position:relative;width:100%;height:2000px}
-.ocean{position:absolute;inset:0;background:#0f3d52 url(assets/tex-sea.webp) 0 0/375px;animation:drift 120s linear infinite;filter:brightness(.92)}
+/* Houle : la texture dérive à vitesse perceptible, et une seconde couche plus large dérive à contre-courant (chatoiement) */
+.ocean{position:absolute;inset:0;background:#0f3d52 url(assets/tex-sea.webp) 0 0/375px;animation:drift 52s linear infinite;filter:brightness(.92)}
+.ocean::after{content:"";position:absolute;inset:0;background:url(assets/tex-sea.webp) 0 0/560px;opacity:.38;mix-blend-mode:overlay;animation:drift2 88s linear infinite}
+@keyframes drift2{to{background-position:-560px 280px}}
 @keyframes drift{to{background-position:375px 750px}}
 .glints{position:absolute;inset:0;background:radial-gradient(60px 18px at 20% 30%,rgba(255,240,200,.18),transparent),radial-gradient(80px 20px at 70% 55%,rgba(255,240,200,.14),transparent),radial-gradient(70px 16px at 35% 80%,rgba(255,240,200,.14),transparent);background-size:390px 600px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
 @keyframes glint{to{background-position:60px 40px;opacity:.5}}
@@ -84,8 +87,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .lvl-pill.lock{background:none;box-shadow:none;padding:0 2px;color:#f6efdc;text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.75)}
 .lvl-pill svg{width:14px;height:14px;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8))}
 .isle.locked .land,.isle.locked .lag{filter:blur(2.6px) brightness(.62) saturate(.5)}
-.isle.cur .land{animation:bob 3.2s ease-in-out infinite}
-@keyframes bob{50%{transform:translate(-50%,calc(-50% - 5px))}}
+/* (le flottement « bob » de l'île courante est retiré : l'écume de rivage fait vivre l'île à sa place) */
 .fogpatch{position:absolute;width:360px;transform:translate(-50%,-50%);pointer-events:none;opacity:.95;animation:fogdrift 14s ease-in-out infinite alternate}
 @keyframes fogdrift{to{transform:translate(calc(-50% + 24px),-50%)}}
 .ship-token{position:absolute;width:86px;transform:translate(-50%,-50%) rotate(-30deg);pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
@@ -95,13 +97,22 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .gull svg{width:100%;height:100%;display:block;animation:gullflap .8s ease-in-out infinite alternate;transform-origin:50% 35%}
 @keyframes gullfly{0%{transform:translate(-50px,0) scale(var(--gs,1));opacity:0}4%{opacity:.8}48%{transform:translate(calc(var(--gw)/2),-26px) scale(var(--gs,1))}94%{opacity:.8}100%{transform:translate(var(--gw),10px) scale(var(--gs,1));opacity:0}}
 @keyframes gullflap{from{transform:scaleY(1)}to{transform:scaleY(.45)}}
-.ripple{position:absolute;width:120px;height:52px;margin:-26px 0 0 -60px;pointer-events:none;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
+/* Onde du navire : des cercles (vue du dessus), plus l'écume de proue et le sillage alignés sur le cap */
+.ripple{position:absolute;width:104px;height:104px;margin:-52px 0 0 -52px;pointer-events:none;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
 .ripple i{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(240,248,245,.4);animation:ripl 4.5s linear infinite;opacity:0}
 .ripple i+i{animation-delay:-2.25s}
 @keyframes ripl{0%{transform:scale(.35);opacity:0}18%{opacity:.5}100%{transform:scale(1);opacity:0}}
-.isle::before{content:"";position:absolute;left:50%;top:58%;width:108%;height:46%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(235,248,244,.16),transparent 72%);animation:foam 7s ease-in-out infinite;pointer-events:none}
-.isle.locked::before,.isle.soon::before{content:none}
-@keyframes foam{0%,100%{transform:translate(-50%,-50%) scale(.96);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.06);opacity:1}}
+.ripple .wk{position:absolute;left:50%;top:50%;width:54px;height:150px;margin:-75px 0 0 -27px;transform:rotate(-30deg)}
+.ripple .bow{position:absolute;left:50%;top:18px;width:30px;height:12px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(248,253,251,.7),rgba(248,253,251,0) 72%);filter:blur(.6px);animation:bowf 1.7s ease-in-out infinite}
+@keyframes bowf{50%{opacity:.4;transform:translateX(-50%) scaleX(.82)}}
+.ripple .tr{position:absolute;left:50%;bottom:4px;width:15px;height:62px;border-radius:50%;background:linear-gradient(180deg,rgba(245,252,249,.5),rgba(245,252,249,0) 85%);filter:blur(1.2px);animation:trailf 2.6s linear infinite}
+.ripple .tr.t2{animation-delay:-1.3s}
+@keyframes trailf{0%{transform:translate(-50%,0) scaleY(.6);opacity:.55}100%{transform:translate(-50%,26px) scaleY(1.15);opacity:0}}
+/* Écume de rivage : deux anneaux doux qui naissent au bord de l'île et s'évanouissent vers le large */
+.isle::before,.isle::after{content:"";position:absolute;left:50%;top:55%;width:100%;height:62%;transform:translate(-50%,-50%) scale(.92);border-radius:50%;border:2px solid rgba(240,250,246,.55);filter:blur(1.1px);opacity:0;animation:shore 8s ease-out infinite;pointer-events:none}
+.isle::after{animation-delay:-4s}
+@keyframes shore{0%{transform:translate(-50%,-50%) scale(.88);opacity:0}20%{opacity:.5}100%{transform:translate(-50%,-50%) scale(1.12);opacity:0}}
+.isle.locked::before,.isle.soon::before,.isle.locked::after,.isle.soon::after{content:none}
 .coastport::before,.coastport::after{content:"";position:absolute;left:26%;top:12%;width:10px;height:10px;border-radius:50%;background:rgba(235,230,215,.5);animation:smoke 5s linear infinite;pointer-events:none}
 .coastport::after{left:28.5%;animation-delay:-2.5s}
 @keyframes smoke{0%{transform:translateY(0) scale(.5);opacity:0}12%{opacity:.55}100%{transform:translateY(-46px) scale(1.7);opacity:0}}
@@ -5762,7 +5773,7 @@ function renderMap() {
       <img class="fogpatch" src="${IMG('fx-fog-a')}" alt="" style="left:${W * .3}px;top:200px;width:420px"><img class="fogpatch fb" src="${IMG('fx-fog-b')}" alt="" style="left:${W * .75}px;top:${krak ? 40 : 120}px;width:${krak ? 300 : 440}px">
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
-      <div class="ripple" aria-hidden="true" style="left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 28}px"><i></i><i></i></div>
+      <div class="ripple" aria-hidden="true" style="left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
       <img class="ship-token${lamps() ? ` lit ${lamps()}` : ''}" id="token" src="${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')}" alt="Ton navire" style="${shipFx()}left:${px(cur) + (cur.x < 50 ? 120 : -120)}px;top:${cur.y - 40}px">
     </div></div><div class="mapveil t" aria-hidden="true"></div><div class="mapveil b" aria-hidden="true"></div>
     ${hudHTML()}
