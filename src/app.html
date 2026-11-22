@@ -88,9 +88,11 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .lvl-pill svg{width:14px;height:14px;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.8))}
 .isle.locked .land,.isle.locked .lag{filter:blur(2.6px) brightness(.62) saturate(.5)}
 /* (le flottement « bob » de l'île courante est retiré : l'écume de rivage fait vivre l'île à sa place) */
-.fogpatch{position:absolute;width:360px;transform:translate(-50%,-50%);pointer-events:none;opacity:.95;animation:fogdrift 14s ease-in-out infinite alternate}
-@keyframes fogdrift{to{transform:translate(calc(-50% + 24px),-50%)}}
-.ship-token{position:absolute;width:86px;transform:translate(-50%,-50%) rotate(-30deg);pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
+/* Brumes et nuages : dérive lente et continue (l'aller-retour rapide faisait figé), un peu plus transparents */
+.fogpatch{position:absolute;width:360px;transform:translate(-50%,-50%);pointer-events:none;opacity:.8;animation:fogdrift 52s ease-in-out infinite alternate}
+@keyframes fogdrift{to{transform:translate(calc(-50% + 46px),calc(-50% + 6px)) scale(1.05)}}
+/* Le navire passe DEVANT les brumes et les nuages d'orage (z-index 2) : il reste net en toutes eaux */
+.ship-token{position:absolute;width:86px;z-index:3;transform:translate(-50%,-50%) rotate(-30deg);pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
 /* Carte vivante : mouettes, ronds d'eau du navire, écume des lagons, fumée du port — transform et opacity seulement,
    coupé d'office par la règle globale prefers-reduced-motion */
 .gull{position:absolute;width:30px;height:18px;pointer-events:none;z-index:4;opacity:0;animation:gullfly var(--gd,46s) linear infinite;animation-delay:var(--gdel,0s);will-change:transform}
@@ -706,8 +708,8 @@ textarea.fld{min-height:76px}
 .lair.won img{filter:drop-shadow(0 10px 8px rgba(4,18,26,.45));opacity:1}
 .lair .lbl{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);white-space:nowrap;font-weight:800;font-size:15px;background:rgba(10,26,36,.62);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid rgba(243,213,140,.55);border-radius:10px;padding:2px 12px 3px;box-shadow:0 3px 10px rgba(0,0,0,.4)}
 .mapcomp{position:absolute;width:130px;transform:translate(-50%,-50%) rotate(-14deg);opacity:.8;pointer-events:none;filter:drop-shadow(0 6px 6px rgba(4,18,26,.35))}
-.fogpatch.fb{animation:fogdrift2 22s ease-in-out infinite alternate;opacity:.85}
-@keyframes fogdrift2{from{transform:translate(calc(-50% + 20px),-50%)}to{transform:translate(calc(-50% - 30px),-50%)}}
+.fogpatch.fb{animation:fogdrift2 74s ease-in-out infinite alternate;opacity:.72}
+@keyframes fogdrift2{from{transform:translate(calc(-50% + 26px),-50%)}to{transform:translate(calc(-50% - 40px),calc(-50% - 8px)) scale(1.04)}}
 .trow{display:flex;align-items:center;gap:10px;width:100%}.trow .tload{flex:1}
 .tcomp{width:44px;height:44px;flex:none;animation:cspin 6s linear infinite;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
 .tcomp.done{animation-play-state:paused}

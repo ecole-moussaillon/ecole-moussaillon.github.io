@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompts — nuages de la carte</title>
+<style>
+body{margin:0;background:#0b2230;color:#e9f3ee;font:15px/1.55 system-ui,sans-serif;padding:28px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:#9fb9bb;margin:0 0 18px}
+.card{background:#f4e8cc;color:#2a1c12;border-radius:14px;padding:16px 18px;margin:12px 0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.card h3{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h3 code{background:rgba(0,0,0,.08);padding:2px 7px;border-radius:7px;font-size:13px}
+.card p{margin:8px 0;color:#4b382a;white-space:pre-wrap}
+button.copy{border:0;border-radius:9px;background:#c9973f;color:#fff;font:600 13px system-ui;padding:7px 13px;cursor:pointer;margin-left:auto}
+button.copy.done{background:#2f8f5a}
+.note{background:rgba(255,255,255,.06);border-radius:12px;padding:12px 16px;margin:10px 0;color:#cfe0df;font-size:14px}
+.note b{color:#f3d58c}
+ul{margin:6px 0;padding-left:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Nuages de la carte — brume et orages</h1>
+<p class="sub">Remplacent <code>fx-fog-a.webp</code> / <code>fx-fog-b.webp</code>, utilisés pour la brume des mers inexplorées ET (assombris par le jeu) comme nuages d’orage des îles verrouillées. Le prompt s’affiche en français ; « Copier EN » copie l’anglais à coller dans GPT Image.</p>
+
+<div class="note"><b>Réglages</b>
+<ul>
+<li>Joindre la capture de la carte comme référence de palette et d’échelle.</li>
+<li><b>La transparence est tout l’enjeu</b> : bords très progressifs, aucune frange dure, aucun halo — le nuage doit se fondre dans n’importe quelle mer. Vérifier l’alpha sur fond sombre ET clair avant de poser.</li>
+<li>Vue du DESSUS (zénithale), comme la carte — pas un nuage vu de profil.</li>
+<li>Trois variantes pour casser la répétition ; le jeu les assombrit lui-même pour les orages (filtre brightness/saturate), donc les générer claires.</li>
+<li>Conversion : <code>cwebp -q 82 entree.png -o assets/fx-fog-a.webp</code> (et -b, -c). Si on garde trois fichiers, je brancherai fx-fog-c dans la rotation.</li>
+</ul></div>
+
+<div class="card"><h3><code>fx-fog-a.webp</code> — grand banc de brume <button class="copy">Copier EN</button></h3>
+<p>Élément de jeu pour enfants, style livre d’images peint à la main. UN BANC DE NUAGES vu du DESSUS (vue zénithale, comme une carte), étiré horizontalement : volutes douces et cotonneuses, blanc cassé légèrement teinté d’ivoire, plus dense au cœur et de plus en plus vaporeux vers les bords. BORDS ENTIÈREMENT FONDUS : la transparence augmente progressivement jusqu’à disparaître, sans aucun contour net, sans frange, sans halo. Touches picturales douces, lumière diffuse sans ombre marquée. Sujet isolé sur fond entièrement transparent, sans texte, sans filigrane. Toile 1024 × 640, le nuage occupe le centre avec de larges marges transparentes.</p>
+<pre class="prompt-en" hidden>Children's storybook game asset, hand-painted style. A CLOUD BANK seen from DIRECTLY ABOVE (zenithal view, like on a map), stretched horizontally: soft cottony swirls, off-white slightly tinted ivory, denser at the core and increasingly vaporous toward the edges. FULLY FEATHERED EDGES: transparency increases gradually until it vanishes, with no hard outline, no fringe, no halo. Soft painterly strokes, diffuse light with no harsh shadow. Isolated subject on a fully transparent background, no text, no watermark. Canvas 1024x640, the cloud centered with wide transparent margins.</pre></div>
+
+<div class="card"><h3><code>fx-fog-b.webp</code> — nuage rond et dodu <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes que le banc de brume (vue zénithale, bords entièrement fondus, fond transparent), mais UN NUAGE PLUS ROND ET DODU, aux volutes bombées comme un cumulus vu d’avion, avec deux ou trois petites volutes détachées autour. Blanc cassé ivoire, cœur dense, pourtour vaporeux. Toile 1024 × 768.</p>
+<pre class="prompt-en" hidden>Same style and constraints as the cloud bank (zenithal view, fully feathered edges, transparent background), but A ROUNDER, PUFFIER CLOUD, with billowing swirls like a cumulus seen from a plane, and two or three small detached wisps around it. Ivory off-white, dense core, vaporous rim. Canvas 1024x768.</pre></div>
+
+<div class="card"><h3><code>fx-fog-c.webp</code> — traînée effilochée <button class="copy">Copier EN</button></h3>
+<p>Même style et mêmes contraintes (vue zénithale, bords entièrement fondus, fond transparent), mais UNE LONGUE TRAÎNÉE DE BRUME EFFILOCHÉE, fine et étirée en diagonale, comme un voile qui se déchire en trois ou quatre filaments vaporeux. Très légère, plus transparente que les deux autres. Toile 1280 × 512.</p>
+<pre class="prompt-en" hidden>Same style and constraints (zenithal view, fully feathered edges, transparent background), but A LONG FRAYED MIST STREAK, thin and stretched diagonally, like a veil tearing into three or four vaporous filaments. Very light, more transparent than the other two. Canvas 1280x512.</pre></div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(b => b.addEventListener('click', async () => {
+  const pre = b.closest('.card').querySelector('.prompt-en');
+  try { await navigator.clipboard.writeText(pre.textContent.trim()); } catch (e) {}
+  b.textContent = 'Copié !'; b.classList.add('done');
+  setTimeout(() => { b.textContent = 'Copier EN'; b.classList.remove('done'); }, 1800);
+}));
+</script>
+</main>
+</body>
+</html>
