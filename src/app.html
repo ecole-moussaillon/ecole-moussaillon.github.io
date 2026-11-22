@@ -122,6 +122,11 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 /* Inversé : la vague naît à la plage, claire, et part mourir vers le large */
 @keyframes shore{0%{transform:translate(-50%,-50%) scale(1.01);opacity:0}12%{opacity:.8}70%{opacity:.22}100%{transform:translate(-50%,-50%) scale(1.26);opacity:0}}
 .isle .land{z-index:2}.isle .lbl{z-index:4}/* au-dessus du pion navire (3) : la barque passe sous les cartouches */
+/* Légère oscillation 3D des cartouches sur l'axe Y (coupée d'office en animations réduites) */
+.isle .lbl,.coastport .lbl{perspective:420px}
+.isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate}
+.isle:nth-child(odd) .lbl b{animation-delay:-2.7s;animation-duration:6.5s}
+@keyframes lblsway{from{transform:rotateY(-5deg)}to{transform:rotateY(5deg)}}
 /* La vague qui s'écrase : un voile d'écume PAR-DESSUS la frange basse de l'île, qui monte sur la plage
    quand l'onde touche la côte, puis s'estompe vite */
 .isle .wash{position:absolute;left:50%;top:44%;width:190px;height:190px;z-index:3;background:#fbfffd;
@@ -1041,11 +1046,8 @@ button.medal{display:block;padding:0;cursor:pointer}
 /* ---------- 1.5 : océan WebGL, îles sous l'orage, voiles flous, boutons, mouettes ---------- */
 .sea-gl{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 .seagl .ocean{visibility:hidden}
-/* Récifs décoratifs : rochers qui dépassent de l'eau sur les bords de la carte, sous la teinte du jour et les cartouches.
-   Même écume animée que les îles, masquée par la silhouette du rocher, sur sa partie basse uniquement. */
+/* Récifs décoratifs (vue zénithale, écume peinte dans l'image) : posés sur les bords, sous la teinte du jour et les cartouches */
 .reef{position:absolute;transform:translate(-50%,-50%);pointer-events:none}
-.reef img{display:block;width:100%;height:100%}
-.reef::after{content:"";position:absolute;left:50%;top:50%;width:100%;height:100%;transform:translate(-50%,-50%);background:#fbfffd;-webkit-mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);-webkit-mask-composite:source-in;mask:var(--rimg) center/contain no-repeat,linear-gradient(180deg,transparent 52%,#000 76%);mask-composite:intersect;filter:blur(3px);opacity:0;animation:shore 7s linear infinite;animation-delay:var(--rd,0s)}
 .reef.m{transform:translate(-50%,-50%) scaleX(-1)}
 .mstorm{position:absolute;width:0;height:0;pointer-events:none;z-index:2}
 .mstorm .fogpatch,.mstorm .bolt{max-width:none}
@@ -5820,7 +5822,7 @@ function renderMap() {
       <div class="coast" style="top:${CT}px;height:${CHF}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
       <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
       <button class="lair${krak ? ' won' : ''}" style="left:${W * .76}px;top:96px" data-a="lair" aria-label="${krak ? 'Repaire du Kraken' : 'Une île cachée dans le brouillard'}"><img src="${IMG('isle-kraken')}" alt="">${krak ? '<span class="lbl"><b><span class="ti">Repaire du Kraken</span></b></span>' : ''}</button>
-      ${[[93, 300, 'a', 86, 0], [6.5, 710, 'b', 66, 1], [93, 1160, 'c', 118, 0], [6, 1520, 'a', 74, 1], [94, 1830, 'b', 58, 0]].map(([x, y, f, w, m], k) => `<span class="reef${m ? ' m' : ''}" style="left:${W * x / 100}px;top:${y}px;width:${w}px;height:${Math.round(w * { a: .8, b: 1, c: .5 }[f])}px;--rimg:url(${IMG('deco-reef-' + f)});--rd:-${(k * 2.3 % 7).toFixed(1)}s" aria-hidden="true"><img src="${IMG('deco-reef-' + f)}" alt=""></span>`).join('')}
+      ${[[93, 300, 'a', 100, 0], [6.5, 710, 'b', 78, 1], [93, 1160, 'c', 134, 0], [6, 1520, 'a', 86, 1], [94, 1830, 'b', 68, 0]].map(([x, y, f, w, m]) => `<img class="reef${m ? ' m' : ''}" src="${IMG('deco-reef-' + f)}" alt="" style="left:${W * x / 100}px;top:${y}px;width:${w}px">`).join('')}
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
       <div class="ripple" aria-hidden="true" style="left:${shx}px;top:${shy}px;--srot:${srot}deg;--simg:url(${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')})"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
