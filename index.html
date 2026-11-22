@@ -124,16 +124,16 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .ship-token{position:absolute;width:86px;z-index:3;transform:translate(-50%,-50%) rotate(var(--srot,-30deg));pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));animation:shipbob 3s ease-in-out infinite;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
 /* Carte vivante : mouettes, ronds d'eau du navire, écume des lagons, fumée du port — transform et opacity seulement,
    coupé d'office par la règle globale prefers-reduced-motion */
-/* Mouettes de la carte : sprites vus de dessus, battement image par image (3 coups d'ailes puis vol plané),
-   cap orienté selon la trajectoire (le sprite pointe vers le haut), ombre portée décalée sur l'eau */
+/* Mouettes de la carte : sprites vus de dessus (ailes à plat), battement = légère déformation continue
+   (écrasement vertical doux, jamais de saut d'image), cap orienté selon la trajectoire, vols dans les deux sens,
+   ombre portée décalée sur l'eau */
 .mgull{position:absolute;pointer-events:none;z-index:4;opacity:0;animation:mgullfly var(--gd,46s) linear infinite;animation-delay:var(--gdel,0s);will-change:transform}
-.mgull img{position:absolute;inset:0;width:100%;height:100%}
+.mgull img{position:absolute;inset:0;width:100%;height:100%;animation:mflap .55s ease-in-out infinite alternate;animation-delay:var(--fd,0s);transform-origin:50% 42%}
+@keyframes mflap{from{transform:scaleY(1)}to{transform:scaleY(.8) scaleX(1.04)}}
 .mgull::before{content:"";position:absolute;inset:0;background:var(--gimg) center/contain no-repeat;filter:blur(3px) brightness(0);opacity:.28;transform:translate(9px,40px) scale(.95)}
-.mgull .w1{animation:flapA 2.3s step-end infinite}
-.mgull .w2{opacity:0;animation:flapB 2.3s step-end infinite}
-@keyframes flapA{0%,16%,32%{opacity:1}8%,24%,40%,100%{opacity:0}}
-@keyframes flapB{0%,16%,32%{opacity:0}8%,24%,40%,100%{opacity:1}}
 @keyframes mgullfly{0%{transform:translate(-70px,0) rotate(96deg) scale(var(--gs,1));opacity:0}4%{opacity:1}48%{transform:translate(calc(var(--gw)/2),-42px) rotate(80deg) scale(var(--gs,1))}94%{opacity:1}100%{transform:translate(var(--gw),16px) rotate(98deg) scale(var(--gs,1));opacity:0}}
+.mgull.rev{animation-name:mgullflyR}
+@keyframes mgullflyR{0%{transform:translate(var(--gw),0) rotate(-96deg) scale(var(--gs,1));opacity:0}4%{opacity:1}48%{transform:translate(calc(var(--gw)/2),-42px) rotate(-80deg) scale(var(--gs,1))}94%{opacity:1}100%{transform:translate(-70px,16px) rotate(-98deg) scale(var(--gs,1));opacity:0}}
 /* Onde du navire : un simple tracé, mais allongé à la forme de la coque (ovale étiré sur le cap),
    plus l'écume de proue et le sillage */
 .ripple{position:absolute;width:104px;height:104px;margin:-52px 0 0 -52px;pointer-events:none;transition:left 1.2s ease-in-out,top 1.2s ease-in-out}
@@ -157,11 +157,13 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 /* Inversé : la vague naît à la plage, claire, et part mourir vers le large */
 @keyframes shore{0%{transform:translate(-50%,-50%) scale(1.01);opacity:0}12%{opacity:.8}70%{opacity:.22}100%{transform:translate(-50%,-50%) scale(1.26);opacity:0}}
 .isle .land{z-index:2}.isle .lbl{z-index:4}/* au-dessus du pion navire (3) : la barque passe sous les cartouches */
-/* Légère oscillation 3D des cartouches sur l'axe Y (coupée d'office en animations réduites) */
-.isle .lbl,.coastport .lbl{perspective:420px}
-.isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate}
-.isle:nth-child(odd) .lbl b{animation-delay:-2.7s;animation-duration:6.5s}
-@keyframes lblsway{from{transform:rotateY(-5deg)}to{transform:rotateY(5deg)}}
+/* Oscillation 3D des cartouches sur l'axe Y, avec un reflet qui balaie le verre en cadence (coupée en animations réduites) */
+.isle .lbl,.coastport .lbl{perspective:320px}
+.isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate;position:relative;overflow:hidden}
+.isle .lbl b::after,.coastport .lbl b::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(255,250,228,.26) 46%,rgba(255,250,228,.06) 54%,transparent 68%);transform:translateX(-70%);animation:lblshine 5.5s ease-in-out infinite alternate}
+.isle:nth-child(odd) .lbl b,.isle:nth-child(odd) .lbl b::after{animation-delay:-2.7s;animation-duration:6.5s}
+@keyframes lblsway{from{transform:rotateY(-8deg)}to{transform:rotateY(8deg)}}
+@keyframes lblshine{from{transform:translateX(-70%)}to{transform:translateX(70%)}}
 /* La vague qui s'écrase : un voile d'écume PAR-DESSUS la frange basse de l'île, qui monte sur la plage
    quand l'onde touche la côte, puis s'estompe vite */
 .isle .wash{position:absolute;left:50%;top:44%;width:190px;height:190px;z-index:3;background:#fbfffd;
@@ -870,6 +872,9 @@ button.medal{display:block;padding:0;cursor:pointer}
 /* Bouton de la marée : plaque « carte au trésor » fournie, découpe en 3 tranches (rivets et rose des vents intacts, le tracé central s'étire).
    Barre réduite à gauche en absolu, texte seul et centré. */
 .tide .brass-btn{position:relative;justify-content:center;background:none;box-shadow:none;border-style:solid;border-color:transparent;border-width:0 54px;border-image:url(assets/btn-tide.webp) 0 300 fill stretch}
+.tide .brass-btn::before{display:none}/* le liseré intérieur du laiton traçait un cadre sur la plaque */
+/* Balayage lumineux : bien plus discret et plus lent sur le parchemin */
+.tide .brass-btn::after{background:linear-gradient(105deg,transparent 41%,rgba(255,255,255,.2) 50%,transparent 59%);animation-duration:12s}
 .tide .brass-btn .play{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:32px;height:32px}
 .tide .brass-btn .play svg{width:22px;height:22px}
 .tide .brass-btn .lbl{align-items:center;text-align:center}
@@ -5860,7 +5865,7 @@ function renderMap() {
   app.innerHTML = `<div class="screen">
     <div class="map-scroll" id="mapScroll"><div class="map sea-${S.sea}${dayPhase() ? ' h-' + dayPhase() : ''}" style="height:${MH}px">
       <div class="ocean"></div><div class="glints"></div>
-      ${[['a', 56, 620, 54, 0, 1], ['b', 40, 1290, 70, -33, 1], ['c', 30, 1760, 44, -13, 1]].map(([f, w, top, gd, gdel, gs]) => `<div class="mgull" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 140}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG(f === 'c' ? 'deco-gull-c' : 'deco-gull-' + f + '2')})" aria-hidden="true">${f === 'c' ? `<img src="${IMG('deco-gull-c')}" alt="">` : `<img class="w1" src="${IMG('deco-gull-' + f + '1')}" alt=""><img class="w2" src="${IMG('deco-gull-' + f + '2')}" alt="">`}</div>`).join('')}
+      ${[['a2', 46, 540, 56, 0, 1, 0], ['b2', 40, 980, 64, -22, 1, 1], ['c', 36, 1380, 48, -9, 1, 0], ['b2', 38, 1720, 72, -40, .94, 0], ['a2', 44, 240, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv], k) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 140}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--fd:-${(k * .17).toFixed(2)}s;--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
       <svg class="route" viewBox="0 0 ${W} ${MH}" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f4e8cc" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
       <div class="coast" style="top:${CT}px;height:${CHF}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
       <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
@@ -7167,7 +7172,7 @@ function titleScreen() {
   app.innerHTML = `<div class="screen title${many ? ' who' : ''}" ${many ? '' : 'data-a="start" role="button" tabindex="0" aria-label="Toucher pour embarquer"'}><img class="bg" src="${IMG('bg-title')}" alt="">
     <div class="tlogo"><div class="smallcaps">L’école pirate</div><div class="disp">Moussaillon</div></div>
     <div class="tgo">${many ? `<div class="whob glass"><b>Qui joue ?</b>${kidList()}</div>` : '<span>Touche pour embarquer</span>'}<div class="trow" aria-hidden="true"><img class="tcomp" id="tcomp" src="${IMG('deco-compass')}" alt=""><div class="tload"><i id="tload"></i></div></div></div><div class="vers2">v${VERSION.split(' ')[0]}${ADMIN ? ' · admin' : ''}</div></div>`;
-  const list = ['tex-sea', 'lagoon-round', 'lagoon-oval', 'lagoon-rocks', 'fx-fog-a', 'fx-fog-b', 'deco-reef-a', 'deco-reef-b', 'deco-reef-c', 'deco-gull-a1', 'deco-gull-a2', 'deco-gull-b1', 'deco-gull-b2', 'deco-gull-c', 'port-coast', 'isle-kraken', 'deco-compass', (paintDef()[4] || 'ship-skin-origine') + '-top', 'pennant-0', 'pennant-1', 'pennant-2', capt(), 'coin-doublon', 'tex-parchment', 'guide-capitaine', ...ISLES.filter(i => !i.soon).map(i => i.img), 'crew-perroquet'];
+  const list = ['tex-sea', 'lagoon-round', 'lagoon-oval', 'lagoon-rocks', 'fx-fog-a', 'fx-fog-b', 'deco-reef-a', 'deco-reef-b', 'deco-reef-c', 'deco-gull-a2', 'deco-gull-b2', 'deco-gull-c', 'port-coast', 'isle-kraken', 'deco-compass', (paintDef()[4] || 'ship-skin-origine') + '-top', 'pennant-0', 'pennant-1', 'pennant-2', capt(), 'coin-doublon', 'tex-parchment', 'guide-capitaine', ...ISLES.filter(i => !i.soon).map(i => i.img), 'crew-perroquet'];
   let done = 0; list.forEach(n => { const im = new Image(); im.onload = im.onerror = () => { done++; const b = $('#tload'); if (b) b.style.width = Math.round(done / list.length * 100) + '%'; if (done === list.length) { const c = $('#tcomp'); c && c.classList.add('done'); } }; im.src = IMG(n); });
   ac();
 }
