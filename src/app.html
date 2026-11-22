@@ -5803,8 +5803,10 @@ function renderMap() {
   bindCog();
   const sc = $('#mapScroll');
   const hb = $('.seas').getBoundingClientRect().bottom, tt = $('.tide').getBoundingClientRect().top;
-  // On peut descendre jusqu'au bas de l'image de côte : le défilement gagne la hauteur que couvrent la marée et le dock
-  sc.style.paddingBottom = Math.round(Math.max(0, (app.getBoundingClientRect().bottom - tt) / UIZ) + 10) + 'px';
+  // On peut descendre jusqu'au bas de l'image de côte : le défilement gagne la hauteur que couvre le panneau
+  // de la marée. Borné à la fenêtre visible : sur iPhone, la racine déborde de l'écran (zones sûres) et le bas
+  // de l'application est plus bas que l'écran — sans la borne, on défilait trop loin.
+  sc.style.paddingBottom = Math.round(Math.max(0, (Math.min(app.getBoundingClientRect().bottom, innerHeight) - tt) / UIZ) + 10) + 'px';
   sc.scrollTop = mapScroll != null ? mapScroll : Math.max(0, $('.map', sc).offsetTop + cur.y - (hb + tt) / 2 / UIZ + 10);
   sc.addEventListener('scroll', () => { mapScroll = sc.scrollTop; }, { passive: true });
   if (S.refund) { const r = S.refund; delete S.refund; save(); setTimeout(() => toast(`Les sillages ont quitté le chantier naval : ${fmt(r)} doublons te sont rendus.`), 900); }
