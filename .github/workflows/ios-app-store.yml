@@ -9,13 +9,21 @@ name: iOS · envoi à App Store Connect
 
 on:
   workflow_dispatch:
+    inputs:
+      machine:
+        description: "Mac de compilation (même image macOS 26 et même Xcode) : Intel si les Mac Apple Silicon de GitHub sont saturés"
+        type: choice
+        options: [macos-26-intel, macos-26]
+        default: macos-26-intel
 
 permissions:
   contents: read
 
 jobs:
   ios:
-    runs-on: macos-26
+    # Avant avril 2027 (SDK iOS 27 exigé par Apple) : Xcode 27 n'existe que sur les Mac Apple Silicon de GitHub,
+    # il faudra alors revenir à macos-26 (ou à l'image Xcode 27) et retirer l'option Intel.
+    runs-on: ${{ inputs.machine || 'macos-26-intel' }}
     timeout-minutes: 60
     env:
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
