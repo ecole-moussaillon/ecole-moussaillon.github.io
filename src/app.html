@@ -58,7 +58,9 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .glints{position:absolute;inset:0;background:radial-gradient(120px 36px at 30% 28%,rgba(255,242,205,.7),transparent),radial-gradient(140px 40px at 68% 55%,rgba(255,242,205,.55),transparent),radial-gradient(120px 32px at 42% 82%,rgba(255,242,205,.55),transparent);background-size:560px 760px;animation:glint 9s ease-in-out infinite alternate;mix-blend-mode:screen}
 @keyframes glint{to{background-position:60px 40px;opacity:.5}}
 .route{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.isle{position:absolute;width:210px;height:230px;transform:translate(-50%,-50%);display:block}
+/* Centrage par marges et non par transform : une transformation ferait de chaque île un plan d'empilement à part, et ses
+   cartouches (z-index 4) ne pourraient plus passer devant le navire (z-index 3) */
+.isle{position:absolute;width:210px;height:230px;margin:-115px 0 0 -105px;display:block}
 .isle .lag{position:absolute;left:50%;top:52%;width:250px;transform:translate(-50%,-50%);opacity:.92;filter:saturate(.9);-webkit-mask:radial-gradient(closest-side,#000 72%,transparent);mask:radial-gradient(closest-side,#000 72%,transparent);animation:lagpulse 6s ease-in-out infinite}
 @keyframes lagpulse{50%{opacity:.75;transform:translate(-50%,-50%) scale(1.03)}}
 .isle .land{position:absolute;left:50%;top:44%;width:190px;transform:translate(-50%,-50%);filter:drop-shadow(0 10px 8px rgba(4,18,26,.45))}
@@ -126,7 +128,7 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .isle::after{animation-delay:-3.5s}
 /* Inversé : la vague naît à la plage, claire, et part mourir vers le large */
 @keyframes shore{0%{transform:translate(-50%,-50%) scale(1.01);opacity:0}12%{opacity:.8}70%{opacity:.22}100%{transform:translate(-50%,-50%) scale(1.26);opacity:0}}
-.isle .land{z-index:2}.isle .lbl{z-index:4}/* au-dessus du pion navire (3) : la barque passe sous les cartouches */
+.isle .land{z-index:2}.isle .lbl{z-index:4}/* au-dessus du navire (3) : la barque passe sous les cartouches */
 /* Oscillation 3D des cartouches sur l'axe Y, avec un reflet qui balaie le verre en cadence (coupée en animations réduites) */
 .isle .lbl,.coastport .lbl{perspective:320px}
 .isle .lbl b,.coastport .lbl b{animation:lblsway 5.5s ease-in-out infinite alternate;position:relative;overflow:hidden}
@@ -1744,9 +1746,13 @@ applyGrade();
 const curveSeg = (p, i) => { const b = p[i], c = p[i + 1], dx = c.x - b.x, dy = c.y - b.y;
   return [b, { x: b.x + dx * .62, y: b.y + dy * .1 }, { x: c.x - dx * .62, y: c.y - dy * .1 }, c]; };
 const curvePath = p => p.length < 2 ? '' : `M${p[0].x.toFixed(0)},${p[0].y.toFixed(0)} ` + p.slice(1).map((_, i) => { const [, c1, c2, e] = curveSeg(p, i); return `C${c1.x.toFixed(1)},${c1.y.toFixed(1)} ${c2.x.toFixed(1)},${c2.y.toFixed(1)} ${e.x.toFixed(0)},${e.y.toFixed(0)}`; }).join(' ');
-// Milieu d'un tronçon de courbe et cap au milieu (en degrés, 0 = vers le haut) : la place du navire en route
-const curveMid = (p, i) => { const [a, c1, c2, b] = curveSeg(p, i), m = { x: (a.x + 3 * c1.x + 3 * c2.x + b.x) / 8, y: (a.y + 3 * c1.y + 3 * c2.y + b.y) / 8 };
-  const dx = b.x - a.x + c2.x - c1.x, dy = b.y - a.y + c2.y - c1.y; return { x: m.x, y: m.y, rot: Math.atan2(dx, -dy) * 180 / Math.PI }; };
+// Point d'un tronçon de courbe (t de 0 à 1) et cap à cet endroit (en degrés, 0 = vers le haut) : la place du navire en route
+const curveAt = (p, i, t) => { const [a, c1, c2, b] = curveSeg(p, i), u = 1 - t, k = [u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t];
+  const d = (q, r, s, w) => 3 * u * u * (r - q) + 6 * u * t * (s - r) + 3 * t * t * (w - s);
+  return { x: k[0] * a.x + k[1] * c1.x + k[2] * c2.x + k[3] * b.x, y: k[0] * a.y + k[1] * c1.y + k[2] * c2.y + k[3] * b.y,
+    rot: Math.atan2(d(a.x, c1.x, c2.x, b.x), -d(a.y, c1.y, c2.y, b.y)) * 180 / Math.PI }; };
+const curveMid = (p, i) => curveAt(p, i, .5);
+let SHIPSEG = null; // tronçon de route où navigue le navire (points et numéro), pour placeShip()
 // Escales sans île : chaque question y vient d'une vraie île (escale mélangée : révisions entrelacées ; test du capitaine : placement)
 const VIRT = {
   mix: { id: 'mix', v: 1, sea: 'm', n: 'Escale mélangée', art: 'l’escale mélangée', notion: 'Révisions mélangées', img: 'deco-compass', hero: 'bg-sea-golden', boss: { n: '', img: 'deco-compass' }, ep: '', sfx: ['BIEN JOUÉ !', 'BRAVO !', 'DANS LE MILLE !'] },
@@ -5835,7 +5841,8 @@ function renderMap() {
   const krak = bossDone(IS('canons')), lair = LAIR[S.sea] || { x: 72, y: MAPTOP };
   // Le navire navigue SUR le tracé : au milieu du tronçon de courbe qui mène à l'île courante (depuis le port pour la
   // première), orienté selon la courbe à cet endroit (le sprite vu de dessus pointe vers le haut).
-  const sm = curveMid(rpts, Math.max(0, sea.indexOf(cur)));
+  SHIPSEG = { pts: rpts, i: Math.max(0, sea.indexOf(cur)) };
+  const sm = curveMid(rpts, SHIPSEG.i);
   const shx = Math.round(sm.x), shy = Math.round(sm.y), srot = Math.round(sm.rot);
   // Récifs : sur le bord opposé à l'île de la même hauteur, pour ne jamais la chevaucher
   const reefs = [[1, 'a', 100], [3, 'b', 78], [4, 'c', 134], [6, 'a', 86], [8, 'b', 68]].filter(([k]) => sea[k]).map(([k, f, w]) => { const i = sea[k], left = i.x > 50;
@@ -5869,7 +5876,7 @@ function renderMap() {
     ${dockHTML()}</div>`;
   bindCog();
   const sc = $('#mapScroll');
-  fitLabels(); fitTideTitle(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitLabels(); fitTideTitle(); });
+  fitLabels(); fitTideTitle(); placeShip(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitLabels(); fitTideTitle(); placeShip(); });
   const hb = $('.seas').getBoundingClientRect().bottom, tt = $('.tide').getBoundingClientRect().top;
   // Le défilement s'arrête au bas de l'image de côte, qui reste SOUS les panneaux flottants (marée, dock) :
   // aucun vide n'apparaît jamais autour d'eux. (L'ancien rembourrage qui faisait remonter l'image jusqu'au
@@ -5890,6 +5897,23 @@ function fitLabels() {
   $$('.isle .lbl,.lair .lbl,.coastport .lbl', m).forEach(l => { l.style.marginLeft = ''; const r = l.getBoundingClientRect();
     const dx = r.left < mr.left + M ? mr.left + M - r.left : r.right > mr.right - M ? mr.right - M - r.right : 0;
     if (dx) l.style.marginLeft = Math.round(dx / UIZ) + 'px'; });
+}
+// Le navire reste sur la route mais jamais sur un cartouche : chaque île forme son propre plan d'empilement, un cartouche ne
+// peut donc pas passer devant le navire. On glisse le navire le long de la courbe jusqu'à une place libre (milieu si possible).
+function placeShip() {
+  const m = $('.map'), tok = $('#token'), rip = $('.ripple'); if (!m || !tok || !SHIPSEG) return;
+  const mr = m.getBoundingClientRect(), box = (el, pad) => { const r = el.getBoundingClientRect(); return [(r.left - mr.left) / UIZ - pad, (r.top - mr.top) / UIZ - pad, (r.right - mr.left) / UIZ + pad, (r.bottom - mr.top) / UIZ + pad]; };
+  // Obstacles : les cartouches (ils cachent le navire) et la terre des îles (image resserrée sur l'île elle-même)
+  // Un cartouche cache le navire (poids 3) ; frôler une plage est acceptable (poids 1, terre resserrée de 50 px) :
+  // entre deux îles proches, la barque longe alors le rivage de l'île visée, comme si elle accostait
+  const obs = [...$$('.isle .lbl,.lair .lbl,.coastport .lbl', m).map(l => [...box(l, 4), 3]), ...$$('.isle .land', m).map(l => [...box(l, -50), 1])];
+  // Surface pondérée recouverte, avec l'emprise réelle du navire (allongé, environ 70 × 120 px) tournée selon son cap ;
+  // on garde le point de route le plus dégagé, le milieu à égalité
+  const cover = q => { const a = q.rot * Math.PI / 180, c = Math.abs(Math.cos(a)), s = Math.abs(Math.sin(a)), hw = c * 35 + s * 60, hh = s * 35 + c * 60;
+    return obs.reduce((n, [l, t, r, b, w]) => n + w * Math.max(0, Math.min(r, q.x + hw) - Math.max(l, q.x - hw)) * Math.max(0, Math.min(b, q.y + hh) - Math.max(t, q.y - hh)), 0); };
+  let p = null, best = 1e12;
+  for (let t = .12; t <= .881; t += .02) { const q = curveAt(SHIPSEG.pts, SHIPSEG.i, t), c = cover(q) + Math.abs(t - .5) * 200; if (c < best) { best = c; p = q; } }
+  [tok, rip].forEach(e => { if (!e) return; e.style.left = Math.round(p.x) + 'px'; e.style.top = Math.round(p.y) + 'px'; e.style.setProperty('--srot', Math.round(p.rot) + 'deg'); });
 }
 // Le cap de la marée tient sur une seule ligne : la taille descend par demi-pixel (24 px au plus, 13 px au moins)
 function fitTideTitle() {
