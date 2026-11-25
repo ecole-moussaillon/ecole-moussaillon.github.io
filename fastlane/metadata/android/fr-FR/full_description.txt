@@ -24,5 +24,5 @@ POUR LES PARENTS
 • Plusieurs enfants sur le même appareil, chacun avec sa propre progression.
 • Plusieurs classes possibles, chacune avec sa propre progression.
 
-SANS PUBLICITÉ, SANS ACHAT, SANS COLLECTE DE DONNÉES
-Aucune publicité, aucun achat intégré, aucun compte. La progression reste sur l’appareil, et le jeu fonctionne aussi hors connexion après un premier lancement.
+SANS PUBLICITÉ, SANS ACHAT INTÉGRÉ, SANS COLLECTE DE DONNÉES
+Aucune publicité, aucun achat dans le jeu, aucun compte. La progression reste sur l’appareil, et le jeu fonctionne aussi hors connexion après un premier lancement.
