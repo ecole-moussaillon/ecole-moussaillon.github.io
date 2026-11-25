@@ -23,7 +23,7 @@ Jeu éducatif pirate, du CP au CM2. 15 îles : 8 de maths (canons, stade, mine, 
 ## Publication
 - **Web** : GitHub Pages, branche `main`, https://ecole-moussaillon.github.io/
 - **iOS** : Capacitor (`ios-app/`), qui embarque les fichiers du jeu. Bundle `io.github.pierreroubydroid.chiffres`, Apple ID de l'appli 6825742947. Workflows à lancer à la main :
-  - `ios-app-store.yml` : compilation, le numéro de build est le numéro d'exécution ;
+  - `ios-app-store.yml` : compilation, le numéro de build est le numéro d'exécution. Menu « machine » au lancement : `macos-26-intel` par défaut depuis le 25/11/2026 (les Mac arm64 de GitHub restaient en file d'attente, annotation « capacity constraints »), `macos-26` (arm64) en option, même image et même Xcode. Xcode 27 n'existe que sur arm64 : y revenir pour le SDK iOS 27 ;
   - `ios-soumission.yml` : fiche et soumission (fastlane deliver, sous Linux, `reject_if_possible`) ;
   - `ios-etat.yml` : lecture seule (versions, prix, pays, avis écrits).
   - Métadonnées dans `fastlane/metadata/fr-FR`. Publication manuelle après la validation d'Apple.
