@@ -3,7 +3,7 @@
 ## Règles de travail
 - Toujours répondre en **français**. Vérifier les faits avant de les affirmer, citer les sources, dire « Je ne peux pas vérifier cette information » si besoin, et terminer les réponses issues d'une recherche par un niveau de confiance (élevé / moyen / faible).
 - **Aucun secret** dans le dépôt ni dans la conversation : clés Apple, keystore Android et mots de passe vivent uniquement dans les secrets GitHub Actions.
-- Contact public : pierrerouby@gmail.com, jamais l'adresse Studi. Ne jamais demander d'identifiants Apple.
+- Contact public : pierrerouby@gmail.com (App Store), ecolemoussaillon@gmail.com (Google Play : fiche et IARC) ; jamais l'adresse Studi. Ne jamais demander d'identifiants Apple.
 - Ne rien soumettre à Apple ou Google, et ne rien publier sur `main`, sans l'accord de l'utilisateur.
 
 ## Le produit
