@@ -42,9 +42,12 @@ await shot('feature-1024x500.png');
 //    téléphone 1080 × 1920 ; tablette 7 pouces 1080 × 1920 en mise en page tablette ; tablette 10 pouces 1620 × 2880.
 //    Au-delà de 700 points de large, le jeu passe en mise en page tablette (agrandie, comme sur iPad).
 await cdp('Emulation.setTouchEmulationEnabled', { enabled: true });
-const FORMATS = [['phone', 360, 640, 3], ['tab7', 720, 1280, 1.5], ['tab10', 810, 1440, 2]];
+// Pliables (exigences Google) : écran déplié en 1:1 et en 4:3, écran extérieur plié en 10:16 portrait ; côtés de 960 à 3 840 px.
+const FORMATS = [['phone', 360, 640, 3], ['tab7', 720, 1280, 1.5], ['tab10', 810, 1440, 2],
+  ['fold-1x1', 900, 900, 1.6], ['fold-4x3', 1280, 960, 1.5], ['fold-10x16', 400, 640, 2.7]];
+const ONLY = process.argv.slice(2); // ex. : node tools/play-captures.mjs fold-1x1 fold-4x3 (tous les formats si rien)
 let n = 0;
-for (const [prefix, w, h, dpr] of FORMATS) {
+for (const [prefix, w, h, dpr] of FORMATS.filter(f => !ONLY.length || ONLY.includes(f[0]))) {
 await size(w, h, dpr, true);
 await go(`${BASE}/index.html?heure=jour&f=${++n}`, 3500);
 await shot(`${prefix}-1-titre.png`);
