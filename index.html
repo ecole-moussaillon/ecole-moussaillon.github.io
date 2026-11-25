@@ -969,7 +969,9 @@ button.medal{display:block;padding:0;cursor:pointer}
 .mini-btn::after{content:"";position:absolute;inset:-7px -2px;border-radius:inherit}
 .seas button::after,.seg button::after{content:"";position:absolute;inset:-4px 0;border-radius:inherit}
 .kk::after{content:"";position:absolute;inset:0 -2px}
-.errbtns{display:flex;gap:10px;align-items:center}.errbtns .say{position:static;flex:none;width:52px;height:52px}.errbtns .brass-btn{flex:1}
+/* position:relative (jamais static) : sinon la zone de toucher agrandie du haut-parleur (::after) se cale sur toute la
+   fiche et avale le tap de « J'ai compris » — c'était le bouton « mort » de la fiche d'erreur */
+.errbtns{display:flex;gap:10px;align-items:center}.errbtns .say{position:relative;right:auto;top:auto;flex:none;width:52px;height:52px}.errbtns .brass-btn{flex:1}
 .revb.retry{background:linear-gradient(180deg,#6fb3d9,#2f7fa8)}
 .kbd{display:flex;flex-direction:column;gap:6px;user-select:none;-webkit-user-select:none}
 .kr{display:flex;justify-content:center;gap:4px}
