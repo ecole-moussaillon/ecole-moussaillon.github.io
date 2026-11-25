@@ -489,7 +489,12 @@ img{max-width:100%;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .lesson .ldots i.on{background:var(--brass)}
 .lesson .lcoins{display:flex;gap:12px;align-items:center}
 .lesson .lcoins img{width:62px}
-.lchip{height:40px;border-radius:20px;cursor:pointer;color:#ffe2a6;font:700 14px var(--f-u)}
+.lchip{height:40px;border-radius:20px;cursor:pointer;color:#ffe2a6;font:700 14px var(--f-u);flex:none}
+/* Pastille de rang de l'écran d'île : sur deux lignes, elle se resserre au lieu de passer sous « Pi t'explique » */
+.topbar{gap:8px}
+.rchip{flex:0 1 auto;min-width:0;height:auto;min-height:40px;padding:4px 14px 4px 10px;border-radius:20px;color:#ffe2a6}
+.rchip .c2{display:flex;flex-direction:column;line-height:1.12;min-width:0}
+.rchip .c2 b{font:700 13.5px var(--f-u)}.rchip .c2 small{font:500 11.5px var(--f-u);opacity:.85}
 .showship::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,26,36,.55),transparent 55%);pointer-events:none}
 .showship .cap{z-index:2;max-width:52%}
 .showship .cap{position:absolute;left:14px;top:12px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
@@ -840,6 +845,8 @@ button.medal{display:block;padding:0;cursor:pointer}
 .result .head .disp{font-size:33px}.tide h2{font-size:24px}.isle .lbl b{font-size:18px}.hud .nm{font-size:19px}
 /* Titres en capitales : cap de la marée et noms des îles */
 .tide h2,.isle .lbl .ti,.coastport .lbl .ti,.lair .lbl .ti{text-transform:uppercase}
+/* Cap de la marée : toujours sur une ligne ; fitTideTitle() réduit la taille jusqu'à ce que le titre tienne */
+.tide h2{white-space:nowrap;overflow:hidden}
 /* Bouton de la marée : plaque « carte au trésor » fournie, découpe en 3 tranches (rivets et rose des vents intacts, le tracé central s'étire).
    Barre réduite à gauche en absolu, texte seul et centré. */
 .tide .brass-btn{position:relative;justify-content:center;background:none;box-shadow:none;border-style:solid;border-color:transparent;border-width:0 54px;border-image:url(assets/btn-tide.webp) 0 300 fill stretch}
@@ -1718,17 +1725,28 @@ const SEAS = { m: { n: 'Mer des Chiffres', s: 'Maths', ic: '123' }, f: { n: 'Mer
 const HFORCE = (location.search.match(/[?&]heure=(aube|jour|soir|nuit)/) || [])[1] || '';
 const dayPhase = () => { if (HFORCE) return HFORCE === 'jour' ? '' : HFORCE; const s = Date.now() / 1000 % 300; return s < 20 ? 'aube' : s < 260 ? '' : s < 280 ? 'soir' : 'nuit'; };
 // Une île réservée à une classe (only) est cachée ailleurs.
-const MAPX = 430; // espace ajouté en haut de la carte : les îles respirent, la côte descend d'autant
+const MAPX = 760; // espace ajouté en haut de la carte : les îles respirent, la côte descend d'autant
+const MAPTOP = 165; // place la plus haute de la chaîne : celle du Repaire du Kraken
+const LAIR = {};
 function applyGrade() {
   ISLES.forEach(i => { i.notion = i[GR()] || i.ce2; const gate = !!i.only && !i.only.includes(GR()); i.soon = !!i.wip || gate; i.hide = gate; });
-  const m = ISLES.filter(i => i.sea === 'm' && !i.hide);
-  // La première île (en bas) part tout à gauche et plus haut, loin du bourg du port ; la suite zigzague droite/gauche.
-  // MAPX agrandit la carte vers le haut pour espacer les îles (pas de 224 px) sans toucher à la côte, décalée d'autant.
-  m.forEach((i, k) => { if (m.length > 7) { i.x = k ? (k % 2 ? 72 : 28) : 25; i.y = k ? (1470 + MAPX) - k * 224 : 1372 + MAPX; } else { i.x = i.x0; i.y = i.y0 + MAPX; } });
-  const f = ISLES.filter(i => i.sea === 'f' && !i.hide);
-  f.forEach((i, k) => { i.x = k % 2 ? 72 : 28; i.y = f.length > 6 ? (1470 + MAPX) - k * 230 : (1450 + MAPX) - k * 240; });
+  // Chaque mer s'étage du port jusqu'en haut de la carte, une île à droite, une île à gauche (jamais deux côte à côte) ;
+  // la première part à gauche, loin du bourg. Le Repaire du Kraken prend la place suivante, du côté opposé à la dernière île.
+  ['m', 'f'].forEach(sea => {
+    const L = ISLES.filter(i => i.sea === sea && !i.hide), y0 = 1372 + MAPX, step = (y0 - MAPTOP) / Math.max(1, L.length);
+    L.forEach((i, k) => { i.x = k ? (k % 2 ? 72 : 28) : 25; i.y = Math.round(y0 - k * step); });
+    LAIR[sea] = { x: L.length % 2 ? 72 : 28, y: MAPTOP };
+  });
 }
 applyGrade();
+// Tracés organiques : entre deux escales, une courbe en S souple (Bézier cubique) qui part et arrive presque à
+// l'horizontale. Le tracé file ainsi sur l'eau libre au lieu de monter sous l'île et sous son cartouche.
+const curveSeg = (p, i) => { const b = p[i], c = p[i + 1], dx = c.x - b.x, dy = c.y - b.y;
+  return [b, { x: b.x + dx * .62, y: b.y + dy * .1 }, { x: c.x - dx * .62, y: c.y - dy * .1 }, c]; };
+const curvePath = p => p.length < 2 ? '' : `M${p[0].x.toFixed(0)},${p[0].y.toFixed(0)} ` + p.slice(1).map((_, i) => { const [, c1, c2, e] = curveSeg(p, i); return `C${c1.x.toFixed(1)},${c1.y.toFixed(1)} ${c2.x.toFixed(1)},${c2.y.toFixed(1)} ${e.x.toFixed(0)},${e.y.toFixed(0)}`; }).join(' ');
+// Milieu d'un tronçon de courbe et cap au milieu (en degrés, 0 = vers le haut) : la place du navire en route
+const curveMid = (p, i) => { const [a, c1, c2, b] = curveSeg(p, i), m = { x: (a.x + 3 * c1.x + 3 * c2.x + b.x) / 8, y: (a.y + 3 * c1.y + 3 * c2.y + b.y) / 8 };
+  const dx = b.x - a.x + c2.x - c1.x, dy = b.y - a.y + c2.y - c1.y; return { x: m.x, y: m.y, rot: Math.atan2(dx, -dy) * 180 / Math.PI }; };
 // Escales sans île : chaque question y vient d'une vraie île (escale mélangée : révisions entrelacées ; test du capitaine : placement)
 const VIRT = {
   mix: { id: 'mix', v: 1, sea: 'm', n: 'Escale mélangée', art: 'l’escale mélangée', notion: 'Révisions mélangées', img: 'deco-compass', hero: 'bg-sea-golden', boss: { n: '', img: 'deco-compass' }, ep: '', sfx: ['BIEN JOUÉ !', 'BRAVO !', 'DANS LE MILLE !'] },
@@ -5812,13 +5830,16 @@ function renderMap() {
   const CW = app.clientWidth || W, CH = Math.round(CW * 2 / 3), CT = Math.round(Math.max(1480, 1750 - CH * .72)) + MAPX;
   // La carte descend jusqu'au bas de l'image de côte (1024×1536) ; le cadrage par défaut ne change pas
   const CHF = Math.round(CW * 1536 / 1024), MH = CT + CHF;
-  const PORT = { x: 62, y: Math.round(CT + CH * .34) }, path = `M${px(PORT).toFixed(0)},${PORT.y} ` + sea.map(i => `L${px(i).toFixed(0)},${i.y}`).join(' ');
-  const krak = bossDone(IS('canons'));
-  // Le navire navigue SUR le tracé : au milieu du segment qui mène à l'île courante (depuis le port pour la
-  // première), orienté dans le sens de la marche (le sprite vu de dessus pointe vers le haut).
-  const ci = sea.indexOf(cur), pvp = ci > 0 ? { x: px(sea[ci - 1]), y: sea[ci - 1].y } : { x: px(PORT), y: PORT.y };
-  const shx = Math.round((pvp.x + px(cur)) / 2), shy = Math.round((pvp.y + cur.y) / 2);
-  const srot = Math.round(Math.atan2(px(cur) - pvp.x, pvp.y - cur.y) * 180 / Math.PI);
+  const PORT = { x: 62, y: Math.round(CT + CH * .34) };
+  const rpts = [{ x: px(PORT), y: PORT.y }, ...sea.map(i => ({ x: px(i), y: i.y }))], path = curvePath(rpts);
+  const krak = bossDone(IS('canons')), lair = LAIR[S.sea] || { x: 72, y: MAPTOP };
+  // Le navire navigue SUR le tracé : au milieu du tronçon de courbe qui mène à l'île courante (depuis le port pour la
+  // première), orienté selon la courbe à cet endroit (le sprite vu de dessus pointe vers le haut).
+  const sm = curveMid(rpts, Math.max(0, sea.indexOf(cur)));
+  const shx = Math.round(sm.x), shy = Math.round(sm.y), srot = Math.round(sm.rot);
+  // Récifs : sur le bord opposé à l'île de la même hauteur, pour ne jamais la chevaucher
+  const reefs = [[1, 'a', 100], [3, 'b', 78], [4, 'c', 134], [6, 'a', 86], [8, 'b', 68]].filter(([k]) => sea[k]).map(([k, f, w]) => { const i = sea[k], left = i.x > 50;
+    return `<img class="reef${left ? ' m' : ''}" src="${IMG('deco-reef-' + f)}" alt="" style="left:${W * (left ? 7 : 93) / 100}px;top:${i.y + 20}px;width:${w}px">`; }).join('');
   const isleHTML = sea.map(i => {
     const s = IS(i.id), lk = !unlocked(i), isCur = i === cur;
     if (i.soon) return `<button class="isle locked soon" style="left:${px(i)}px;top:${i.y}px" data-a="isle" data-i="${i.id}" aria-label="${esc(i.n)}, bientôt"><img class="lag" src="${IMG(i.lag)}" alt=""><span class="lbl"><b><span class="col"><span class="ti">${i.n}</span><span class="lv">Bientôt</span></span></b></span></button>`;
@@ -5831,12 +5852,12 @@ function renderMap() {
   app.innerHTML = `<div class="screen">
     <div class="map-scroll" id="mapScroll"><div class="map sea-${S.sea}${dayPhase() ? ' h-' + dayPhase() : ''}" style="height:${MH}px">
       <div class="ocean"></div><div class="glints"></div>
-      ${[['a2', 84, 320, 56, 0, 1, 0], ['b2', 72, 800, 64, -22, 1, 1], ['c', 64, 1260, 48, -9, 1, 0], ['b2', 70, 1620, 72, -40, .94, 0], ['a2', 78, 1880, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv]) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 180}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
-      <svg class="route" viewBox="0 0 ${W} ${MH}" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f4e8cc" stroke-opacity=".55" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
+      ${[['a2', 84, 380, 56, 0, 1, 0], ['b2', 72, 920, 64, -22, 1, 1], ['c', 64, 1440, 48, -9, 1, 0], ['b2', 70, 1880, 72, -40, .94, 0], ['a2', 78, 2160, 60, -33, .96, 1]].map(([f, w, top, gd, gdel, gs, rv]) => `<div class="mgull${rv ? ' rev' : ''}" style="top:${top}px;width:${w}px;height:${w}px;--gw:${W + 180}px;--gd:${gd}s;--gdel:${gdel}s;--gs:${gs};--gimg:url(${IMG('deco-gull-' + f)})" aria-hidden="true"><img src="${IMG('deco-gull-' + f)}" alt=""></div>`).join('')}
+      <svg class="route" viewBox="0 0 ${W} ${MH}" preserveAspectRatio="none"><path d="${path}" fill="none" stroke="#f6ecd2" stroke-opacity=".85" stroke-width="3.6" stroke-dasharray="1 11" stroke-linecap="round"/></svg>
       <div class="coast" style="top:${CT}px;height:${CHF}px" aria-hidden="true"><img src="${IMG('port-coast')}" alt=""></div>
       <button class="coastport${S.port.includes('phare') ? ' phare' : ''}" style="left:${Math.round(CW * .6)}px;top:${Math.round(CT + CH * .26)}px;width:${Math.round(CW * .4)}px;height:${Math.round(CH * .48)}px" data-a="portisle" aria-label="Port d’attache"><span class="lbl"><b><span class="ti">Port d’attache</span></b></span></button>
-      <button class="lair${krak ? ' won' : ''}" style="left:${W * .76}px;top:96px" data-a="lair" aria-label="${krak ? 'Repaire du Kraken' : 'Une île cachée dans le brouillard'}"><img src="${IMG('isle-kraken')}" alt="">${krak ? '<span class="lbl"><b><span class="ti">Repaire du Kraken</span></b></span>' : ''}</button>
-      ${[[93, 300, 'a', 100, 0], [6.5, 710, 'b', 78, 1], [93, 1160, 'c', 134, 0], [6, 1520, 'a', 86, 1], [94, 1830, 'b', 68, 0]].map(([x, y, f, w, m]) => `<img class="reef${m ? ' m' : ''}" src="${IMG('deco-reef-' + f)}" alt="" style="left:${W * x / 100}px;top:${y}px;width:${w}px">`).join('')}
+      <button class="lair${krak ? ' won' : ''}" style="left:${px(lair)}px;top:${lair.y}px" data-a="lair" aria-label="${krak ? 'Repaire du Kraken' : 'Une île cachée dans le brouillard'}"><img src="${IMG('isle-kraken')}" alt="">${krak ? '<span class="lbl"><b><span class="ti">Repaire du Kraken</span></b></span>' : ''}</button>
+      ${reefs}
       <div class="mers" style="top:24px">Mers inexplorées</div>
       ${isleHTML}${fog}
       <div class="ripple" aria-hidden="true" style="left:${shx}px;top:${shy}px;--srot:${srot}deg;--simg:url(${IMG((paintDef()[4] || 'ship-skin-origine') + '-top')})"><i></i><i></i><span class="wk"><span class="bow"></span><span class="tr"></span><span class="tr t2"></span></span></div>
@@ -5848,6 +5869,7 @@ function renderMap() {
     ${dockHTML()}</div>`;
   bindCog();
   const sc = $('#mapScroll');
+  fitLabels(); fitTideTitle(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitLabels(); fitTideTitle(); });
   const hb = $('.seas').getBoundingClientRect().bottom, tt = $('.tide').getBoundingClientRect().top;
   // Le défilement s'arrête au bas de l'image de côte, qui reste SOUS les panneaux flottants (marée, dock) :
   // aucun vide n'apparaît jamais autour d'eux. (L'ancien rembourrage qui faisait remonter l'image jusqu'au
@@ -5860,6 +5882,20 @@ function renderMap() {
   else if (S.intro && !S.tuto.gem1 && gems() > 0 && !(S.blds || []).length) { S.tuto.gem1 = 1; save(); setTimeout(() => toast('Une pierre précieuse ! Touche le port d’attache, tout en bas de la carte, pour construire.'), 1600); }
   else if (S.intro && !S.tuto.star1 && starTotal() >= 9 && shipLv() === 0) { S.tuto.star1 = 1; save(); setTimeout(() => toast('Tes étoiles font grandir ton navire : à 60 étoiles, il deviendra un brigantin !'), 1600); }
   setTimeout(offerPlacement, 900);
+}
+// Marge de sécurité : aucun cartouche de la carte n'approche le bord à moins de 18 px. Le cartouche est décalé
+// horizontalement (jamais tronqué) ; la mesure se fait sur la boîte .lbl, que la bascule 3D du texte ne modifie pas.
+function fitLabels() {
+  const m = $('.map'); if (!m) return; const mr = m.getBoundingClientRect(), M = 18 * UIZ;
+  $$('.isle .lbl,.lair .lbl,.coastport .lbl', m).forEach(l => { l.style.marginLeft = ''; const r = l.getBoundingClientRect();
+    const dx = r.left < mr.left + M ? mr.left + M - r.left : r.right > mr.right - M ? mr.right - M - r.right : 0;
+    if (dx) l.style.marginLeft = Math.round(dx / UIZ) + 'px'; });
+}
+// Le cap de la marée tient sur une seule ligne : la taille descend par demi-pixel (24 px au plus, 13 px au moins)
+function fitTideTitle() {
+  const h = $('.tide h2'); if (!h) return; h.style.fontSize = '';
+  let fs = parseFloat(getComputedStyle(h).fontSize) || 24;
+  while (h.scrollWidth > h.clientWidth + 1 && fs > 13) { fs -= .5; h.style.fontSize = fs + 'px'; }
 }
 function tideHTML(t) {
   const mini = t.stops.map((id, k) => { const i = isleById(id); return `<span class="${t.done || k < t.i ? 'done' : k === t.i ? 'cur' : ''}" title="${esc(i.notion)}"><img src="${IMG(i.img)}" alt="${esc(i.notion)}"></span>`; }).join('');
@@ -5900,11 +5936,11 @@ function renderIsle(id) {
     const play = ADMIN || isDone || isCur;
     return `<button class="rnode ${cls}" style="left:${x}px;top:${y}px" ${play ? `data-a="play" data-i="${id}" data-n="${k}"` : 'disabled'} aria-label="Niveau ${k}">${inner}</button>${stars}${lab}`;
   }).join('');
-  const path = range(1, NODES).map(k => `${k > 1 ? 'L' : 'M'}${xs(k)},${ys(k)}`).join(' ');
+  const path = curvePath(range(1, NODES).map(k => ({ x: xs(k), y: ys(k) })));
   const hero = `<img class="bg" src="${IMG(i.hero)}" alt="">`;
   app.innerHTML = `<div class="screen"><div class="hero">${hero}
       <div class="tt"><div class="smallcaps" style="color:#ffd9a0"><span class="gradeb" style="margin-right:6px;vertical-align:1px">${GRADES[GR()].n}</span>${i.notion}</div><div class="disp">${i.n}</div></div></div>
-    <div class="topbar"><button class="round glass" data-a="home" aria-label="Retour à la carte">${ico('iBack')}</button><span class="chip glass" style="height:40px;border-radius:20px;color:#ffe2a6">${penArt(rk(s))}Rang ${IRANK[rk(s)].n} · ${s.node > CHEST ? 'Coffre ouvert' : 'Coffre au niveau 5'}</span>${LESSONS[i.id] ? `<button class="chip glass lchip" data-a="lesson" data-l="${i.id}">Pi t’explique</button>` : ''}</div>
+    <div class="topbar"><button class="round glass" data-a="home" aria-label="Retour à la carte">${ico('iBack')}</button><span class="chip glass rchip">${penArt(rk(s))}<span class="c2"><b>Rang ${IRANK[rk(s)].n}</b><small>${s.node > CHEST ? 'Coffre ouvert' : 'Coffre au niveau 5'}</small></span></span>${LESSONS[i.id] ? `<button class="chip glass lchip" data-a="lesson" data-l="${i.id}">Pi t’explique</button>` : ''}</div>
     <div class="sheet paper">${trophyHTML(i, s)}<div class="stats" hidden>
         <div class="stat"><svg width="58" height="58" viewBox="0 0 58 58"><circle cx="29" cy="29" r="24" fill="none" stroke="rgba(138,98,36,.2)" stroke-width="6"/><circle cx="29" cy="29" r="24" fill="none" stroke="url(#gBrass)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(acc / 100 * 150.8).toFixed(1)} 150.8" transform="rotate(-90 29 29)"/><text x="29" y="34.5" text-anchor="middle" font-family="Fraunces,serif" font-weight="800" font-size="15" fill="#2a1c12">${acc}%</text></svg><span>Réussite</span></div>
         <div class="stat"><b>${node}<span style="font-size:15px;color:#6b5440;font-weight:600"> /${NODES}</span></b><span>Niveau</span></div>
